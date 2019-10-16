@@ -1,0 +1,63 @@
+﻿@model AddModel
+
+    <form asp-controller="Order" asp-action="AddHelper" method="post" enctype="multipart/form-data">
+        @for (int i = 0; i < AddModel.StandartInfo.Count; i++)
+        {
+            @switch (AddModel.StandartInfo[i].Type.Name)
+            {
+                case "String":
+                    {
+                        <p>@AddModel.StandartInfo[i].Description: </p><input type="text" asp-for="StandartInfoValues[i]" required />;
+                        break;
+                    }
+
+                case "Double":
+                    {
+                        <p>@AddModel.StandartInfo[i].Description: </p><input type="text" asp-for="StandartInfoValues[i]" required />;
+                        break;
+                    }
+
+                case "Int32":
+                    {
+                        <p>@AddModel.StandartInfo[i].Description: </p><input type="number" asp-for="StandartInfoValues[i]" required />;
+                        break;
+                    }
+
+                case "Boolean":
+                    {
+                        <p>@AddModel.StandartInfo[i].Description: </p><input type="checkbox" asp-for="StandartInfoValues[i]" />;
+                        break;
+                    }
+            }
+        }
+
+
+        @for (int i = 0; i < Model.AdditionalInfo.Count; i++)
+        {
+            @switch (Model.AdditionalInfo[i].Type.Name)
+            {
+                case "String":
+                    {
+                        <p>@Model.AdditionalInfo[i].Description: </p><input type="text" asp-for="Values[i]" required />;
+                        break;
+                    }
+
+                case "Int32":
+                    {
+                        <p>@Model.AdditionalInfo[i].Description: </p><input type="number" asp-for="Values[i]" required />;
+                        break;
+                    }
+
+                case "Boolean":
+                    {
+                        <p>@Model.AdditionalInfo[i].Description: </p><input type="checkbox" asp-for="Values[i]" />;
+                        break;
+                    }
+            }
+        }
+
+        <p>Изображение в формате 3х4: </p><input type="file" accept="image/jpeg" asp-for="Image" enctype="multipart/form-data" required /><br />
+
+        <input asp-for="Name" value="@Model.Name" hidden/>
+        <button type="submit">Отправить</button>
+    </form>

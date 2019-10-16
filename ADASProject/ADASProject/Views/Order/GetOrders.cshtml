@@ -1,0 +1,11 @@
+﻿@model IEnumerable<ADASProject.Order.OrderInfo>
+@foreach(var order in Model)
+{
+    <pre>Сумма заказа: @order.Amount руб</pre>
+    <pre>Время заказа: @order.OrderTime.ToString()</pre>
+    <pre>Статус заказа: @order.StatusInfo.ToString()</pre>
+    foreach(var product in order.Products)
+    {
+        <pre>Товар: @product.Product.Name       Количество: @product.Count</pre>
+    }
+}
