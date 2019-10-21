@@ -31,10 +31,11 @@ C:\Users\User\source\repos\ADASProject\ADASProject\obj\Release\netcoreapp2.1\ADA
 C:\Users\User\source\repos\ADASProject\ADASProject\obj\Release\netcoreapp2.1\Razor\Views\Account\Login.g.cshtml.cs
 C:\Users\User\source\repos\ADASProject\ADASProject\obj\Release\netcoreapp2.1\Razor\Views\Account\Register.g.cshtml.cs
 C:\Users\User\source\repos\ADASProject\ADASProject\obj\Release\netcoreapp2.1\Razor\Views\Home\PersonalArea.g.cshtml.cs
-C:\Users\User\source\repos\ADASProject\ADASProject\obj\Release\netcoreapp2.1\Razor\Views\Order\Add.g.cshtml.cs
 C:\Users\User\source\repos\ADASProject\ADASProject\obj\Release\netcoreapp2.1\Razor\Views\Order\Basket.g.cshtml.cs
-C:\Users\User\source\repos\ADASProject\ADASProject\obj\Release\netcoreapp2.1\Razor\Views\Order\ChouseAdd.g.cshtml.cs
-C:\Users\User\source\repos\ADASProject\ADASProject\obj\Release\netcoreapp2.1\Razor\Views\Order\Get.g.cshtml.cs
 C:\Users\User\source\repos\ADASProject\ADASProject\obj\Release\netcoreapp2.1\Razor\Views\Order\GetOrders.g.cshtml.cs
 C:\Users\User\source\repos\ADASProject\ADASProject\obj\Release\netcoreapp2.1\Razor\Views\Order\Order.g.cshtml.cs
 C:\Users\User\source\repos\ADASProject\ADASProject\obj\Release\netcoreapp2.1\Razor\Views\Order\Sending.g.cshtml.cs
+C:\Users\User\source\repos\ADASProject\ADASProject\obj\Release\netcoreapp2.1\Razor\Views\Edit\Add.g.cshtml.cs
+C:\Users\User\source\repos\ADASProject\ADASProject\obj\Release\netcoreapp2.1\Razor\Views\Edit\ChouseAdd.g.cshtml.cs
+C:\Users\User\source\repos\ADASProject\ADASProject\obj\Release\netcoreapp2.1\Razor\Views\Home\Test.g.cshtml.cs
+C:\Users\User\source\repos\ADASProject\ADASProject\obj\Release\netcoreapp2.1\Razor\Views\Product\Get.g.cshtml.cs

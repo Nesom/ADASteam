@@ -1,8 +1,0 @@
-﻿<h2>Добро пожаловать, @TempData.Peek("username")!</h2>
-@if (TempData.Peek("role") != null && TempData.Peek("role").ToString() == "admin")
-{
-    <a asp-controller="Edit" asp-action="ChouseAdd"><pre>Добавить товар</pre></a>
-    <a asp-controller="Edit" asp-action="ChouseRemove"><pre>Удалить товар</pre></a>
-    <a asp-controller="Order" asp-action="GetOrders"><pre>Посмотреть список заказов</pre></a>
-}
-

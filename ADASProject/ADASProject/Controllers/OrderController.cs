@@ -20,11 +20,6 @@ namespace ADASProject.Controllers
             db = context;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
-
         [HttpPost]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public async Task<IActionResult> Error(ErrorViewModel model)
@@ -33,61 +28,6 @@ namespace ADASProject.Controllers
                 model = new ErrorViewModel();
             return View(model);
         }
-
-        [HttpGet]
-        [Authorize(Roles = "admin")]
-        public async Task<IActionResult> ChouseAdd()
-        {
-            var types = ReflectionHelper.GetAllProductClasses();
-            var nameToTypeDict = ReflectionHelper.CreateNameToTypeDict(types, typeof(Attributes.ClassName));
-            var model = new AddModel() { ProductNames = nameToTypeDict.Keys.ToArray() };
-            return View(model);
-        }
-
-        [HttpPost]
-        [Authorize(Roles = "admin")]
-        public async Task<IActionResult> Add(AddModel model)
-        {
-            var types = ReflectionHelper.GetAllProductClasses();
-            var nameToTypeDict = ReflectionHelper.CreateNameToTypeDict(types, typeof(Attributes.ClassName));
-
-            if (nameToTypeDict.ContainsKey(model.Name))
-                model.Name = nameToTypeDict[model.Name];
-
-            var type = ReflectionHelper.FoundType(model.Name);
-            var newModel = ReflectionHelper.CreateAddModelByType(type);
-
-            newModel.Name = model.Name;
-
-            return View(newModel);
-        }
-
-        [HttpPost]
-        [Authorize(Roles = "admin")]
-        public async Task<IActionResult> AddHelper(AddModel model)
-        {
-            var description = ReflectionHelper.CreateProductDescription(model.Name, model.Values);
-            var productInfo = ReflectionHelper.CreateProductInfo(model.StandartInfoValues);
-            var product = new Product<IDescription>();
-            product.Description = description;
-            product.ProductInfo = productInfo;
-            product.ProductInfo.Image = ControllerHelper.ConvertFileToBytes(model.Image);
-            db.AddProduct(product);
-            return RedirectToAction("Index");
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Get(GetModel model)
-        {
-            var product = db.GetById(model.Id);
-            model.Values = ReflectionHelper.GetCharacteristics(product.Description);
-            model.StandartValues = ReflectionHelper.GetCharacteristics(product.ProductInfo);
-            model.Image = product.ProductInfo.Image;
-            return View(model);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> Get(int id) => await Get(new GetModel { Id = id });
 
         [HttpGet]
         [Authorize(Roles = "admin, user")]
@@ -118,11 +58,16 @@ namespace ADASProject.Controllers
             var basket = HttpContext.Session.Get("basket");
             var values = basket.GetValues();
 
-            var dict = new Dictionary<ProductInfo, int>();
-            foreach (var value in values)
-                dict.Add(db.GetProductInfo(value.Key), value.Value);
+            var model = new BasketModel();
 
-            return View(new BasketModel() { Products = dict });
+            foreach (var value in values)
+            {
+                var product = db.GetProductInfo(value.Key);
+                model.Products.Add(product, value.Value);
+                model.Amount += product.Price * value.Value;
+            }
+
+            return View(model);
         }
 
         [HttpGet]
@@ -179,14 +124,10 @@ namespace ADASProject.Controllers
             var orderInfo = new OrderInfo();
             foreach (var item in values)
             {
-                if (db.TryToChangeCountOfProducts(item.Key, item.Value))
+                if (db.HasQuantity(item.Key, item.Value))
                 {
                     var product = db.GetProductInfo(item.Key);
-                    orderInfo.Products.Add(new SubOrder()
-                    {
-                        Product = product,
-                        Count = item.Value
-                    });
+                    orderInfo.SubOrders.Add(new SubOrder() { ProductId = item.Key, Count = item.Value });
                     orderInfo.Amount += product.Price * item.Value;
                 }
                 else
@@ -204,18 +145,25 @@ namespace ADASProject.Controllers
             var userId = (int)TempData.Peek("id");
             model.Address.UserId = userId;
             orderInfo.UserId = userId;
-
             orderInfo.StatusInfo = Status.Проверяется;
             orderInfo.OrderTime = DateTime.Now;
-            orderInfo.AddressId = db.SaveAndGetId(model.Address);
 
-            db.SaveAndGetId(orderInfo);
-            // изменить кол-во заказов у продукта
-            // изменить структуру OrderInfo в бд
+            
+
+            if (!db.TryToSaveOrder(orderInfo))
+                return RedirectToAction("Error",
+                                        new ErrorViewModel()
+                                        {
+                                            ActionName = "Basket",
+                                            RequestInfo = $"Ошибка при формировании заказа. Возможно отсутствуют некоторые товары."
+                                        });
+
+            HttpContext.Session.Remove("basket");
+
             // добавить возможность меня статус заказа
             // добавить возможность оценивать продукт если статус = доставлено(получено)
 
-            HttpContext.Session.Remove("basket");
+
 
             return View(new OrderModel() { });
         }
@@ -224,7 +172,18 @@ namespace ADASProject.Controllers
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> GetOrders()
         {
-            return View((IEnumerable<OrderInfo>)db.Orders);
+            var model = new GetOrdersModel();
+            foreach(var order in db.Orders)
+            {
+                model.Products.Add(order, new List<Tuple<ProductInfo, int>>());
+                var subOrders = db.GetSubOrders(order.Id);
+                foreach(var subOrder in subOrders)
+                {
+                    var product = db.GetProductInfo(subOrder.ProductId);
+                    model.Products[order].Add(Tuple.Create(product, subOrder.Count));
+                }
+            }
+            return View(model);
         }
     }
 }

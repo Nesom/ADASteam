@@ -26,7 +26,7 @@
             <pre style="margin-top:10px">Цена: @element.Price</pre>
             <pre>Год издания: @element.YearOfEdition</pre>
             <pre>Производитель: @element.Producer</pre>
-            <pre><a asp-controller="Order" asp-action="Get/@element.Id">Посмотреть подробную информацию</a></pre>
+            <pre><a asp-controller="Product" asp-action="Get/@element.Id">Посмотреть подробную информацию</a></pre>
             <pre><a asp-controller="Order" asp-action="Buy/@element.Id">Купить</a></pre>
         </div>
     }

@@ -1,12 +1,14 @@
 ﻿@model BasketModel
-@foreach (var element in Model.Products)
-{
-    <form>
-        <pre style="font-size:15px">@element.Key.Name --- Цена: @element.Key.Price --- Количество: @element.Value --- <a asp-action="RemoveProduct/@element.Key.Id">Удалить из корзины</a> --- Количество: <input type="number" max="@element.Key.Count" min="1" name="count" /><input type="number" value="@element.Key.Id"  name="Id" hidden/><input type="submit" asp-action="ChangeCount" formmethod="post" name="Изменить"/></pre>
-        <pre><a asp-action="Get/@element.Key.Id">Посмотреть подробную информацию</a></pre>
-    </form>
-}
-@if(Model.Products.Count != 0)
-{
-    <pre><a asp-controller="Order" asp-action="Sending">Заказать</a></pre>
-}
+
+    @foreach (var element in Model.Products)
+    {
+        <form>
+            <pre style="font-size:15px">@element.Key.Name --- Цена: @element.Key.Price --- Количество: @element.Value --- <a asp-action="RemoveProduct/@element.Key.Id">Удалить из корзины</a> --- Количество: <input type="number" max="@element.Key.Count" min="1" name="count" /><input type="number" value="@element.Key.Id" name="Id" hidden /><input type="submit" asp-action="ChangeCount" formmethod="post" name="Изменить" /></pre>
+            <pre><a asp-controller="Product" asp-action="Get/@element.Key.Id">Посмотреть подробную информацию</a></pre>
+        </form>
+    }
+    @if (Model.Products.Count != 0)
+    {
+        <pre>Сумма заказа: @Model.Amount руб</pre>
+        <pre><a asp-controller="Order" asp-action="Sending">Заказать</a></pre>
+    }

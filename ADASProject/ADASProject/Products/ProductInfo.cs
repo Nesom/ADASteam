@@ -17,13 +17,14 @@ namespace ADASProject.Products
         }
 
         public int Id { get; set; }
-        public int SubId { get; set; }
 
         public string TableName { get; set; }
         public DateTime AddDate { get; set; }
 
         public int CountOfOrders { get; set; }
+
         public double Rating { get; set; }
+        public int CountOfVotes { get; set; }
 
         [Category("Основное")]
         [Characteristic("Название")]

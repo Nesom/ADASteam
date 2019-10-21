@@ -9,6 +9,8 @@ namespace ADASProject.Controllers
     {
         ApplicationContext db;
 
+        public IActionResult Test() => View();
+
         public HomeController(ApplicationContext context)
         {
             db = context;

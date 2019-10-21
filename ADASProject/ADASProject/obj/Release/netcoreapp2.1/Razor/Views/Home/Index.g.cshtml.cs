@@ -55,7 +55,7 @@ using ADASProject.Models;
             WriteLiteral("<h2>Добро пожаловать!</h2>\r\n");
             EndContext();
             BeginContext(28, 82, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "13f7825fbdaa46dd8e2a79c330d87ad4", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "487ab3a333974127bec8912233f9ba65", async() => {
                 BeginContext(74, 32, true);
                 WriteLiteral("<pre>Посмотреть все товары</pre>");
                 EndContext();

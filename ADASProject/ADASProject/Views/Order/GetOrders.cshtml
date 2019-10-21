@@ -1,11 +1,14 @@
-﻿@model IEnumerable<ADASProject.Order.OrderInfo>
-@foreach(var order in Model)
+﻿@model GetOrdersModel
+@foreach(var order in Model.Products)
 {
-    <pre>Сумма заказа: @order.Amount руб</pre>
-    <pre>Время заказа: @order.OrderTime.ToString()</pre>
-    <pre>Статус заказа: @order.StatusInfo.ToString()</pre>
-    foreach(var product in order.Products)
+    <pre>Номер заказа: @order.Key.Id</pre>
+    <pre>Сумма заказа: @order.Key.Amount руб</pre>
+    <pre>Время заказа: @order.Key.OrderTime.ToString()</pre>
+    <pre>Статус заказа: @order.Key.StatusInfo.ToString()</pre>
+    <pre>Список товаров (@order.Value.Count): </pre>
+    foreach(var product in order.Value)
     {
-        <pre>Товар: @product.Product.Name       Количество: @product.Count</pre>
+        <pre>   Название: @product.Item1.Name       Количество: @product.Item2</pre>
     }
+    <br />
 }

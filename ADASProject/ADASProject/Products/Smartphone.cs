@@ -28,7 +28,6 @@ namespace ADASProject.Products
         }
 
         public int Id { get; set; }
-        public int MainTableId { get; set; }
 
         [Category("Мобильная связь")]
         [Characteristic("Поддерживает 4G")]
