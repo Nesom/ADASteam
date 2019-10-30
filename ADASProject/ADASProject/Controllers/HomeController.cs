@@ -2,10 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using ADASProject.Models;
-using ADASProject.Products;
-using System;
-using System.Linq.Expressions;
-using System.Linq;
 
 namespace ADASProject.Controllers
 {
