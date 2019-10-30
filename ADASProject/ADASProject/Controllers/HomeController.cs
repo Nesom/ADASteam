@@ -2,12 +2,18 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using ADASProject.Models;
+using ADASProject.Products;
+using System;
+using System.Linq.Expressions;
+using System.Linq;
 
 namespace ADASProject.Controllers
 {
     public class HomeController : Controller
     {
         ApplicationContext db;
+
+        public IActionResult Test() => View();
 
         public HomeController(ApplicationContext context)
         {

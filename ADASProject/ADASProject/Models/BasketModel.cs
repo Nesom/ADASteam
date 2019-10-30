@@ -9,7 +9,13 @@ namespace ADASProject.Models
 {
     public class BasketModel
     {
+        public BasketModel()
+        {
+            Products = new Dictionary<ProductInfo, int>();
+        }
+
         public Dictionary<ProductInfo, int> Products { get; set; }
+        public double Amount { get; set; }
         public int Id { get; set; }
         public int Count { get; set; }
     }

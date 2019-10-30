@@ -10,7 +10,7 @@ namespace ADASProject.Order
     {
         public OrderInfo()
         {
-            Products = new List<SubOrder>();
+            SubOrders = new List<SubOrder>();
         }
 
         public int Id { get; set; }
@@ -18,9 +18,7 @@ namespace ADASProject.Order
         public double Amount { get; set; }
         public DateTime OrderTime { get; set; }
 
-        public int AddressId { get; set; }
-
-        public List<SubOrder> Products;
+        public List<SubOrder> SubOrders;
         public Status StatusInfo { get; set; }
         
         public bool IsDelivered

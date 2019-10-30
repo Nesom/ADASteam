@@ -1,6 +1,6 @@
 ﻿@model AddModel
 
-    <form asp-controller="Order" asp-action="AddHelper" method="post" enctype="multipart/form-data">
+    <form asp-controller="Edit" asp-action="AddHelper" method="post" enctype="multipart/form-data">
         @for (int i = 0; i < AddModel.StandartInfo.Count; i++)
         {
             @switch (AddModel.StandartInfo[i].Type.Name)
