@@ -1,0 +1,11 @@
+C:\Users\Дмитрий\source\repos\EmailNotification\EmailNotification\bin\Debug\netcoreapp2.1\EmailNotification.deps.json
+C:\Users\Дмитрий\source\repos\EmailNotification\EmailNotification\bin\Debug\netcoreapp2.1\EmailNotification.runtimeconfig.json
+C:\Users\Дмитрий\source\repos\EmailNotification\EmailNotification\bin\Debug\netcoreapp2.1\EmailNotification.runtimeconfig.dev.json
+C:\Users\Дмитрий\source\repos\EmailNotification\EmailNotification\bin\Debug\netcoreapp2.1\EmailNotification.dll
+C:\Users\Дмитрий\source\repos\EmailNotification\EmailNotification\bin\Debug\netcoreapp2.1\EmailNotification.pdb
+C:\Users\Дмитрий\source\repos\EmailNotification\EmailNotification\obj\Debug\netcoreapp2.1\EmailNotification.csprojAssemblyReference.cache
+C:\Users\Дмитрий\source\repos\EmailNotification\EmailNotification\obj\Debug\netcoreapp2.1\EmailNotification.csproj.CoreCompileInputs.cache
+C:\Users\Дмитрий\source\repos\EmailNotification\EmailNotification\obj\Debug\netcoreapp2.1\EmailNotification.AssemblyInfoInputs.cache
+C:\Users\Дмитрий\source\repos\EmailNotification\EmailNotification\obj\Debug\netcoreapp2.1\EmailNotification.AssemblyInfo.cs
+C:\Users\Дмитрий\source\repos\EmailNotification\EmailNotification\obj\Debug\netcoreapp2.1\EmailNotification.dll
+C:\Users\Дмитрий\source\repos\EmailNotification\EmailNotification\obj\Debug\netcoreapp2.1\EmailNotification.pdb
