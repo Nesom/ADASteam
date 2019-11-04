@@ -11,4 +11,10 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.10" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="Searching">
+      <HintPath>obj\Debug\netcoreapp2.1\Searching.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

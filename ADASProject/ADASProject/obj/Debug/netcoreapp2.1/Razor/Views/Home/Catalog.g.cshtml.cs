@@ -144,7 +144,7 @@ WriteAttributeValue("", 745, imgSrc, 745, 7, false);
             WriteLiteral("</pre>\r\n            <pre>");
             EndContext();
             BeginContext(986, 92, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "fee0a31adbcd4aa58df918bc966b6fee", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0ef4f1107f9849a7bb8eec3a989b0059", async() => {
                 BeginContext(1043, 31, true);
                 WriteLiteral("Посмотреть подробную информацию");
                 EndContext();
@@ -176,7 +176,7 @@ WriteAttributeValue("", 745, imgSrc, 745, 7, false);
             WriteLiteral("</pre>\r\n            <pre>");
             EndContext();
             BeginContext(1103, 65, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "4fc6e7fd1665403e8874dbd90a2290fd", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "741328bd156148aba37a7569baba18c6", async() => {
                 BeginContext(1158, 6, true);
                 WriteLiteral("Купить");
                 EndContext();
