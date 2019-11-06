@@ -6,51 +6,29 @@ using ADASProject.Products;
 using ADASProject.Models;
 using ADASProject.Attributes;
 using System.Text;
-
+using System.Globalization;
 
 namespace ADASProject
 {
     public static class ReflectionHelper
     {
-        public static Type FoundType(string productName)
+        public static Type FoundType(string type)
         {
             return Assembly.GetExecutingAssembly()
                 .GetTypes()
-                .FirstOrDefault(type => type.Name == productName);
+                .FirstOrDefault(t => t.Name == type);
         }
 
         public static AddModel CreateAddModelByType(Type type)
         {
             var propertyType = GetPropertyType(type, "Description");
-            var list = GetCharacteristicInfo(propertyType);
+            var list = GetCharacteristicInfo(propertyType, true);
             return new AddModel()
             {
                 AdditionalInfo = list,
                 Values = new string[list.Count],
                 StandartInfoValues = new string[AddModel.StandartInfo.Count]
             };
-        }
-
-        public static List<Models.TypeInfo> GetCharacteristicInfo(Type propertyType)
-        {
-            var properties = propertyType
-                .GetProperties();
-            var list = new List<Models.TypeInfo>();
-
-            foreach (var property in properties)
-            {
-                var attribute = property.GetCustomAttribute(typeof(Characteristic));
-                if (attribute != null)
-                {
-                    list.Add(new Models.TypeInfo
-                    {
-                        Description = ((Characteristic)attribute).CharacteristicName,
-                        Type = property.PropertyType
-                    });
-                }
-            }
-
-            return list;
         }
 
         public static IDescription CreateProductDescription(string name, string[] values)
@@ -68,10 +46,10 @@ namespace ADASProject
             return (IDescription)propertyType.GetConstructor(types).Invoke(objValues);
         }
 
-        public static ProductInfo CreateProductInfo(string[] values)
+        public static ProductInfo CreateProductInfo(string[] values, bool onlyForShow = false)
         {
             var list = new List<Type>();
-            foreach (var value in GetCharacteristicInfo(typeof(ProductInfo)))
+            foreach (var value in GetCharacteristicInfo(typeof(ProductInfo), onlyForShow))
                 list.Add(value.Type);
 
             var types = list.ToArray();
@@ -80,47 +58,36 @@ namespace ADASProject
             return (ProductInfo)typeof(ProductInfo).GetConstructor(types).Invoke(objValues);
         }
 
-        private static object[] ConvertTypes(string[] values, Type[] types)
+        public static object[] ConvertTypes(string[] values, Type[] types)
         {
-            var objValues = new object[values.Length];
-            for (int i = 0; i < values.Length; i++)
+            var objValues = new object[types.Length];
+            for (int i = 0; i < types.Length; i++)
             {
-                switch (types[i].Name)
-                {
-                    case "Int32":
-                        objValues[i] = Convert.ToInt32(values[i]);
-                        break;
-                    case "Boolean":
-                        objValues[i] = Convert.ToBoolean(values[i]);
-                        break;
-                    case "Double":
-                        objValues[i] = Convert.ToDouble(values[i]);
-                        break;
-                    case "Byte[]":
-                        objValues[i] = Encoding.ASCII.GetBytes(values[i]);
-                        break;
-                    default:
-                        objValues[i] = values[i];
-                        break;
-                }
+                if (values[i] != null)
+                    try
+                    {
+                        switch (types[i].Name)
+                        {
+                            case "Int32":
+                                objValues[i] = Convert.ToInt32(values[i]);
+                                break;
+                            case "Boolean":
+                                objValues[i] = Convert.ToBoolean(values[i]);
+                                break;
+                            case "Double":
+                                objValues[i] = Convert.ToDouble(values[i], new NumberFormatInfo());
+                                break;
+                            case "Byte[]":
+                                objValues[i] = Encoding.ASCII.GetBytes(values[i]);
+                                break;
+                            default:
+                                objValues[i] = values[i];
+                                break;
+                        }
+                    }
+                    catch { }
             }
             return objValues;
-        }
-
-        public static Type GetPropertyType(Type type, string propertyName)
-        {
-            var property = type.GetProperty(propertyName);
-            if (property == null)
-                throw new Exception("Property is not found");
-            return property.PropertyType;
-        }
-
-        public static PropertyInfo GetProperty(object obj, string propertyName)
-        {
-            var property = obj.GetType().GetProperty(propertyName);
-            if (property == null)
-                throw new Exception("Property is not found");
-            return property;
         }
 
         public static Dictionary<string, Dictionary<string, string>>
@@ -157,6 +124,66 @@ namespace ADASProject
             return dict;
         }
 
+        public static List<Models.TypeInfo> GetCharacteristicInfo(Type type, bool onlyForShow = false)
+        {
+            var properties = type
+                .GetProperties();
+            var list = new List<Models.TypeInfo>();
+
+            foreach (var property in properties)
+            {
+                var attribute = property.GetCustomAttribute(typeof(Characteristic));
+                if (attribute != null && (!onlyForShow || !((Characteristic)attribute).OnlyForShow))
+                {
+                    list.Add(new Models.TypeInfo
+                    {
+                        Description = ((Characteristic)attribute).CharacteristicName,
+                        Type = property.PropertyType,
+                        PropertyName = property.Name
+                    });
+                }
+            }
+
+            return list;
+        }
+
+        public static List<Models.TypeInfo> GetCharacteristicInfo(Type type, HashSet<string> parameters)
+        {
+            var characteristics = GetCharacteristicInfo(type);
+            return characteristics
+                .Where(ch => parameters.Contains(ch.Description))
+                .ToList();
+        }
+
+        public static Dictionary<string, List<Models.TypeInfo>> GetCharacteristicInfo(IEnumerable<Type> types, HashSet<Type> filter)
+        {
+            var characteristics = new Dictionary<string, List<Models.TypeInfo>>();
+            foreach(var type in types)
+            {
+                characteristics.Add(type.Name, 
+                    GetCharacteristicInfo(type)
+                    .Where(ch => filter.Contains(ch.Type))
+                    .ToList());
+            }
+            return characteristics;
+        }
+
+        public static Type GetPropertyType(Type type, string propertyName)
+        {
+            var property = type.GetProperty(propertyName);
+            if (property == null)
+                throw new Exception("Property is not found");
+            return property.PropertyType;
+        }
+
+        public static PropertyInfo GetProperty(object obj, string propertyName)
+        {
+            var property = obj.GetType().GetProperty(propertyName);
+            if (property == null)
+                throw new Exception("Property is not found");
+            return property;
+        }
+
         public static Type[] GetAllProductClasses()
         {
             return Assembly
@@ -164,6 +191,20 @@ namespace ADASProject
                 .GetTypes()
                 .Where(type => type.IsClass && type.BaseType.Name == "Product`1")
                 .ToArray();
+        }
+
+        public static Type[] GetAllDescriptionClasses()
+        {
+            return Assembly
+                .GetExecutingAssembly()
+                .GetTypes()
+                .Where(type => type.IsClass && type.GetInterface("IDescription") != null)
+                .ToArray();
+        }
+
+        public static Attribute GetAttribute(Type valueType, Type attributeType)
+        {
+            return valueType.GetCustomAttribute(attributeType);
         }
 
         public static Dictionary<string, string> CreateNameToTypeDict(Type[] types, Type attributeType)

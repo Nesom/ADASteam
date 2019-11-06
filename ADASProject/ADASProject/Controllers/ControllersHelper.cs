@@ -45,5 +45,23 @@ namespace ADASProject.Controllers
             }
             return dict;
         }
+
+        public static IQueryable<T> FilterValues<T>(IQueryable<T> values, Type type, string propertyName, object fromValue, object toValue)
+        {
+            if (fromValue == null && toValue == null || type == null)
+                return values;
+            // Property that need to filter
+            var property = type.GetProperty(propertyName);
+            if (property == null)
+                return values;
+            // Filter all values that < fromValue
+            if (fromValue != null)
+                values = values.Where(pr => ((IComparable)property.GetValue(pr)).CompareTo(fromValue) >= 0);
+            // Filter all values that > toValue
+            if (toValue != null)
+                values = values.Where(pr => ((IComparable)property.GetValue(pr)).CompareTo(toValue) <= 0);
+
+            return values;
+        }
     }
 }
