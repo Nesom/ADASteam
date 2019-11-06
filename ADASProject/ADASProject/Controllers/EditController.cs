@@ -51,10 +51,8 @@ namespace ADASProject.Controllers
         public async Task<IActionResult> AddHelper(AddModel model)
         {
             var description = ReflectionHelper.CreateProductDescription(model.Name, model.Values);
-            var productInfo = ReflectionHelper.CreateProductInfo(model.StandartInfoValues);
-            var product = new Product<IDescription>();
-            product.Description = description;
-            product.ProductInfo = productInfo;
+            var productInfo = ReflectionHelper.CreateProductInfo(model.StandartInfoValues, true);
+            var product = Product<IDescription>.GetProduct(description, productInfo);
             product.ProductInfo.Image = ControllerHelper.ConvertFileToBytes(model.Image);
             db.AddProduct(product);
             return RedirectToAction("Index", "Home");

@@ -3,6 +3,7 @@
 namespace ADASProject.Products
 {
     [ClassName("Смартфон")]
+    [ImageSize(350, 200)]
     public class Smartphone : Product<SmartphoneDescription>
     {
     }

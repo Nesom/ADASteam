@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\User\\source\\repos\\ADASProject\\ADASProject\\ADASProject.csproj": {}
+    "C:\\Users\\User\\Desktop\\Новая папка\\ADASProject_ssSamat\\ADASProject\\ADASProject.csproj": {}
   },
   "projects": {
-    "C:\\Users\\User\\source\\repos\\ADASProject\\ADASProject\\ADASProject.csproj": {
+    "C:\\Users\\User\\Desktop\\Новая папка\\ADASProject_ssSamat\\ADASProject\\ADASProject.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\User\\source\\repos\\ADASProject\\ADASProject\\ADASProject.csproj",
+        "projectUniqueName": "C:\\Users\\User\\Desktop\\Новая папка\\ADASProject_ssSamat\\ADASProject\\ADASProject.csproj",
         "projectName": "ADASProject",
-        "projectPath": "C:\\Users\\User\\source\\repos\\ADASProject\\ADASProject\\ADASProject.csproj",
+        "projectPath": "C:\\Users\\User\\Desktop\\Новая папка\\ADASProject_ssSamat\\ADASProject\\ADASProject.csproj",
         "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\User\\source\\repos\\ADASProject\\ADASProject\\obj\\",
+        "outputPath": "C:\\Users\\User\\Desktop\\Новая папка\\ADASProject_ssSamat\\ADASProject\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -45,6 +45,10 @@
               "target": "Package",
               "version": "[0.1.0, )"
             },
+            "FSharp.Core": {
+              "target": "Package",
+              "version": "[4.6.0, )"
+            },
             "Microsoft.AspNetCore.App": {
               "suppressParent": "All",
               "target": "Package",
@@ -64,6 +68,10 @@
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
               "version": "[2.1.10, )"
+            },
+            "System.Drawing.Common": {
+              "target": "Package",
+              "version": "[4.6.0, )"
             }
           },
           "imports": [

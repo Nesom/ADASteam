@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using ADASProject.Comments;
 using ADASProject.Order;
 using ADASProject.Products;
@@ -10,6 +9,14 @@ namespace ADASProject
 {
     public static class ApplicationContextExtentions
     {
+        public static IQueryable<IDescription> GetDescriptions(this ApplicationContext context, string descriptionName)
+        {
+            // Get DbSet<"TableName"> property
+            var property = ReflectionHelper.GetProperty(context, descriptionName);
+            // Get DbSet<"TableName"> value
+            return (IQueryable<IDescription>)property.GetValue(context);
+        }
+
         public static Product<IDescription> GetProduct(this ApplicationContext context, int id)
         {
             if (!context.IsAvailable(id))
@@ -29,9 +36,7 @@ namespace ADASProject
 
             var description = (IDescription)value;
 
-            var product = ProductExtentions.GetProduct(description, productInfo);
-            product.Description = description;
-            product.ProductInfo = productInfo;
+            var product = Product<IDescription>.GetProduct(description, productInfo);
             return product;
         }
 

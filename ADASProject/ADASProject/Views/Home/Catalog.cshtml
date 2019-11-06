@@ -1,36 +1,346 @@
 ﻿@model CatalogModel
 
-<style>
-    .block {
-        float: left;
-        width: 320px;
-        margin-top: 10px;
-        margin-left: 20px;
-        margin-right: 20px;
-        margin-bottom: 10px;
-        text-align: center;
-    }
-</style>
-@foreach (var category in Model.ProductsByCategory)
-{
-    <pre style="font-size:30px; text-align:center">@category.Key</pre>
-    @foreach (var element in category.Value)
-    {
-        <div class="block">
-            <pre style="font-size:25px; align-self:center">@element.Name</pre>
-            @{
-                var base64 = Convert.ToBase64String(element.Image);
-                var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Gretong a Ecommerce Category Flat Bootstarp Responsive Website Template | Women :: w3layouts</title>
+    <link href="~/css/bootstrap.css" rel='stylesheet' type='text/css' />
+
+    <style>
+        .float-input{float:left}
+    </style>
+
+    <style>
+        .b
+        {
+            width: 80px;
+            height: 30px;
+            border-radius:3px;
+        }
+        .a {
+            text-decoration: none;
+            outline: none;
+            display: inline-block;
+            width: 140px;
+            height: 45px;
+            line-height: 45px;
+            border-radius: 45px;
+            margin: 10px 20px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 11px;
+            text-transform: uppercase;
+            text-align: center;
+            letter-spacing: 3px;
+            font-weight: 600;
+            color: #524f4e;
+            background: white;
+            box-shadow: 0 8px 15px rgba(0,0,0,.1);
+            transition: .3s;
+        }
+
+            .a:hover {
+                background: #A0A0A0;
+                box-shadow: 0 15px 20px #AFAFAF;
+                color: white;
+                transform: translateY(-7px);
             }
-            <img src="@imgSrc" width="250" height="330" />
-            <pre style="margin-top:10px">Цена: @element.Price</pre>
-            <pre>Год издания: @element.YearOfEdition</pre>
-            <pre>Производитель: @element.Producer</pre>
-            <pre><a asp-controller="Product" asp-action="Get/@element.Id">Посмотреть подробную информацию</a></pre>
-            <pre><a asp-controller="Order" asp-action="Buy/@element.Id">Купить</a></pre>
+    </style>
+
+    <script type='text/javascript' src="~/js/jquery-1.11.1.min.js"></script>
+
+    <link href="~/css/style.css" rel='stylesheet' type='text/css' />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="Gretong Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template,
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Playfair+Display:400,700,900' rel='stylesheet' type='text/css'>
+    <!-- start menu -->
+    <link href="~/css/megamenu.css" rel="stylesheet" type="text/css" media="all" />
+    <script type="text/javascript" src="~/js/megamenu.js"></script>
+    <script>$(document).ready(function(){$(".megamenu").megamenu();});</script>
+    <script src="~/js/menu_jquery.js"></script>
+    <script src="~/js/simpleCart.min.js"></script>
+</head>
+<body>
+    <div class="top_bg">
+        <div class="container">
+            <div class="header_top">
+                <div class="top_right">
+                    <ul>
+                        <li><a href="#">help</a></li>|
+                        <li><a href="contact.html">Contact</a></li>|
+                        <li><a href="#">Delivery information</a></li>
+                    </ul>
+                </div>
+                <div class="top_left">
+                    <h2><span></span> Call us : 032 2352 782</h2>
+                </div>
+                <div class="clearfix"> </div>
+            </div>
         </div>
-    }
-}
+    </div>
+    <div class="header_bg">
+        <div class="container">
+            <div class="header">
+                <div class="head-t">
+                    <div class="logo">
+                        <a href="index.html"><img src="~/images/logo.png" class="img-responsive" alt="" /> </a>
+                    </div>
+                    <div class="header_right">
+                        <div class="rgt-bottom">
+                            <div class="log">
+                                <div class="login">
+                                    <div id="loginContainer">
+                                        <a href="#" id="loginButton"><span>Login</span></a>
+                                        <div id="loginBox">
+                                            <form id="loginForm">
+                                                <fieldset id="body">
+                                                    <fieldset>
+                                                        <label for="email">Email Address</label>
+                                                        <input type="text" name="email" id="email">
+                                                    </fieldset>
+                                                    <fieldset>
+                                                        <label for="password">Password</label>
+                                                        <input type="password" name="password" id="password">
+                                                    </fieldset>
+                                                    <input type="submit" id="login" value="Sign in">
+                                                    <label for="checkbox"><input type="checkbox" id="checkbox"> <i>Remember me</i></label>
+                                                </fieldset>
+                                                <span><a href="#">Forgot your password?</a></span>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="reg">
+                                <a href="register.html">REGISTER</a>
+                            </div>
+                            <div class="cart box_1">
+                                <a href="checkout.html">
+                                    <h3> <span class="simpleCart_total">$0.00</span> (<span id="simpleCart_quantity" class="simpleCart_quantity">0</span> items)<img src="images/bag.png" alt=""></h3>
+                                </a>
+                                <p><a href="javascript:;" class="simpleCart_empty">(empty card)</a></p>
+                                <div class="clearfix"> </div>
+                            </div>
+                            <div class="create_btn">
+                                <a href="checkout.html">CHECKOUT</a>
+                            </div>
+                            <div class="clearfix"> </div>
+                        </div>
+                        <div class="search">
+                            <form>
+                                <input type="text" value="" placeholder="search...">
+                                <input type="submit" value="">
+                            </form>
+                        </div>
+                        <div class="clearfix"> </div>
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+                <ul class="megamenu skyblue">
+                    <li class="active grid"><a class="color1" asp-action="Index">Home</a></li>
+                    <li class="grid">
+                        <a class="color2" href="women.html" target="_blank">new arrivals</a>
+                    <li>
+                        <a class="color4" href="women.html" target="_blank">laptops</a>
+                    <li>
+                        <a class="color5" href="women.html" target="_blank">Smartphones</a>
+                    <li>
+                        <a class="color6" href="women.html" target="_blank">Accesories</a>
+                    <li>
+                        <a class="color9" href="women.html" target="_blank">WATCHES</a>
+            </div>
+
+            <!-- content -->
+            <div class="container">
+                <div class="women_main">
+                    <!-- start sidebar -->
+                    <div class="col-md-3 s-d">
+                        <div class="w_sidebar">
+                            <section class="sky-form">
+                                <h4>categories</h4>
+                                <form asp-controller="Home" asp-action="Catalog" method="get">
+                                    <div class="row1 scroll-pane">
+                                        <div class="col col-4">
+                                            @foreach (var check in CatalogModel.TypeToNameDict)
+                                            {
+                                                    <label><button class="a" name="CategoryName" value="@check.Key" asp-controller="Home" asp-action="Catalog">@check.Value</button></label>
+                                            }
+                                        </div>
+                                    </div>
+                                </form>
+                                
+                            </section>
+                            <form asp-controller="Home" asp-action="Catalog" method="get">
+                                <section class="sky-form">
+                                    <h4>Filters</h4>
+                                    <div class="row1 scroll-pane">
+                                        <div class="col col-4">
+
+                                            @for (int i = 0; i < Model.Types.Length; i++)
+                                            {
+                                                @switch (Model.Types[i].Name)
+                                                {
+                                                    case "Double":
+                                                        {
+                                                            <p>@Model.Descriptions[i]: </p><input class="float-input, b" type="number" step="0.1" asp-for="FromValues[i]" /><input class="b" type="number" step="0.1" asp-for="ToValues[i]" />;
+                                                            break;
+                                                        }
+
+                                                    case "Int32":
+                                                        {
+                                                            <p>@Model.Descriptions[i]: </p><input class="float-input, b" type="number" asp-for="FromValues[i]" /><input class="b" type="number" asp-for="ToValues[i]" />;
+                                                            break;
+                                                        }
+                                                    default:
+                                                        {
+                                                            <p>@Model.Descriptions[i]: </p><input class="float-input, b" type="text" asp-for="FromValues[i]" /><input class="b" type="text" asp-for="ToValues[i]" />;
+                                                            break;
+                                                        }
+                                                }
+                                            }
+                                            <br />
+                                            @for (int i = 0; i < Model.CustomTypes.Length; i++)
+                                            {
+                                                @switch (Model.CustomTypes[i].Name)
+                                                {
+                                                    case "Double":
+                                                        {
+                                                            <p>@Model.CustomDescriptions[i]: </p><input class="float-input, b" type="number" step="0.1" asp-for="CustomFromValues[i]" /><input class="b" type="number" step="0.1" asp-for="CustomToValues[i]" />;
+                                                            break;
+                                                        }
+
+                                                    case "Int32":
+                                                        {
+                                                            <p>@Model.CustomDescriptions[i]: </p><input class="float-input, b" type="number" asp-for="CustomFromValues[i]" /><input class="b" type="number" asp-for="CustomToValues[i]" />;
+                                                            break;
+                                                        }
+                                                    default:
+                                                        {
+                                                            <p>@Model.CustomDescriptions[i]: </p><input class="float-input, b" type="text" asp-for="CustomFromValues[i]" /><input class="b" type="text" asp-for="CustomToValues[i]" />;
+                                                            break;
+                                                        }
+                                                }
+                                            }
+                                            <input type="text" value="@Model.CategoryName" asp-for="CategoryName" hidden />
+                                            <br /><button class="a" style="margin-left:10px" asp-controller="Home" asp-action="Catalog">Submit</button>
+
+                                        </div>
+                                    </div>
+                                </section>
+                                <section class="sky-form">
+                                    <h4>Sort</h4>
+                                    <div class="row1 scroll-pane">
+                                        <div class="col col-4">
+                                            <label><input type="radio" name="sort" checked />Not sorted</label>
+                                            <label><input asp-for="SortedBy" type="radio" name="sort" value="Price"/>Sorted by price</label>
+                                            <label><input asp-for="SortedBy" type="radio" name="sort" value="Rating"/>Sorted by rating</label>
+                                            <br />
+                                            <label><input asp-for="SortedByDescending" type="checkbox"/>Sort by descending</label>
+                                            <button class="a" style="margin-left:10px; vertical-align:bottom" asp-controller="Home" asp-action="Catalog">Submit</button>
+                                        </div>
+                                    </div>
+                                </section>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- start content -->
+                    <div class="col-md-9 w_content">
+                        <div class="women">
+                            <a href="#"><h4>Result - <span>@Model.Count items</span> </h4></a>
+                            <ul class="w_nav">
+                                <li>Sort : </li>
+                                <li><a class="active" href="#">popular</a></li> |
+                                <li><a href="#">new </a></li> |
+                                <li><a href="#">discount</a></li> |
+                                <li><a href="#">price: Low High </a></li>
+                                <div class="clear"></div>
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                        <!-- grids_of_4 -->
+
+                        @foreach (var category in Model.Products.GroupBy(pr => pr.TableName))
+                        {
+                            <div class="grids_of_4">
+                                @foreach (var element in category)
+                                {
+                                    var base64 = Convert.ToBase64String(element.Image);
+                                    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                                    
+                                    <div class="grid1_of_4">
+                                        <div class="content_box">
+                                            <a href="details.html">
+                                                <img src="@imgSrc" class="img-responsive" alt="" />
+                                            </a>
+                                            <h4><a href="details.html">@element.Name</a></h4>
+                                            <p>@element.TableName</p>
+                                            <div class="grid_1 simpleCart_shelfItem">
+
+                                                <div class="item_add"><span class="item_price"><h6>Price: @element.Price</h6></span></div>
+                                                <div class="item_add"><span class="item_price"><a href="#">add to cart</a></span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                            <div class="clearfix"></div>
+                            <br />
+                        }
+                    </div>
+                    <div class="clearfix"></div>
+
+                    <!-- end content -->
+                </div>
+            </div>
+
+            <div class="foot-top">
+                <div class="container">
+                    <div class="col-md-6 s-c">
+                        <li>
+                            <div class="fooll">
+                                <h5>follow us on</h5>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="social-ic">
+                                <ul>
+                                    <li><a href="#"><i class="facebok"> </i></a></li>
+                                    <li><a href="#"><i class="twiter"> </i></a></li>
+                                    <li><a href="#"><i class="goog"> </i></a></li>
+                                    <li><a href="#"><i class="be"> </i></a></li>
+                                    <li><a href="#"><i class="pp"> </i></a></li>
+                                    <div class="clearfix"></div>
+                                </ul>
+                            </div>
+                        </li>
+                        <div class="clearfix"> </div>
+                    </div>
+                    <div class="col-md-6 s-c">
+                        <div class="stay">
+                            <div class="stay-left">
+                                <form>
+                                    <input type="text" placeholder="Enter your email to join our newsletter" required="">
+                                </form>
+                            </div>
+                            <div class="btn-1">
+                                <form>
+                                    <input type="submit" value="join">
+                                </form>
+                            </div>
+                            <div class="clearfix"> </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
 
 
 

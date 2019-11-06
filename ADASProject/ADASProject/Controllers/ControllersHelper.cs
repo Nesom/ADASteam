@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace ADASProject.Controllers
@@ -44,6 +45,44 @@ namespace ADASProject.Controllers
                 dict[name].Add(product);
             }
             return dict;
+        }
+
+        public static IQueryable<T> FilterValues<T>(IQueryable<T> values, Type type, string propertyName, object fromValue, object toValue)
+        {
+            if (fromValue == null && toValue == null || type == null)
+                return values;
+            // Property that need to filter
+            var property = type.GetProperty(propertyName);
+            if (property == null)
+                return values;
+            // Filter all values that < fromValue
+            if (fromValue != null)
+                values = values.Where(pr => ((IComparable)property.GetValue(pr)).CompareTo(fromValue) >= 0);
+            // Filter all values that > toValue
+            if (toValue != null)
+                values = values.Where(pr => ((IComparable)property.GetValue(pr)).CompareTo(toValue) <= 0);
+
+            return values;
+        }
+
+        public static IQueryable<ProductInfo> OrderValuesByParameter(IQueryable<ProductInfo> values, string parameter, bool byDescenting)
+        {
+            switch (parameter)
+            {
+                case "Price":
+                    return OrderValues(values, x => x.Price, byDescenting);
+                case "Rating":
+                    return OrderValues(values, x => x.Rating, byDescenting);
+                default:
+                    return values;
+            }
+        }
+
+        public static IQueryable<ProductInfo> OrderValues<TKey>
+            (IQueryable<ProductInfo> values, Expression<Func<ProductInfo, TKey>> filter, bool byDestenition)
+        {
+            return byDestenition ? 
+                values.OrderByDescending(filter) : values.OrderBy(filter);
         }
     }
 }
