@@ -19,4 +19,10 @@
     </Reference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Update="Searching %281%29">
+      <HintPath>..\..\..\..\Downloads\Searching (1).dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

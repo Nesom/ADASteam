@@ -40,6 +40,8 @@ namespace ADASProject.Controllers
             var test4 = Searcher.Search(new List<string>() { "Apple", "6" }, list).ToList();
             var test5 = Searcher.Search(new List<string>() { "Apple", "4", "5" }, list).ToList();
             var test6 = Searcher.Search(new List<string>() { "China" }, list).ToList();
+            var test7 = Searcher.Search(new List<string>() { "Apples 4" }, list).ToList();
+            var test8 = Searcher.Search(new List<string>() { "Justs" }, list).ToList();
 
             var a = "aaa";
         }
@@ -67,11 +69,14 @@ namespace ADASProject.Controllers
         [HttpGet]
         public async Task<IActionResult> Catalog(CatalogModel model)
         {
+            // Fill main fields
             model.FillFields();
+
             bool hasCustomTypes = false;
             if (model.CategoryName != null)
                 hasCustomTypes = model.TryToFillCustomFields(model.CategoryName + "Description");
 
+            // Select by categories
             Expression<Func<ProductInfo, bool>> selector = null;
 
             if (model.CategoryName == null || !CatalogModel.TypeToNameDict.ContainsKey(model.CategoryName))
@@ -80,30 +85,7 @@ namespace ADASProject.Controllers
                 selector = (pr) => pr.TableName == model.CategoryName + "Descriptions";
 
             var products = db.Products.Where(selector);
-
-            //if (model.CustomFromValues != null && model.CustomToValues != null)
-            //{
-            //    var fromValues = ReflectionHelper.ConvertTypes(model.CustomFromValues, model.CustomTypes);
-            //    var toValues = ReflectionHelper.ConvertTypes(model.CustomToValues, model.CustomTypes);
-            //    var descriptions = db.GetDescriptions(model.CategoryName + "Descriptions");
-            //    var type = ReflectionHelper.FoundType(model.CategoryName + "Description");
-            //    for (int i = 0; i < fromValues.Length; i++)
-            //        descriptions = ControllerHelper.FilterValues(descriptions, type, model.CustomPropertyNames[i], fromValues[i], toValues[i]);
-
-            //    var ids = descriptions.Select(d => d.Id).OrderBy(id => id).ToHashSet();
-            //    products = products.Where(pr => ids.Contains(pr.Id));
-            //}
-
-            //if (model.FromValues != null && model.ToValues != null)
-            //{
-
-            //    var fromValues = ReflectionHelper.ConvertTypes(model.FromValues, model.Types);
-            //    var toValues = ReflectionHelper.ConvertTypes(model.ToValues, model.Types);
-
-            //    for (int i = 0; i < fromValues.Length; i++)
-            //        products = ControllerHelper.FilterValues(products, typeof(ProductInfo), model.PropertyNames[i], fromValues[i], toValues[i]);
-            //}
-
+            // Filter by custom values
             if (model.CustomFromValues != null && model.CustomToValues != null)
             {
                 var descriptions = FilterCatalogValues(db.GetDescriptions(model.CategoryName + "Descriptions"),
@@ -113,20 +95,20 @@ namespace ADASProject.Controllers
                 var ids = descriptions.Select(d => d.Id).OrderBy(id => id).ToHashSet();
                 products = products.Where(pr => ids.Contains(pr.Id));
             }
-
+            // Filter by main values
             if (model.FromValues != null && model.ToValues != null)
             {
                 products = FilterCatalogValues(products, typeof(ProductInfo), model.FromValues, model.ToValues, model.Types, model.PropertyNames);
             }
 
-            model.Count = products.Count();
-            model.Products = products;
-
             if (!hasCustomTypes)
                 model.CustomTypes = new Type[0];
-
+            // Sort by parameter
             if (model.SortedBy != null)
                 products = ControllerHelper.OrderValuesByParameter(products, model.SortedBy, model.SortedByDescending);
+
+            model.Count = products.Count();
+            model.Products = products;
 
             return View(model);
         }

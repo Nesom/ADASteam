@@ -235,11 +235,33 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                     <h4>Sort</h4>
                                     <div class="row1 scroll-pane">
                                         <div class="col col-4">
-                                            <label><input type="radio" name="sort" checked />Not sorted</label>
-                                            <label><input asp-for="SortedBy" type="radio" name="sort" value="Price"/>Sorted by price</label>
-                                            <label><input asp-for="SortedBy" type="radio" name="sort" value="Rating"/>Sorted by rating</label>
+                                            @if (Model.SortedBy == null)
+                                            {
+                                                <label><input type="radio" name="SortedBy" checked />Not sorted</label>
+                                            }
+                                            else
+                                            {
+                                                <label><input type="radio" name="SortedBy" />Not sorted</label>
+                                            }
+                                            @if (Model.SortedBy == "Price")
+                                            {
+                                                <label><input asp-for="SortedBy" type="radio" name="SortedBy" value="Price" checked />Sorted by price</label>
+                                            }
+                                            else
+                                            {
+                                                <label><input asp-for="SortedBy" type="radio" name="SortedBy" value="Price" />Sorted by price</label>
+                                            }
+                                            @if (Model.SortedBy == "Rating")
+                                            {
+                                                <label><input asp-for="SortedBy" type="radio" name="SortedBy" value="Rating" checked />Sorted by rating</label>
+                                            }
+                                            else
+                                            {
+                                                <label><input asp-for="SortedBy" type="radio" name="SortedBy" value="Rating"/>Sorted by rating</label>
+                                            }
+
                                             <br />
-                                            <label><input asp-for="SortedByDescending" type="checkbox"/>Sort by descending</label>
+                                            <label><input asp-for="SortedByDescending" type="checkbox" />Sort by descending</label>
                                             <button class="a" style="margin-left:10px; vertical-align:bottom" asp-controller="Home" asp-action="Catalog">Submit</button>
                                         </div>
                                     </div>
