@@ -51,43 +51,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     </div>
                     <div class="header_right">
                         <div class="rgt-bottom">
-                            <div class="log">
-                                <div class="login">
-                                    <div id="loginContainer">
-                                        <a href="#" id="loginButton"><span>Login</span></a>
-                                        <div id="loginBox">
-                                            <form id="loginForm">
-                                                <fieldset id="body">
-                                                    <fieldset>
-                                                        <label for="email">Email Address</label>
-                                                        <input type="text" name="email" id="email">
-                                                    </fieldset>
-                                                    <fieldset>
-                                                        <label for="password">Password</label>
-                                                        <input type="password" name="password" id="password">
-                                                    </fieldset>
-                                                    <input type="submit" id="login" value="Sign in">
-                                                    <label for="checkbox"><input type="checkbox" id="checkbox"> <i>Remember me</i></label>
-                                                </fieldset>
-                                                <span><a href="#">Forgot your password?</a></span>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="reg">
-                                <a href="register.html">REGISTER</a>
-                            </div>
-                            <div class="cart box_1">
-                                <a href="checkout.html">
-                                    <h3> <span class="simpleCart_total">$0.00</span> (<span id="simpleCart_quantity" class="simpleCart_quantity">0</span> items)<img src="images/bag.png" alt=""></h3>
-                                </a>
-                                <p><a href="javascript:;" class="simpleCart_empty">(empty card)</a></p>
-                                <div class="clearfix"> </div>
-                            </div>
-                            <div class="create_btn">
-                                <a href="checkout.html">CHECKOUT</a>
-                            </div>
                             <div class="clearfix"> </div>
                         </div>
                         <div class="search">
@@ -102,16 +65,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 </div>
                 <ul class="megamenu skyblue">
                     <li class="active grid"><a class="color1" asp-action="Index">Home</a></li>
-                    <li class="grid">
-                        <a class="color2" href="women.html" target="_blank">new arrivals</a>
-                    <li>
-                        <a class="color4" href="women.html" target="_blank">laptops</a>
-                    <li>
-                        <a class="color5" href="women.html" target="_blank">Smartphones</a>
-                    <li>
-                        <a class="color6" href="women.html" target="_blank">Accesories</a>
-                    <li>
-                        <a class="color9" href="women.html" target="_blank">WATCHES</a>
             </div>
 
             <!-- content -->
@@ -220,10 +173,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
                                     <div class="grid1_of_4">
                                         <div class="content_box">
-                                            <a href="details.html">
+                                            <a asp-controller="Order" asp-action="Get/@element.Id">
                                                 <img src="@imgSrc" class="img-responsive" alt="" />
                                             </a>
-                                            <h4><a href="details.html">@element.Name</a></h4>
+                                            <h4><a asp-controller="Product" asp-action="Get/@element.Id">@element.Name</a></h4>
                                             <p>@element.TableName</p>
                                             <div class="grid_1 simpleCart_shelfItem">
 

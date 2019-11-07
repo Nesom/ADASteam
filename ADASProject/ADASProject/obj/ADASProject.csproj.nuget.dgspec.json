@@ -1,6 +1,7 @@
 {
   "format": 1,
   "restore": {
+<<<<<<< Updated upstream
     "C:\\Users\\rakhi\\OneDrive\\Рабочий стол\\копия адаса\\ADASProject\\ADASProject\\ADASProject.csproj": {}
   },
   "projects": {
@@ -12,6 +13,19 @@
         "projectPath": "C:\\Users\\rakhi\\OneDrive\\Рабочий стол\\копия адаса\\ADASProject\\ADASProject\\ADASProject.csproj",
         "packagesPath": "C:\\Users\\rakhi\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\rakhi\\OneDrive\\Рабочий стол\\копия адаса\\ADASProject\\ADASProject\\obj\\",
+=======
+    "C:\\Users\\rakhi\\OneDrive\\Рабочий стол\\ADASteam\\ADASProject\\ADASProject\\ADASProject.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\rakhi\\OneDrive\\Рабочий стол\\ADASteam\\ADASProject\\ADASProject\\ADASProject.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\rakhi\\OneDrive\\Рабочий стол\\ADASteam\\ADASProject\\ADASProject\\ADASProject.csproj",
+        "projectName": "ADASProject",
+        "projectPath": "C:\\Users\\rakhi\\OneDrive\\Рабочий стол\\ADASteam\\ADASProject\\ADASProject\\ADASProject.csproj",
+        "packagesPath": "C:\\Users\\rakhi\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\rakhi\\OneDrive\\Рабочий стол\\ADASteam\\ADASProject\\ADASProject\\obj\\",
+>>>>>>> Stashed changes
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

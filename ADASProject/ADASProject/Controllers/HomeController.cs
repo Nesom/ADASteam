@@ -2,6 +2,14 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using ADASProject.Models;
+<<<<<<< Updated upstream
+=======
+using System.Linq;
+using System.Linq.Expressions;
+using ADASProject.Products;
+using System;
+using System.Collections.Generic;
+>>>>>>> Stashed changes
 
 namespace ADASProject.Controllers
 {
@@ -16,6 +24,18 @@ namespace ADASProject.Controllers
             db = context;
         }
 
+<<<<<<< Updated upstream
+=======
+
+        [HttpGet]
+        public string Cookie()
+        {
+            if (!HttpContext.Request.Cookies.ContainsKey("cook"))
+                HttpContext.Response.Cookies.Append("cook", "pe4enka");
+            return HttpContext.Request.Cookies["cook"];
+        }
+
+>>>>>>> Stashed changes
         public IActionResult Index()
         {
             return View();
