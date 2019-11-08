@@ -72,7 +72,7 @@ using ADASProject.Models;
             WriteLiteral("        ");
             EndContext();
             BeginContext(83, 574, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "e6d1cd09c47341c5b561052833e051cd", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "10186310c85c40709809bfdd2813594c", async() => {
                 BeginContext(89, 42, true);
                 WriteLiteral("\r\n            <pre style=\"font-size:15px\">");
                 EndContext();
@@ -107,7 +107,7 @@ using ADASProject.Models;
                 WriteLiteral(" --- ");
                 EndContext();
                 BeginContext(213, 68, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d805e671e2f1449fb46fa774e7b87d43", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f08732b0bed146b9b0d161684622aa54", async() => {
                     BeginContext(259, 18, true);
                     WriteLiteral("Удалить из корзины");
                     EndContext();
@@ -157,7 +157,7 @@ WriteAttributeValue("", 395, element.Key.Id, 395, 15, false);
                 WriteLiteral(" name=\"Id\" hidden />");
                 EndContext();
                 BeginContext(431, 82, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("input", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "fbcb5ea3cbd34bd6a6e125d3e3d98231", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("input", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "3e80fd9526154a158e12e98298489d8e", async() => {
                 }
                 );
                 __Microsoft_AspNetCore_Mvc_TagHelpers_FormActionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.TagHelpers.FormActionTagHelper>();
@@ -179,7 +179,7 @@ WriteAttributeValue("", 395, element.Key.Id, 395, 15, false);
                 WriteLiteral("</pre>\r\n            <pre>");
                 EndContext();
                 BeginContext(538, 96, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f22d231ac5dd46239496720eceb59507", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "e1cc919fa9c1422ea7e214d814870c80", async() => {
                     BeginContext(599, 31, true);
                     WriteLiteral("Посмотреть подробную информацию");
                     EndContext();
@@ -255,7 +255,7 @@ WriteAttributeValue("", 395, element.Key.Id, 395, 15, false);
             WriteLiteral(" руб</pre>\r\n        <pre>");
             EndContext();
             BeginContext(775, 59, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "81291b23f8064de7b91474dfc3763207", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "e33aa85b53c945d69071a509cfa46c12", async() => {
                 BeginContext(822, 8, true);
                 WriteLiteral("Заказать");
                 EndContext();

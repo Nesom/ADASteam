@@ -34,14 +34,14 @@ namespace ADASProject.Controllers
                 new Product(6, "Mega Apple 4 5 6 Simple Just 9999", "China")
             };
 
-            var test1 = Searcher.Search(new List<string>() { "Apple" }, list).ToList();
-            var test2 = Searcher.Search(new List<string>() { "Apple", "4" }, list).ToList();
-            var test3 = Searcher.Search(new List<string>() { "Apple", "5" }, list).ToList();
-            var test4 = Searcher.Search(new List<string>() { "Apple", "6" }, list).ToList();
-            var test5 = Searcher.Search(new List<string>() { "Apple", "4", "5" }, list).ToList();
-            var test6 = Searcher.Search(new List<string>() { "China" }, list).ToList();
-            var test7 = Searcher.Search(new List<string>() { "Apples 4" }, list).ToList();
-            var test8 = Searcher.Search(new List<string>() { "Justs" }, list).ToList();
+            var test1 = Searcher.Search("Apple", list).ToList();
+            var test2 = Searcher.Search("Apple 4", list).ToList();
+            var test3 = Searcher.Search("Apple 5", list).ToList();
+            var test4 = Searcher.Search("Apple 6", list).ToList();
+            var test5 = Searcher.Search("Apple 4 5", list).ToList();
+            var test6 = Searcher.Search("China", list).ToList();
+            var test7 = Searcher.Search("Apples 4", list).ToList();
+            var test8 = Searcher.Search("Chinas", list).ToList();
 
             var a = "aaa";
         }
