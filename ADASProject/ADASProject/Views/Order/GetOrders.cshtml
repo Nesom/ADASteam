@@ -1,0 +1,18 @@
+﻿@model GetOrdersModel
+@foreach(var order in Model.Products)
+{
+    <pre>Order number: @order.Key.Id</pre>
+    <pre>Order amount: @order.Key.Amount руб</pre>
+    <pre>Order time: @order.Key.OrderTime.ToString()</pre>
+    <pre>Status: @order.Key.StatusInfo.ToString()</pre>
+    <pre>Product list(@order.Value.Count): </pre>
+    foreach(var product in order.Value)
+    {
+        <pre>   Name: @product.Item1.Name       Count: @product.Item2</pre>
+    }
+    @if (Model.IsAdmin)
+    {
+        <a asp-controller="Order" asp-action="GetOrder/@order.Key.Id"><pre>Details</pre></a>
+    }
+    <br />
+}
