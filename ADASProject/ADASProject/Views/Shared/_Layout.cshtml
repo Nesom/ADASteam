@@ -9,7 +9,7 @@
 
         <script type='text/javascript' src="~/js/jquery-1.11.1.min.js"></script>
 
-        <link href="~/css/style1.css" rel='stylesheet' type='text/css' />
+        <link href="~/css/style.css" rel='stylesheet' type='text/css' />
 
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -35,8 +35,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <link href="css/bootstrap.css" rel='stylesheet' type='text/css' />
         <script type='text/javascript' src="js/jquery-1.11.1.min.js"></script>
         <link href="css/style.css" rel='stylesheet' type='text/css' />
-        @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-        <link rel="stylesheet" href="~/css/site.css" />*@
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
@@ -46,8 +46,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     </environment>
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
+    <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color:#F2F2F2">
+        <div class="container" style="background-color: #F2F2F2">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
@@ -56,35 +56,96 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <span class="icon-bar"></span>
                 </button>
                 @*<a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">*@
-                @if (TempData.Peek("username") != null)
-                {
-                    <p>@TempData.Peek("username")</p>
-                }
+                @*@if (TempData.Peek("username") != null)
+                {*@
+                    <img src="~/images/logo.png" style="position:absolute; left:10px; width:150px">
+                @*}*@
                 </a>
             </div>
-            <div class="navbar-collapse collapse">
+            <li class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
+                    @*<li class="logo" style="position:relative;left:10px; bottom:20px">
+            <a asp-controller="Home" asp-action="Index"><img style="height:20px" src="~/images/logo.png" class="img-responsive" alt="" /> </a>
+        </li>*@
                     @*<li><a asp-area="" asp-controller="Home" asp-action="Index">Домашняя страница</a></li>*@
                     @if (TempData.ContainsKey("username"))
                     {
-                        <li><a asp-area="" asp-controller="Home" asp-action="PersonalArea">Личный кабинет</a></li>
-                        <li><a asp-area="" asp-controller="Order" asp-action="Basket">Корзина</a></li>
-                        <li class="element"><a asp-area="" asp-controller="Account" asp-action="Logout">Выйти</a></li>
-                        
-                        <li><a asp-area="" asp-controller="Order" asp-action="Basket"><span class="simpleCart_total">0.00</span> (<span id="simpleCart_quantity" class="simpleCart_quantity">0</span> items)<img src="~/images/bag.png" alt=""></a></li>
-                        
+                        <li class="element" style="position:absolute;left:200px; top:20%; background-color:#E6E6E6;width:auto">
+                            <div class="log" style="width:auto">
+                                <div class="login" style="width:auto">
+                                    <div id="loginContainer">
+                                        <a class="color1" asp-area="" asp-controller="Home" asp-action="PersonalArea" id="loginButton"><span>Personal Area</span></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        @*<li><a asp-area="" asp-controller="Home" asp-action="PersonalArea" style="position:relative;left:10px">Личный кабинет</a></li>*@
+                        <li class="element" style="position:absolute;left:341px; top:20%; background-color:#E6E6E6;width:auto">
+                            <div class="log" style="width:auto">
+                                <div class="login" style="width:auto">
+                                    <div id="loginContainer">
+                                        <a class="color1" asp-area="" asp-controller="Order" asp-action="Basket" id="loginButton"><span>Basket</span></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        @*<li><a asp-area="" asp-controller="Order" asp-action="Basket">Корзина</a></li>*@
+                        <li class="element" style="position:absolute;left:430px; top:20%; background-color:#E6E6E6;width:auto">
+                            <div class="log" style="width:auto">
+                                <div class="login" style="width:auto">
+                                    <div id="loginContainer">
+                                        <a class="color1" asp-area="" asp-controller="Account" asp-action="Logout" id="loginButton"><span>Logout</span></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        @*<li class="element"><a asp-area="" asp-controller="Account" asp-action="Logout">Выйти</a></li>*@
+
                     }
                     else
                     {
-                        <li class="element"><a asp-area="" asp-controller="Account" asp-action="Login">Войти</a></li>
+                        @*<li class="element"><a asp-area="" asp-controller="Account" asp-action="Login">Войти</a></li>*@
+                        <li class="element" style="position:absolute;left:200px; top:20%; background-color:#E6E6E6">
+                            <div class="log">
+                                <div class="login">
+                                    <div id="loginContainer">
+                                        <a class="color1" asp-area="" asp-controller="Account" asp-action="Login" id="loginButton"><span>Login</span></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="element" style="position:absolute;left:280px; top:20%; background-color:#E6E6E6">
+                            <div class="log">
+                                <div class="login">
+                                    <div id="loginContainer">
+                                        <a class="color1" asp-area="" asp-controller="Account" asp-action="Register" id="loginButton"><span>Register</span></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
                     }
-
+                    <li class="element" style="position:absolute;right: calc(11.7% + 210px); top:20%; background-color:#E6E6E6">
+                        <div class="log">
+                            <div class="login">
+                                <div id="loginContainer">
+                                    <a class="color1" asp-area="" asp-controller="Order" asp-action="Basket" id="loginButton"><span>Checkout</span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="search" style="position:absolute; right:11.7%; top:10%">
+                        <form>
+                            <input type="text" value="" placeholder="search...">
+                            <input type="submit" value="">
+                        </form>
+                    </li>
                 </ul>
+            </li>
             </div>
         </div>
     </nav>
 
-    <partial name="_CookieConsentPartial" />
+    @*<partial name="_CookieConsentPartial" />*@
 
     <div class="container body-content">
         @RenderBody()

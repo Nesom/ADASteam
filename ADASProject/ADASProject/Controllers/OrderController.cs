@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ADASProject.Models;
+using ADASProject.Notifications;
 using ADASProject.Order;
 using ADASProject.Products;
 using Microsoft.AspNetCore.Authorization;
@@ -160,29 +161,23 @@ namespace ADASProject.Controllers
 
             HttpContext.Session.Remove("basket");
 
-            // добавить возможность оценивать продукт если статус = доставлено(получено)
+            await NotificationService.Service.SendOrderNotificationAsync((string)TempData.Peek("username"), orderInfo, Status.Review);
 
-
+            // добавить возможность оценивать продукт если статус = доставлено(получено) (??)
 
             return View(new OrderModel() { });
         }
 
         [HttpGet]
-        [Authorize(Roles = "user, admin")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> GetOrders()
         {
-            var role = (string)TempData.Peek("role");
-            var model = new GetOrdersModel() { IsAdmin = true };
+            var model = new GetOrdersModel();
+            // Get all orders from DB
             var orders = (IQueryable<OrderInfo>)db.Orders;
-            if (role != "admin")
-            {
-                var id = (int)TempData.Peek("id");
-                orders = orders.Where(or => or.UserId == id);
-                model.IsAdmin = false;
-            }
-               
             foreach (var order in orders)
             {
+                // Add all sub orders from this order
                 model.Products.Add(order, new List<Tuple<ProductInfo, int>>());
                 var subOrders = db.GetSubOrders(order.Id);
                 foreach (var subOrder in subOrders)
@@ -195,40 +190,55 @@ namespace ADASProject.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin, user")]
         public async Task<IActionResult> GetOrder(int id)
         {
             var order = db.Orders.Find(id);
 
-            if (order == null)
+            if (order.UserId != (int)TempData.Peek("id") && "admin" != (string)TempData.Peek("role"))
                 return RedirectToAction("Error",
                            new ErrorViewModel()
                            {
                                ActionName = "GetOrders",
+                               RequestInfo = $"You dont have permissions."
+                           });
+
+            if (order == null)
+                return RedirectToAction("Error", "Home",
+                           new ErrorViewModel()
+                           {
+                               ActionName = "Index",
                                RequestInfo = $"Order with id = {id} doesn't exist."
                            });
 
             // Get sub orders
             order.SubOrders = db.GetSubOrders(order.Id);
-            // Create get order model
-            var model = new GetOrderModel() { Order = order, Status = order.StatusInfo };
+            // Create list of subOrders
+            var list = new List<Tuple<ProductInfo, int>>();
             // Fill sub orders info
             foreach (var subOrder in order.SubOrders)
             {
                 var product = await db.GetProductInfo(subOrder.ProductId);
-                model.SubOrders.Add(Tuple.Create(product, subOrder.Count));
+                list.Add(Tuple.Create(product, subOrder.Count));
             }
+            // Create and return model
+            var model = new GetOrderModel() { Order = order, SubOrders = list, Status = order.StatusInfo, Role = (string)TempData.Peek("role") };
             return View(model);
         }
 
         [HttpPost]
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin, user")]
         public async Task<IActionResult> ChangeOrder(GetOrderModel model)
         {
             var order = db.Orders.Find(model.Order.Id);
+            // Get user
+            var user = await db.GetUser(order.UserId);
+            // Send mail about changes in status to this user
+            await NotificationService.Service.SendOrderNotificationAsync(user.Email, order, model.Status);
+            // Change and save order
             order.StatusInfo = model.Status;
             await db.SaveChangesAsync();
-            return RedirectToAction("GetOrders", "Order");
+            return RedirectToAction("PersonalArea", "Home");
         }
     }
 }

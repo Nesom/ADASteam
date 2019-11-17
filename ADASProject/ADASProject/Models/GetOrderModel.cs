@@ -11,12 +11,10 @@ namespace ADASProject.Models
     {
         public OrderInfo Order { get; set; }
         public Status Status { get; set; }
+        public string Role { get; set; }
 
         public List<Tuple<ProductInfo, int>> SubOrders { get; set; }
 
-        public GetOrderModel()
-        {
-            SubOrders = new List<Tuple<ProductInfo, int>>();
-        }
+        public GetOrderModel() { }
     }
 }

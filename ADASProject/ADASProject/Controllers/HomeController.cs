@@ -21,30 +21,69 @@ namespace ADASProject.Controllers
             db = context;
         }
 
+        public static Dictionary<Type, EditerTModel> Cache { get; } 
+            = new Dictionary<Type, EditerTModel>();
+
+        [HttpGet]
+        public async Task<IActionResult> EditerT(int id)
+        {
+            var product = await db.GetProductInfo(id);
+
+            var type = product.GetType();
+
+            var model = new EditerTModel();
+
+            if (!Cache.ContainsKey(type))
+            {
+                var properties = type.GetProperties();
+                model.Types = properties
+                    .Select(pr => Tuple.Create(pr.Name, pr.PropertyType, pr.GetCustomAttributes(typeof(Attributes.ClassName), false) == null))
+                    .ToArray();
+
+                for(int i = 0; i < properties.Length; i++)
+                {
+                    model.StandartValues[i] = properties[i].GetValue(product);
+                }
+
+                Cache[type] = model;
+            }
+            model = Cache[type];
+            
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditT(EditerTModel model)
+        {
+            return RedirectToAction("Index");
+        }
+
         [HttpPost]
         public string Get(string request)
         {
             return "Test";
         }
 
-        [HttpGet]
-        public string Cookie()
-        {
-            if (!HttpContext.Request.Cookies.ContainsKey("cook"))
-                HttpContext.Response.Cookies.Append("cook", "pe4enka");
-            return HttpContext.Request.Cookies["cook"];
-        }
-
         public IActionResult Index()
         {
-            return View();
+            var products = db.Products
+                .OrderByDescending(pr => pr.AddDate)
+                .Take(4)
+                .ToArray();
+            return View(new IndexModel() { First4Products = products });
         }
 
         [HttpGet]
         [Authorize(Roles = "admin, user")]
         public async Task<IActionResult> PersonalArea()
         {
-            return View();
+            var model = new PersonalAreaModel()
+            {
+                Orders = db.Orders
+                    .Where(or => or.UserId == (int)TempData.Peek("id"))
+                    .ToArray()
+            };
+            return View(model);
         }
 
         [HttpGet]
@@ -69,7 +108,7 @@ namespace ADASProject.Controllers
             // Filter by custom values
             if (model.CustomValuesInfo != null && model.CustomValuesInfo.FromValues != null && model.CustomValuesInfo.ToValues != null)
             {
-                var descriptions = FilterCatalogValues(db.GetDescriptions(model.CategoryName + "Descriptions"),
+                var descriptions = ControllerHelper.FilterCatalogValues(db.GetDescriptions(model.CategoryName + "Descriptions"),
                     ReflectionHelper.FoundType(model.CategoryName + "Description"),
                     model.CustomValuesInfo);
 
@@ -79,7 +118,7 @@ namespace ADASProject.Controllers
             // Filter by main values
             if (model.StandartValuesInfo != null && model.StandartValuesInfo.FromValues != null && model.StandartValuesInfo.ToValues != null)
             {
-                products = FilterCatalogValues(products, typeof(ProductInfo), model.StandartValuesInfo);
+                products = ControllerHelper.FilterCatalogValues(products, typeof(ProductInfo), model.StandartValuesInfo);
             }
 
             if (!hasCustomTypes)
@@ -92,17 +131,6 @@ namespace ADASProject.Controllers
             model.Products = products;
 
             return View(model);
-        }
-
-        public IQueryable<T> FilterCatalogValues<T>(IQueryable<T> values, Type type, CatalogValuesInfo valuesInfo)
-        {
-            var fromValuesObj = ReflectionHelper.ConvertTypes(valuesInfo.FromValues, valuesInfo.Types);
-            var toValuesObj = ReflectionHelper.ConvertTypes(valuesInfo.ToValues, valuesInfo.Types);
-
-            for (int i = 0; i < valuesInfo.Types.Length; i++)
-                values = ControllerHelper.FilterValues(values, type, valuesInfo.PropertyNames[i], fromValuesObj[i], toValuesObj[i]);
-
-            return values;
         }
 
         [HttpPost]

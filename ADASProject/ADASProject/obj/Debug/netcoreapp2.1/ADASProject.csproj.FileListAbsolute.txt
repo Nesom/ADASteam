@@ -246,12 +246,10 @@ C:\Users\User\Desktop\ADASProject\ADASProject\obj\Debug\netcoreapp2.1\Razor\View
 C:\Users\User\Desktop\ADASProject\ADASProject\obj\Debug\netcoreapp2.1\Razor\Views\Home\PersonalArea.g.cshtml.cs
 C:\Users\User\Desktop\ADASProject\ADASProject\obj\Debug\netcoreapp2.1\Razor\Views\Home\Test.g.cshtml.cs
 C:\Users\User\Desktop\ADASProject\ADASProject\obj\Debug\netcoreapp2.1\Razor\Views\Order\Basket.g.cshtml.cs
-C:\Users\User\Desktop\ADASProject\ADASProject\obj\Debug\netcoreapp2.1\Razor\Views\Order\GetOrder.g.cshtml.cs
 C:\Users\User\Desktop\ADASProject\ADASProject\obj\Debug\netcoreapp2.1\Razor\Views\Order\GetOrders.g.cshtml.cs
 C:\Users\User\Desktop\ADASProject\ADASProject\obj\Debug\netcoreapp2.1\Razor\Views\Order\Order.g.cshtml.cs
 C:\Users\User\Desktop\ADASProject\ADASProject\obj\Debug\netcoreapp2.1\Razor\Views\Order\Sending.g.cshtml.cs
 C:\Users\User\Desktop\ADASProject\ADASProject\obj\Debug\netcoreapp2.1\Razor\Views\Product\Get.g.cshtml.cs
-C:\Users\User\Desktop\ADASProject\ADASProject\obj\Debug\netcoreapp2.1\Razor\Views\Product\GetRelationProducts.g.cshtml.cs
 C:\Users\User\Desktop\ADASProject\ADASProject\obj\Debug\netcoreapp2.1\Razor\Views\Shared\Error.g.cshtml.cs
 C:\Users\User\Desktop\ADASProject\ADASProject\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_CookieConsentPartial.g.cshtml.cs
 C:\Users\User\Desktop\ADASProject\ADASProject\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_Layout.g.cshtml.cs
@@ -264,3 +262,6 @@ C:\Users\User\Desktop\ADASProject\ADASProject\obj\Debug\netcoreapp2.1\ADASProjec
 C:\Users\User\Desktop\ADASProject\ADASProject\obj\Debug\netcoreapp2.1\ADASProject.dll
 C:\Users\User\Desktop\ADASProject\ADASProject\obj\Debug\netcoreapp2.1\ADASProject.pdb
 C:\Users\User\Desktop\ADASProject\ADASProject\obj\Debug\netcoreapp2.1\ADASProject.csproj.CopyComplete
+C:\Users\User\Desktop\ADASProject\ADASProject\obj\Debug\netcoreapp2.1\Razor\Views\Home\EditerT.g.cshtml.cs
+C:\Users\User\Desktop\ADASProject\ADASProject\bin\Debug\netcoreapp2.1\Searching.dll
+C:\Users\User\Desktop\ADASProject\ADASProject\obj\Debug\netcoreapp2.1\Razor\Views\Order\GetOrder.g.cshtml.cs

@@ -3,18 +3,37 @@
 <pre>Order number: @Model.Order.Id</pre>
 <pre>Order amount: @Model.Order.Amount</pre>
 <h4>Products</h4>
-@foreach(var subOrder in Model.SubOrders)
+@foreach (var subOrder in Model.SubOrders)
 {
-    <pre>@subOrder.Item1.Name   in count    @subOrder.Item2</pre>
+    <pre>@subOrder.Item1.Name (@subOrder.Item2)</pre>
 }
-<form asp-controller="Order" asp-action="ChangeOrder" method="post">
-    <select asp-for="Status">
-        <option value="@ADASProject.Order.Status.Review">Review</option>
-        <option value="@ADASProject.Order.Status.Sent">Sent</option>
-        <option value="@ADASProject.Order.Status.Delivered">Delivered</option>
-        <option value="@ADASProject.Order.Status.Received">Received</option>
-    </select>
-    <input asp-for="Order.Id" value="@Model.Order.Id" hidden/>
-    <button>Submit</button>
-</form>
+@if (Model.Role == "admin")
+{
+    <form asp-controller="Order" asp-action="ChangeOrder" method="post">
+        <select asp-for="Status">
+            <option value="@ADASProject.Order.Status.Review">Review</option>
+            <option value="@ADASProject.Order.Status.Sent">Sent</option>
+            <option value="@ADASProject.Order.Status.Delivered">Delivered</option>
+            <option value="@ADASProject.Order.Status.Received">Received</option>
+        </select>
+        <input asp-for="Order.Id" value="@Model.Order.Id" hidden />
+        <button>Submit</button>
+    </form>
+}
+else
+{
+    <pre>Status: @Model.Order.StatusInfo</pre>
+    @if (Model.Order.StatusInfo != ADASProject.Order.Status.Received)
+    {
+        <form asp-controller="Order" asp-action="ChangeOrder" method="post">
+            <select asp-for="Status">
+                <option value="@Model.Order.StatusInfo">@Model.Order.StatusInfo</option>
+                <option value="@ADASProject.Order.Status.Received">Received</option>
+            </select>
+            <input asp-for="Order.Id" value="@Model.Order.Id" hidden />
+            <button>Submit</button>
+        </form>
+    }
+}
+
 

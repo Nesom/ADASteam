@@ -54,7 +54,7 @@ using ADASProject.Models;
             WriteLiteral("<!DOCTYPE html>\r\n<html>\r\n");
             EndContext();
             BeginContext(25, 89, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "e79b0dc81bec4d6888ca5c2ed9f0a693", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0bf0403dca2d41aa9d6dfae186e86499", async() => {
                 BeginContext(31, 76, true);
                 WriteLiteral("\r\n    <meta charset=\"UTF-8\" />\r\n    <title>Add React in One Minute</title>\r\n");
                 EndContext();
@@ -74,7 +74,7 @@ using ADASProject.Models;
             WriteLiteral("\r\n");
             EndContext();
             BeginContext(116, 2080, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "aa166732030f4fa785289c7ce6c07fe6", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "74e592164cb84cf0acf249a358e5b10d", async() => {
                 BeginContext(122, 2067, true);
                 WriteLiteral(@"
 
