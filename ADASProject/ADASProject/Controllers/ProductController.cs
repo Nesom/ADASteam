@@ -11,9 +11,9 @@ namespace ADASProject.Controllers
 {
     public class ProductController : Controller
     {
-        ApplicationContext db;
+        IDbContext db;
 
-        public ProductController(ApplicationContext context)
+        public ProductController(IDbContext context)
         {
             db = context;
         }
@@ -21,17 +21,16 @@ namespace ADASProject.Controllers
         [HttpPost]
         public async Task<IActionResult> Get(GetModel model)
         {
-            var product = await db.GetProduct(model.Id);
+            var product = await db.GetProductAsync(model.Id);
             model.Values = ReflectionHelper.GetCharacteristics(product.Description);
             model.StandartValues = ReflectionHelper.GetCharacteristics(product.ProductInfo);
             model.Image = product.ProductInfo.Image;
-            var comments = db.GetComments(model.Id);
+            var comments = await db.GetCommentsAsync(model.Id);
             foreach (var comment in comments)
             {
-                var user = await db.GetUser(comment.UserId);
+                var user = await db.GetUserAsync(comment.UserId);
                 model.Comments.Add(Tuple.Create(comment, user.Email));
             }
-            model.Context = db;
             return View(model);
         }
 
@@ -43,7 +42,7 @@ namespace ADASProject.Controllers
         public async Task<IActionResult> Comment(int id, string text)
         {
             var userId = (int)TempData.Peek("id");
-            await db.AddComment(userId, id, text);
+            await db.AddCommentAsync(new Comments.Comment() { UserId = userId, ProductId = id, Text = text });
             return RedirectToAction($"Get/{id}");
         }
 
@@ -51,8 +50,8 @@ namespace ADASProject.Controllers
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> RemoveComment(int id)
         {
-            var commentId = (await db.GetComment(id)).ProductId;
-            await db.RemoveComment(id);
+            var commentId = (await db.GetCommentAsync(id)).ProductId;
+            await db.RemoveCommentAsync(id);
             return RedirectToAction($"Get/{commentId}");
         }
 
@@ -60,7 +59,7 @@ namespace ADASProject.Controllers
         [Authorize(Roles = "user, admin")]
         public async Task<IActionResult> Like(int id)
         {
-            await db.LikeComment((int)TempData.Peek("id"), id);
+            await db.LikeCommentAsync((int)TempData.Peek("id"), id);
             if (TempData["GetId"] != null)
                 return RedirectToAction($"Get/{TempData["GetId"]}");
             return RedirectToAction("Index", "Home");
@@ -70,7 +69,7 @@ namespace ADASProject.Controllers
         [Authorize(Roles = "user, admin")]
         public async Task<IActionResult> Unlike(int id)
         {
-            await db.UnlikeComment((int)TempData.Peek("id"), id);
+            await db.UnlikeCommentAsync((int)TempData.Peek("id"), id);
             if (TempData["GetId"] != null)
                 return RedirectToAction($"Get/{TempData["GetId"]}");
             return RedirectToAction("Index", "Home");
@@ -79,13 +78,13 @@ namespace ADASProject.Controllers
         [HttpGet]
         public async Task<IActionResult> GetRelationProducts(int id)
         {
-            var ids = db.Relations
+            var ids =(await db.GetRelationsAsync())
                 .Where(r => r.LesserId == id || r.BiggerId == id)
                 .OrderByDescending(r => r.Count)
                 .Select(r => r.LesserId == id ? r.BiggerId : r.LesserId);
             var products = new List<ProductInfo>();
             foreach (var productId in ids)
-                products.Add(await db.GetProductInfo(id));
+                products.Add(await db.GetProductInfoAsync(id));
             return View(products);
         }
     }

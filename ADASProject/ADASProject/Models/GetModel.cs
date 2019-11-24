@@ -15,8 +15,6 @@ namespace ADASProject.Models
             Comments = new List<Tuple<Comment, string>>();
         }
 
-        public ApplicationContext Context { get; set; }
-
         public int Id { get; set; }
         public Dictionary<string, Dictionary<string, string>> Values { get; set; }
         public Dictionary<string, Dictionary<string, string>> StandartValues { get; set; }

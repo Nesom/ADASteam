@@ -7,48 +7,56 @@ using System.Linq.Expressions;
 using ADASProject.Products;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Reflection;
 
 namespace ADASProject.Controllers
 {
     public class HomeController : Controller
     {
-        ApplicationContext db;
+        IDbContext db;
 
         public IActionResult Test() => View();
 
-        public HomeController(ApplicationContext context)
+        private string str;
+
+        public HomeController(IDbContext context)
         {
             db = context;
         }
 
-        public static Dictionary<Type, EditerTModel> Cache { get; } 
-            = new Dictionary<Type, EditerTModel>();
+        #region HomeWork
+        public static Dictionary<Type, Tuple<string, PropertyInfo, bool>[]> Cache { get; }
+            = new Dictionary<Type, Tuple<string, PropertyInfo, bool>[]>();
 
         [HttpGet]
         public async Task<IActionResult> EditerT(int id)
         {
-            var product = await db.GetProductInfo(id);
+            var product = await db.GetProductInfoAsync(id);
 
             var type = product.GetType();
 
-            var model = new EditerTModel();
+            var timer = new Stopwatch();
 
+            timer.Start();
+
+            var model = new EditerTModel();
             if (!Cache.ContainsKey(type))
             {
                 var properties = type.GetProperties();
-                model.Types = properties
-                    .Select(pr => Tuple.Create(pr.Name, pr.PropertyType, pr.GetCustomAttributes(typeof(Attributes.ClassName), false) == null))
+                var types = properties
+                    .Select(pr => Tuple.Create(pr.Name, pr, pr.GetCustomAttributes(typeof(Attributes.ClassName), false) == null))
                     .ToArray();
-
-                for(int i = 0; i < properties.Length; i++)
-                {
-                    model.StandartValues[i] = properties[i].GetValue(product);
-                }
-
-                Cache[type] = model;
+                Cache[type] = types;
             }
-            model = Cache[type];
-            
+            model.Types = Cache[type];
+            model.StandartValues = new object[model.Types.Length];
+            for (int i = 0; i < model.Types.Length; i++)
+            {
+                model.StandartValues[i] = model.Types[i].Item2.GetValue(product);
+            }
+            timer.Stop();
+            model.TimeInTicks = timer.ElapsedTicks;
             return View(model);
         }
 
@@ -63,10 +71,11 @@ namespace ADASProject.Controllers
         {
             return "Test";
         }
+        #endregion
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var products = db.Products
+            var products = (await db.GetProductInfosAsync())
                 .OrderByDescending(pr => pr.AddDate)
                 .Take(4)
                 .ToArray();
@@ -79,9 +88,7 @@ namespace ADASProject.Controllers
         {
             var model = new PersonalAreaModel()
             {
-                Orders = db.Orders
-                    .Where(or => or.UserId == (int)TempData.Peek("id"))
-                    .ToArray()
+                Orders = (await db.GetOrdersAsync((int)TempData.Peek("id"))).ToArray()
             };
             return View(model);
         }
@@ -104,11 +111,11 @@ namespace ADASProject.Controllers
             else
                 selector = (pr) => pr.TableName == model.CategoryName + "Descriptions";
 
-            var products = db.Products.Where(selector);
+            var products = (await db.GetProductInfosAsync()).Where(selector);
             // Filter by custom values
             if (model.CustomValuesInfo != null && model.CustomValuesInfo.FromValues != null && model.CustomValuesInfo.ToValues != null)
             {
-                var descriptions = ControllerHelper.FilterCatalogValues(db.GetDescriptions(model.CategoryName + "Descriptions"),
+                var descriptions = ControllerHelper.FilterCatalogValues(await db.GetDescriptionsAsync(model.CategoryName + "Descriptions"),
                     ReflectionHelper.FoundType(model.CategoryName + "Description"),
                     model.CustomValuesInfo);
 

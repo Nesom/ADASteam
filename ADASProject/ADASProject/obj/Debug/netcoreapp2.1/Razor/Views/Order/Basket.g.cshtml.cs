@@ -61,7 +61,7 @@ using ADASProject.Models;
             WriteLiteral("\r\n\r\n<!DOCTYPE HTML>\r\n<html>\r\n");
             EndContext();
             BeginContext(880, 1604, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c987cdef079243d8a6957c0a0c8e7e90", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "59becd45b475415c86e564e84b674d11", async() => {
                 BeginContext(886, 1591, true);
                 WriteLiteral(@"
     <title>Internet-shop ADAS</title>
@@ -104,7 +104,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             WriteLiteral("\r\n");
             EndContext();
             BeginContext(2486, 8264, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "30c43a6707a544c395a4731c5f51d57c", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "81151c3f6d0b49e3ba648e3de9e7812f", async() => {
                 BeginContext(2492, 1203, true);
                 WriteLiteral(@"
     <!-- header_top -->
@@ -137,7 +137,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 WriteLiteral("t-bottom\">\r\n\r\n                            <div class=\"clearfix\"> </div>\r\n                        </div>\r\n                        <div class=\"search\">\r\n                            ");
                 EndContext();
                 BeginContext(3695, 193, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3ca04ad10abb453c83f8fb60aa41b6d8", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "829057e48acf4c319bd31d5ce904f310", async() => {
                     BeginContext(3701, 180, true);
                     WriteLiteral("\r\n                                <input type=\"text\" value=\"\" placeholder=\"search...\">\r\n                                <input type=\"submit\" value=\"\">\r\n                            ");
                     EndContext();
@@ -167,7 +167,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <li class=""active grid"">");
                 EndContext();
                 BeginContext(4215, 67, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "dfa3871d5f1e4bb2a225d9c96862c7a1", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "6553b59005b243ef8a9edcf8a4683f12", async() => {
                     BeginContext(4274, 4, true);
                     WriteLiteral("Home");
                     EndContext();
@@ -192,7 +192,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 WriteLiteral("</li>\r\n                    <li class=\"active grid\">");
                 EndContext();
                 BeginContext(4333, 72, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7373d769d566406c861b11cd77f4c9c9", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "822fa8c600a34949a85bbbedbd7e4a0a", async() => {
                     BeginContext(4394, 7, true);
                     WriteLiteral("Catalog");
                     EndContext();
@@ -358,7 +358,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 WriteLiteral("        <div class=\"col-md-6 s-c\">\r\n                <div class=\"stay\">\r\n                    <div class=\"stay-left\">\r\n                        ");
                 EndContext();
                 BeginContext(10195, 154, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "995b562ce9844ace8fd9dd572a534f73", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "70f04155d501470fbb158cfd66a1613f", async() => {
                     BeginContext(10201, 141, true);
                     WriteLiteral("\r\n                            <input type=\"text\" placeholder=\"Enter your email to join our newsletter\" required=\"\">\r\n                        ");
                     EndContext();
@@ -380,7 +380,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 WriteLiteral("\r\n                    </div>\r\n                    <div class=\"btn-1\">\r\n                        ");
                 EndContext();
                 BeginContext(10444, 103, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9b2a39302088482aa08475c73635fbba", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "80b36cf668184cdb909f688c4e3d3f89", async() => {
                     BeginContext(10450, 90, true);
                     WriteLiteral("\r\n                            <input type=\"submit\" value=\"join\">\r\n                        ");
                     EndContext();

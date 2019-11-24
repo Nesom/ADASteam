@@ -71,12 +71,12 @@ using ADASProject.Models;
             WriteLiteral("<!DOCTYPE HTML>\r\n<html>\r\n");
             EndContext();
             BeginContext(2082, 1945, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "681c14660b8f420a8c0b79da616642de", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "e6f68d26f7b1498d94e6d4230b642a04", async() => {
                 BeginContext(2088, 186, true);
                 WriteLiteral("\r\n    <title>Ware page</title>\r\n    <link href=\"css/bootstrap.css\" rel=\'stylesheet\' type=\'text/css\' />\r\n\r\n    <script type=\'text/javascript\' src=\"js/jquery-1.11.1.min.js\"></script>\r\n    ");
                 EndContext();
                 BeginContext(2274, 64, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("link", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "87e04464e077405fbd0ee60886c3db3c", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("link", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "f1ad8bd456234ba58d12cc7a00bcf826", async() => {
                 }
                 );
                 __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
@@ -141,7 +141,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             WriteLiteral("\r\n");
             EndContext();
             BeginContext(4029, 9960, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a76c62084ddc4fcba459ca03fd146be7", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "faf0ee0720fd48369c125caf489ddfab", async() => {
                 BeginContext(4035, 136, true);
                 WriteLiteral("\r\n    <div class=\"header_bg\">\r\n        <div class=\"container\">\r\n            <div class=\"header\">\r\n                <div class=\"head-t\">\r\n");
                 EndContext();
@@ -376,7 +376,7 @@ WriteAttributeValue("", 5389, imgSrc, 5389, 7, false);
                                 ");
                 EndContext();
                 BeginContext(13286, 170, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8c30eed103814efda12a92e4b1c3bf82", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "cd298a094816453e99433843af51a99c", async() => {
                     BeginContext(13292, 157, true);
                     WriteLiteral("\r\n                                    <input type=\"text\" placeholder=\"Enter your email to join our newsletter\" required=\"\">\r\n                                ");
                     EndContext();
@@ -398,7 +398,7 @@ WriteAttributeValue("", 5389, imgSrc, 5389, 7, false);
                 WriteLiteral("\r\n                            </div>\r\n                            <div class=\"btn-1\">\r\n                                ");
                 EndContext();
                 BeginContext(13575, 119, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "6d2610052d924688aeea7e211368e31f", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "afbb63bf8edc4689bc1a8d42f5df249c", async() => {
                     BeginContext(13581, 106, true);
                     WriteLiteral("\r\n                                    <input type=\"submit\" value=\"join\">\r\n                                ");
                     EndContext();

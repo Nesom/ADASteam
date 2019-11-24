@@ -11,9 +11,9 @@ namespace ADASProject.Controllers
 {
     public class EditController : Controller
     {
-        ApplicationContext db;
+        IDbContext db;
 
-        public EditController(ApplicationContext context)
+        public EditController(IDbContext context)
         {
             db = context;
         }
@@ -54,7 +54,7 @@ namespace ADASProject.Controllers
             var productInfo = ReflectionHelper.CreateProductInfo(model.StandartInfoValues, true);
             var product = Product<IDescription>.GetProduct(description, productInfo);
             product.ProductInfo.Image = ControllerHelper.ConvertFileToBytes(model.Image);
-            await db.AddProduct(product);
+            await db.AddProductAsync(product);
             return RedirectToAction("Index", "Home");
         }
     }

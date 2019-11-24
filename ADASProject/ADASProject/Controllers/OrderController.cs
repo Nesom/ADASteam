@@ -14,9 +14,9 @@ namespace ADASProject.Controllers
 {
     public class OrderController : Controller
     {
-        ApplicationContext db;
+        IDbContext db;
 
-        public OrderController(ApplicationContext context)
+        public OrderController(IDbContext context)
         {
             db = context;
         }
@@ -63,7 +63,7 @@ namespace ADASProject.Controllers
 
             foreach (var value in values)
             {
-                var product = await db.GetProductInfo(value.Key);
+                var product = await db.GetProductInfoAsync(value.Key);
                 model.Products.Add(product, value.Value);
                 model.Amount += product.Price * value.Value;
             }
@@ -127,13 +127,13 @@ namespace ADASProject.Controllers
             {
                 if (await db.HasQuantity(item.Key, item.Value))
                 {
-                    var product = await db.GetProductInfo(item.Key);
+                    var product = await db.GetProductInfoAsync(item.Key);
                     orderInfo.SubOrders.Add(new SubOrder() { ProductId = item.Key, Count = item.Value });
                     orderInfo.Amount += product.Price * item.Value;
                 }
                 else
                 {
-                    var productName = await db.GetProductInfo(item.Key);
+                    var productName = await db.GetProductInfoAsync(item.Key);
                     return RedirectToAction("Error",
                         new ErrorViewModel()
                         {
@@ -151,8 +151,8 @@ namespace ADASProject.Controllers
 
 
 
-            if (!await db.TryToSaveOrder(orderInfo))
-                return RedirectToAction("Error", 
+            if (!await db.TryToSaveOrderAsync(orderInfo))
+                return base.RedirectToAction("Error", 
                      new ErrorViewModel()
                      {
                          ActionName = "Basket",
@@ -174,15 +174,15 @@ namespace ADASProject.Controllers
         {
             var model = new GetOrdersModel();
             // Get all orders from DB
-            var orders = (IQueryable<OrderInfo>)db.Orders;
+            var orders = (IQueryable<OrderInfo>)await db.GetOrdersAsync();
             foreach (var order in orders)
             {
                 // Add all sub orders from this order
                 model.Products.Add(order, new List<Tuple<ProductInfo, int>>());
-                var subOrders = db.GetSubOrders(order.Id);
+                var subOrders = await db.GetSubOrdersAsync(order.Id);
                 foreach (var subOrder in subOrders)
                 {
-                    var product = await db.GetProductInfo(subOrder.ProductId);
+                    var product = await db.GetProductInfoAsync(subOrder.ProductId);
                     model.Products[order].Add(Tuple.Create(product, subOrder.Count));
                 }
             }
@@ -193,7 +193,7 @@ namespace ADASProject.Controllers
         [Authorize(Roles = "admin, user")]
         public async Task<IActionResult> GetOrder(int id)
         {
-            var order = db.Orders.Find(id);
+            var order = await db.GetOrderAsync(id);
 
             if (order.UserId != (int)TempData.Peek("id") && "admin" != (string)TempData.Peek("role"))
                 return RedirectToAction("Error",
@@ -212,13 +212,13 @@ namespace ADASProject.Controllers
                            });
 
             // Get sub orders
-            order.SubOrders = db.GetSubOrders(order.Id);
+            order.SubOrders = await db.GetSubOrdersAsync(order.Id);
             // Create list of subOrders
             var list = new List<Tuple<ProductInfo, int>>();
             // Fill sub orders info
             foreach (var subOrder in order.SubOrders)
             {
-                var product = await db.GetProductInfo(subOrder.ProductId);
+                var product = await db.GetProductInfoAsync(subOrder.ProductId);
                 list.Add(Tuple.Create(product, subOrder.Count));
             }
             // Create and return model
@@ -230,14 +230,13 @@ namespace ADASProject.Controllers
         [Authorize(Roles = "admin, user")]
         public async Task<IActionResult> ChangeOrder(GetOrderModel model)
         {
-            var order = db.Orders.Find(model.Order.Id);
+            var order = await db.GetOrderAsync(model.Order.Id);
             // Get user
-            var user = await db.GetUser(order.UserId);
+            var user = await db.GetUserAsync(order.UserId);
             // Send mail about changes in status to this user
             await NotificationService.Service.SendOrderNotificationAsync(user.Email, order, model.Status);
             // Change and save order
-            order.StatusInfo = model.Status;
-            await db.SaveChangesAsync();
+            await db.ChangeStatusAsync(model.Order.Id, model.Status);
             return RedirectToAction("PersonalArea", "Home");
         }
     }
