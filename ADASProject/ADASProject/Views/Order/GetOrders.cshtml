@@ -1,14 +1,16 @@
 ﻿@model GetOrdersModel
-@foreach(var order in Model.Products)
+@foreach (var order in Model.Products)
 {
-    <pre>Номер заказа: @order.Key.Id</pre>
-    <pre>Сумма заказа: @order.Key.Amount руб</pre>
-    <pre>Время заказа: @order.Key.OrderTime.ToString()</pre>
-    <pre>Статус заказа: @order.Key.StatusInfo.ToString()</pre>
-    <pre>Список товаров (@order.Value.Count): </pre>
-    foreach(var product in order.Value)
+    <pre>Order number: @order.Key.Id</pre>
+    <pre>Order amount: @order.Key.Amount руб</pre>
+    <pre>Order time: @order.Key.OrderTime.ToString()</pre>
+    <pre>Status: @order.Key.StatusInfo.ToString()</pre>
+    <pre>Product list(@order.Value.Count): </pre>
+    foreach (var product in order.Value)
     {
-        <pre>   Название: @product.Item1.Name       Количество: @product.Item2</pre>
+        <pre>   Name: @product.Item1.Name       Count: @product.Item2</pre>
     }
+    <a asp-controller="Order" asp-action="GetOrder/@order.Key.Id"><pre>Details</pre></a>
     <br />
 }
+

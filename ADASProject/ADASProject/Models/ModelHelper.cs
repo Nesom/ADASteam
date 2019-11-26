@@ -14,10 +14,15 @@ namespace ADASProject.Models
         static ModelHelper()
         {
             ParametersToFilter = ReflectionHelper
-                .GetCharacteristicInfo(typeof(ProductInfo), new HashSet<string>() { "Цена", "Рейтинг" })
+                .GetCharacteristicInfo(typeof(ProductInfo), new HashSet<string>() { "Price", "Rating" })
                 .ToList();
             SpecialParameters = ReflectionHelper.GetCharacteristicInfo
                     (ReflectionHelper.GetAllDescriptionClasses(), new HashSet<Type>() { typeof(int), typeof(double) });
+        }
+
+        public static string GetCategoryName(string tableName)
+        {
+            return tableName.Remove(tableName.Length - "Descriptions".Length);
         }
     }
 }

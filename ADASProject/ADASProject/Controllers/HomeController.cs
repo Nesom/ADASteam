@@ -21,67 +21,69 @@ namespace ADASProject.Controllers
             db = context;
         }
 
-       
+        public static Dictionary<Type, EditerTModel> Cache { get; } 
+            = new Dictionary<Type, EditerTModel>();
 
         [HttpGet]
-        public string Cookie()
+        public async Task<IActionResult> EditerT(int id)
         {
-            if (!HttpContext.Request.Cookies.ContainsKey("cook"))
-                HttpContext.Response.Cookies.Append("cook", "pe4enka");
-            return HttpContext.Request.Cookies["cook"];
+            var product = await db.GetProductInfo(id);
+
+            var type = product.GetType();
+
+            var model = new EditerTModel();
+
+            if (!Cache.ContainsKey(type))
+            {
+                var properties = type.GetProperties();
+                model.Types = properties
+                    .Select(pr => Tuple.Create(pr.Name, pr.PropertyType, pr.GetCustomAttributes(typeof(Attributes.ClassName), false) == null))
+                    .ToArray();
+
+                for(int i = 0; i < properties.Length; i++)
+                {
+                    model.StandartValues[i] = properties[i].GetValue(product);
+                }
+
+                Cache[type] = model;
+            }
+            model = Cache[type];
+            
+            return View(model);
         }
 
-        public IActionResult Index(CatalogModel model)
+        [HttpPost]
+        public async Task<IActionResult> EditT(EditerTModel model)
         {
-            // Fill main fields
-            model.FillFields();
+            return RedirectToAction("Index");
+        }
 
-            bool hasCustomTypes = false;
-            if (model.CategoryName != null)
-                hasCustomTypes = model.TryToFillCustomFields(model.CategoryName + "Description");
+        [HttpPost]
+        public string Get(string request)
+        {
+            return "Test";
+        }
 
-            // Select by categories
-            Expression<Func<ProductInfo, bool>> selector = null;
-
-            if (model.CategoryName == null || !CatalogModel.TypeToNameDict.ContainsKey(model.CategoryName))
-                selector = (pr) => true;
-            else
-                selector = (pr) => pr.TableName == model.CategoryName + "Descriptions";
-
-            var products = db.Products.Where(selector);
-            // Filter by custom values
-            if (model.CustomFromValues != null && model.CustomToValues != null)
-            {
-                var descriptions = FilterCatalogValues(db.GetDescriptions(model.CategoryName + "Descriptions"),
-                    ReflectionHelper.FoundType(model.CategoryName + "Description"),
-                    model.CustomFromValues, model.CustomToValues, model.CustomTypes, model.CustomPropertyNames);
-
-                var ids = descriptions.Select(d => d.Id).OrderBy(id => id).ToHashSet();
-                products = products.Where(pr => ids.Contains(pr.Id));
-            }
-            // Filter by main values
-            if (model.FromValues != null && model.ToValues != null)
-            {
-                products = FilterCatalogValues(products, typeof(ProductInfo), model.FromValues, model.ToValues, model.Types, model.PropertyNames);
-            }
-
-            if (!hasCustomTypes)
-                model.CustomTypes = new Type[0];
-            // Sort by parameter
-            if (model.SortedBy != null)
-                products = ControllerHelper.OrderValuesByParameter(products, model.SortedBy, model.SortedByDescending);
-
-            model.Count = products.Count();
-            model.Products = products;
-
-            return View(model);
+        public IActionResult Index()
+        {
+            var products = db.Products
+                .OrderByDescending(pr => pr.AddDate)
+                .Take(4)
+                .ToArray();
+            return View(new IndexModel() { First4Products = products });
         }
 
         [HttpGet]
         [Authorize(Roles = "admin, user")]
         public async Task<IActionResult> PersonalArea()
         {
-            return View();
+            var model = new PersonalAreaModel()
+            {
+                Orders = db.Orders
+                    .Where(or => or.UserId == (int)TempData.Peek("id"))
+                    .ToArray()
+            };
+            return View(model);
         }
 
         [HttpGet]
@@ -104,23 +106,23 @@ namespace ADASProject.Controllers
 
             var products = db.Products.Where(selector);
             // Filter by custom values
-            if (model.CustomFromValues != null && model.CustomToValues != null)
+            if (model.CustomValuesInfo != null && model.CustomValuesInfo.FromValues != null && model.CustomValuesInfo.ToValues != null)
             {
-                var descriptions = FilterCatalogValues(db.GetDescriptions(model.CategoryName + "Descriptions"),
+                var descriptions = ControllerHelper.FilterCatalogValues(db.GetDescriptions(model.CategoryName + "Descriptions"),
                     ReflectionHelper.FoundType(model.CategoryName + "Description"),
-                    model.CustomFromValues, model.CustomToValues, model.CustomTypes, model.CustomPropertyNames);
+                    model.CustomValuesInfo);
 
                 var ids = descriptions.Select(d => d.Id).OrderBy(id => id).ToHashSet();
                 products = products.Where(pr => ids.Contains(pr.Id));
             }
             // Filter by main values
-            if (model.FromValues != null && model.ToValues != null)
+            if (model.StandartValuesInfo != null && model.StandartValuesInfo.FromValues != null && model.StandartValuesInfo.ToValues != null)
             {
-                products = FilterCatalogValues(products, typeof(ProductInfo), model.FromValues, model.ToValues, model.Types, model.PropertyNames);
+                products = ControllerHelper.FilterCatalogValues(products, typeof(ProductInfo), model.StandartValuesInfo);
             }
 
             if (!hasCustomTypes)
-                model.CustomTypes = new Type[0];
+                model.CustomValuesInfo.Types = new Type[0];
             // Sort by parameter
             if (model.SortedBy != null)
                 products = ControllerHelper.OrderValuesByParameter(products, model.SortedBy, model.SortedByDescending);
@@ -129,17 +131,6 @@ namespace ADASProject.Controllers
             model.Products = products;
 
             return View(model);
-        }
-
-        public IQueryable<T> FilterCatalogValues<T>(IQueryable<T> values, Type type, string[] fromValues, string[] toValues, Type[] types, string[] propertyNames)
-        {
-            var fromValuesObj = ReflectionHelper.ConvertTypes(fromValues, types);
-            var toValuesObj = ReflectionHelper.ConvertTypes(toValues, types);
-
-            for (int i = 0; i < types.Length; i++)
-                values = ControllerHelper.FilterValues(values, type, propertyNames[i], fromValuesObj[i], toValuesObj[i]);
-
-            return values;
         }
 
         [HttpPost]

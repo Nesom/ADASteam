@@ -12,5 +12,7 @@ namespace ADASProject.Models
             Products = new Dictionary<OrderInfo, List<Tuple<ProductInfo, int>>>();
 
         public Dictionary<OrderInfo, List<Tuple<ProductInfo, int>>> Products { get; set; }
+
+        public bool IsAdmin { get; set; }
     }
 }

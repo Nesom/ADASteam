@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using ADASProject.Comments;
 using ADASProject.Order;
 using ADASProject.Products;
@@ -17,11 +18,11 @@ namespace ADASProject
             return (IQueryable<IDescription>)property.GetValue(context);
         }
 
-        public static Product<IDescription> GetProduct(this ApplicationContext context, int id)
+        public static async Task<Product<IDescription>> GetProduct(this ApplicationContext context, int id)
         {
-            if (!context.IsAvailable(id))
+            if (!await context.IsAvailable(id))
                 return null;
-            var productInfo = context.Products.Find(id);
+            var productInfo = await context.Products.FindAsync(id);
             // Get DbSet<"TableName"> property
             var property = ReflectionHelper.GetProperty(context, productInfo.TableName);
             // Get property value
@@ -40,16 +41,16 @@ namespace ADASProject
             return product;
         }
 
-        public static ProductInfo GetProductInfo(this ApplicationContext context, int id)
+        public static async Task<ProductInfo> GetProductInfo(this ApplicationContext context, int id)
         {
-            return context.Products.Find(id);
+            return await context.Products.FindAsync(id);
         }
 
-        public static SubOrder[] GetSubOrders(this ApplicationContext context, int orderId)
+        public static List<SubOrder> GetSubOrders(this ApplicationContext context, int orderId)
         {
             return context.SubOrders
                 .Where(or => or.OrderId == orderId)
-                .ToArray();
+                .ToList();
         }
 
         public static Comment[] GetComments(this ApplicationContext context, int id)
@@ -59,46 +60,62 @@ namespace ADASProject
                 .ToArray();
         }
 
-        public static Comment GetComment(this ApplicationContext context, int id)
+        public static async Task<Comment> GetComment(this ApplicationContext context, int id)
         {
-            return context.Comments.Find(id);
+            return await context.Comments.FindAsync(id);
         }
 
-        public static User GetUser(this ApplicationContext context, int id)
+        public static async Task<User> GetUser(this ApplicationContext context, int id)
         {
-            return context.Users.Find(id);
+            return await context.Users.FindAsync(id);
         }
 
-        public static void Save(this ApplicationContext context, Address address)
+        public static async Task Save(this ApplicationContext context, Address address)
         {
             context.Addresses.Add(address);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
-        public static bool TryToSaveOrder(this ApplicationContext context, OrderInfo order)
+        public static async Task<bool> TryToSaveOrder(this ApplicationContext context, OrderInfo order)
         {
             if (order.SubOrders == null || order.SubOrders.Count == 0)
                 return false;
+            // Try to change count of products
+            if (!await context.TryToChangeCountOfProducts(order.SubOrders.Select(s => Tuple.Create(s.ProductId, s.Count))))
+                return false;
+            // Add order and get order id
             context.Orders.Add(order);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
             var id = context.Orders.Last().Id;
-            foreach(var subOrder in order.SubOrders)
+            // Order sub orders (to add relations)
+            order.SubOrders = order.SubOrders
+                .OrderBy(s => s.ProductId)
+                .ToList();
+            // Add relations and save sub orders
+            for(int i = 0; i < order.SubOrders.Count; i++)
             {
-                if (!context.TryToChangeCountOfProducts(subOrder.ProductId, subOrder.Count))
-                {
-                    context.SaveChanges();
-                    context.Orders.Remove(order);
-                    context.SaveChanges();
-                    return false;
-                }
+                var subOrder = order.SubOrders[i];
                 subOrder.OrderId = id;
                 context.SubOrders.Add(subOrder);
+                for (int j = i + 1; j < order.SubOrders.Count; j++)
+                {
+                    var relation = await context.Relations.FindAsync(new object[] { subOrder.ProductId, order.SubOrders[j].ProductId });
+                    if (relation == null)
+                        context.Relations.Add(new Relation()
+                        {
+                            LesserId = subOrder.ProductId,
+                            BiggerId = order.SubOrders[j].ProductId,
+                            Count = 1
+                        });
+                    else
+                        relation.Count += 1;
+                }
             }
-            context.SaveChanges();
+            await context.SaveChangesAsync();
             return true;
         }
 
-        public static void AddProduct(this ApplicationContext context, Product<IDescription> product)
+        public static async Task AddProduct(this ApplicationContext context, Product<IDescription> product)
         {
             var name = product.Description.GetType().Name + 's';
 
@@ -115,7 +132,7 @@ namespace ADASProject
             product.ProductInfo.TableName = name;
 
             context.Products.Add(product.ProductInfo);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
 
             var id = context.Products.Last().Id;
             product.Description.Id = id;
@@ -123,10 +140,10 @@ namespace ADASProject
             // Find and invoke method "Add" in property type
             type.GetMethod("Add", new Type[1] { productType })
                 .Invoke(propertyValue, new object[1] { product.Description });
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
-        public static void AddComment(this ApplicationContext context, int userId, int productId, string text)
+        public static async Task AddComment(this ApplicationContext context, int userId, int productId, string text)
         {
             var comment = new Comment()
             {
@@ -136,14 +153,14 @@ namespace ADASProject
                 UserId = userId
             };
             context.Comments.Add(comment);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
-        public static void LikeComment(this ApplicationContext context, int userId, int commentId)
+        public static async Task LikeComment(this ApplicationContext context, int userId, int commentId)
         {
-            if (!context.CanLike(userId, commentId))
+            if (!await context.CanLike(userId, commentId))
                 return;
-            var like = context.CommentLikes.Find(userId, commentId);
+            var like = await context.CommentLikes.FindAsync(userId, commentId);
             if (like == null)
             {
                 context.CommentLikes.Add(new CommentLike()
@@ -157,59 +174,63 @@ namespace ADASProject
             {
                 like.IsLiked = true;
             }
-            var comment = context.GetComment(commentId);
+            var comment = await context.GetComment(commentId);
             comment.Rating += 1;
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
-        public static void UnlikeComment(this ApplicationContext context, int userId, int commentId)
+        public static async Task UnlikeComment(this ApplicationContext context, int userId, int commentId)
         {
-            if (context.CanLike(userId, commentId))
+            if (await context.CanLike(userId, commentId))
                 return;
-            var like = context.CommentLikes.Find(userId, commentId);
+            var like = await context.CommentLikes.FindAsync(userId, commentId);
             if (like == null)
             {
                 return;
             }
             like.IsLiked = false;
-            var comment = context.GetComment(commentId);
+            var comment = await context.GetComment(commentId);
             comment.Rating -= 1;
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
-        public static void RemoveComment(this ApplicationContext context, int id)
+        public static async Task RemoveComment(this ApplicationContext context, int id)
         {
-            var comment = context.Comments.Find(id);
+            var comment = await context.Comments.FindAsync(id);
             if (comment != null)
                 context.Comments.Remove(comment);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
-        public static bool TryToChangeCountOfProducts(this ApplicationContext context, int id, int count)
+        public static async Task<bool> TryToChangeCountOfProducts(this ApplicationContext context, IEnumerable<Tuple<int, int>> idsToValues)
         {
-            var product = context.Products.Find(id);
-            if (product != null && product.Count < count)
-                return false;
-            product.Count -= count;
-            product.CountOfOrders += 1;
+            foreach (var value in idsToValues)
+            {
+                var product = context.Products.Find(value.Item1);
+                if (product != null && product.Count < value.Item2)
+                    return false;
+                product.Count -= value.Item2;
+                product.CountOfOrders += 1;
+            }
+            await context.SaveChangesAsync();
             return true;
         }
 
-        public static bool IsAvailable(this ApplicationContext context, int id)
+        public static async Task<bool> IsAvailable(this ApplicationContext context, int id)
         {
-            var value = context.Products.Find(id);
+            var value = await context.Products.FindAsync(id);
             return value != null && value.Count > 0;
         }
 
-        public static bool HasQuantity(this ApplicationContext context, int id, int count)
+        public static async Task<bool> HasQuantity(this ApplicationContext context, int id, int count)
         {
-            var value = context.Products.Find(id);
+            var value = await context.Products.FindAsync(id);
             return value != null && value.Count >= count;
         }
 
-        public static bool CanLike(this ApplicationContext context, int userId, int commentId)
+        public static async Task<bool> CanLike(this ApplicationContext context, int userId, int commentId)
         {
-            var like = context.CommentLikes.Find(new object[2] { userId, commentId });
+            var like = await context.CommentLikes.FindAsync(new object[2] { userId, commentId });
             if (like == null)
             {
                 return true;

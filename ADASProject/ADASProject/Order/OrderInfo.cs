@@ -22,9 +22,9 @@ namespace ADASProject.Order
         public Status StatusInfo { get; set; }
         
         public bool IsDelivered
-            => StatusInfo == Status.Доставлено;
+            => StatusInfo == Status.Delivered;
 
         public bool IsRecieved
-            => StatusInfo == Status.Получено;
+            => StatusInfo == Status.Received;
     }
 }

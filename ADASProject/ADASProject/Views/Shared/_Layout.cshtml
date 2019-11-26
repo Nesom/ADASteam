@@ -35,8 +35,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <link href="css/bootstrap.css" rel='stylesheet' type='text/css' />
         <script type='text/javascript' src="js/jquery-1.11.1.min.js"></script>
         <link href="css/style.css" rel='stylesheet' type='text/css' />
-        @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-        <link rel="stylesheet" href="~/css/site.css" />*@
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
@@ -70,31 +70,31 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     @*<li><a asp-area="" asp-controller="Home" asp-action="Index">Домашняя страница</a></li>*@
                     @if (TempData.ContainsKey("username"))
                     {
-                        <li class="element" style="position:relative;left:10px; top:10px; background-color:#E6E6E6;width:auto">
+                        <li class="element" style="position:absolute;left:200px; top:20%; background-color:#E6E6E6;width:auto">
                             <div class="log" style="width:auto">
                                 <div class="login" style="width:auto">
                                     <div id="loginContainer">
-                                        <a class="color1" asp-area="" asp-controller="Home" asp-action="PersonalArea" id="loginButton"><span>Личный кабинет</span></a>
+                                        <a class="color1" asp-area="" asp-controller="Home" asp-action="PersonalArea" id="loginButton"><span>Personal Area</span></a>
                                     </div>
                                 </div>
                             </div>
                         </li>
                         @*<li><a asp-area="" asp-controller="Home" asp-action="PersonalArea" style="position:relative;left:10px">Личный кабинет</a></li>*@
-                        <li class="element" style="position:relative;left:20px; top:10px; background-color:#E6E6E6;width:auto">
+                        <li class="element" style="position:absolute;left:341px; top:20%; background-color:#E6E6E6;width:auto">
                             <div class="log" style="width:auto">
                                 <div class="login" style="width:auto">
                                     <div id="loginContainer">
-                                        <a class="color1" asp-area="" asp-controller="Order" asp-action="Basket" id="loginButton"><span>Корзина</span></a>
+                                        <a class="color1" asp-area="" asp-controller="Order" asp-action="Basket" id="loginButton"><span>Basket</span></a>
                                     </div>
                                 </div>
                             </div>
                         </li>
                         @*<li><a asp-area="" asp-controller="Order" asp-action="Basket">Корзина</a></li>*@
-                        <li class="element" style="position:relative;left:30px; top:10px; background-color:#E6E6E6;width:auto">
+                        <li class="element" style="position:absolute;left:430px; top:20%; background-color:#E6E6E6;width:auto">
                             <div class="log" style="width:auto">
                                 <div class="login" style="width:auto">
                                     <div id="loginContainer">
-                                        <a class="color1" asp-area="" asp-controller="Account" asp-action="Logout" id="loginButton"><span>Выйти</span></a>
+                                        <a class="color1" asp-area="" asp-controller="Account" asp-action="Logout" id="loginButton"><span>Logout</span></a>
                                     </div>
                                 </div>
                             </div>
@@ -105,7 +105,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     else
                     {
                         @*<li class="element"><a asp-area="" asp-controller="Account" asp-action="Login">Войти</a></li>*@
-                        <li class="element" style="position:relative;left:15px; top:10px; background-color:#E6E6E6">
+                        <li class="element" style="position:absolute;left:200px; top:20%; background-color:#E6E6E6">
                             <div class="log">
                                 <div class="login">
                                     <div id="loginContainer">
@@ -114,8 +114,17 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 </div>
                             </div>
                         </li>
+                        <li class="element" style="position:absolute;left:280px; top:20%; background-color:#E6E6E6">
+                            <div class="log">
+                                <div class="login">
+                                    <div id="loginContainer">
+                                        <a class="color1" asp-area="" asp-controller="Account" asp-action="Register" id="loginButton"><span>Register</span></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
                     }
-                    <li class="element" style="position:absolute;right:345px; top:10px; background-color:#E6E6E6">
+                    <li class="element" style="position:absolute;right: calc(11.7% + 210px); top:20%; background-color:#E6E6E6">
                         <div class="log">
                             <div class="login">
                                 <div id="loginContainer">
@@ -124,7 +133,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             </div>
                         </div>
                     </li>
-                    <li class="search" style="position:absolute; right:150px; top:5px">
+                    <li class="search" style="position:absolute; right:11.7%; top:10%">
                         <form>
                             <input type="text" value="" placeholder="search...">
                             <input type="submit" value="">

@@ -1,4 +1,14 @@
-﻿<h2>Добро пожаловать, @TempData.Peek("username")!</h2>
+﻿@model PersonalAreaModel
+<h2>Welcome, @TempData.Peek("username")!</h2>
+@if (Model.Orders.Length > 0)
+{
+<h4>Your orders (@Model.Orders.Length):</h4>
+    foreach(var order in Model.Orders)
+    {
+        <pre>(@order.OrderTime) Amount = @order.Amount, Status = @order.StatusInfo      <a asp-controller="Order" asp-action="GetOrder/@order.Id">Details</a></pre>
+    }
+}
+
 @if (TempData.Peek("role") != null && TempData.Peek("role").ToString() == "admin")
 {
     <a asp-controller="Edit" asp-action="ChouseAdd"><pre>Добавить товар</pre></a>

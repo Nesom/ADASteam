@@ -28,18 +28,18 @@ namespace ADASProject.Products
 
         public int Id { get; set; }
 
-        [Category("Мобильная связь")]
+        [Category("Mobile connection")]
         [Characteristic("Поддерживает 4G")]
         public bool IsUsing4G { get; set; }
 
-        [Category("Система")]
-        [Characteristic("Версия ОС")]
+        [Category("System")]
+        [Characteristic("OS version")]
         public string OSVersion { get; set; }
-        [Characteristic("Количество ядер")]
+        [Characteristic("Core count")]
         public int CoreCount { get; set; }
-        [Characteristic("Частота работы процессора")]
+        [Characteristic("CPU frequency")]
         public string Frequency { get; set; }
-        [Characteristic("Объем оперативной памяти")]
+        [Characteristic("RAM size")]
         public string Memory { get; set; }
     }
 }

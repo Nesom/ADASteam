@@ -133,19 +133,19 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     @*</div>*@
                 
                 <div class="registration_left">
-                    <h2>Log in</h2>
+                    <h2 >Log in</h2>
                     <div class="registration_form">
                         <form asp-action="Login" asp-controller="Account" asp-anti-forgery="true">
                             <div class="validation" asp-validation-summary="ModelOnly"></div>
                             <div>
                                 <div class="form-group">
                                     <label asp-for="Email">Enter your Email</label>
-                                    <input type="text" asp-for="Email" />
+                                    <input style="width:300px" type="text" asp-for="Email" />
                                     <span asp-validation-for="Email" />
                                 </div>
                                 <div class="form-group">
                                     <label asp-for="Password">Enter your password</label>
-                                    <input asp-for="Password" />
+                                    <input style="width:300px" asp-for="Password" />
                                     <span asp-validation-for="Password" />
                                 </div>
                                 <div class="form-group">

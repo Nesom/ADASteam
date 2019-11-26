@@ -28,16 +28,22 @@ namespace ADASProject.Models
 
         public void FillFields()
         {
+            if (StandartValuesInfo == null)
+                StandartValuesInfo = new CatalogValuesInfo();
+
+            if (CustomValuesInfo == null)
+                CustomValuesInfo = new CatalogValuesInfo();
+
             var parameters = ModelHelper.ParametersToFilter;
-            Types = parameters
+            StandartValuesInfo.Types = parameters
                 .Select(par => par.Type)
                 .ToArray();
 
-            PropertyNames = parameters
+            StandartValuesInfo.PropertyNames = parameters
                 .Select(par => par.PropertyName)
                 .ToArray();
 
-            Descriptions = parameters
+            StandartValuesInfo.Descriptions = parameters
                 .Select(par => par.Description)
                 .ToArray();
         }
@@ -46,17 +52,18 @@ namespace ADASProject.Models
         {
             if (type == null || !ModelHelper.SpecialParameters.ContainsKey(type))
                 return false;
+
             var parameters = ModelHelper.SpecialParameters[type];
 
-            CustomTypes = parameters
+            CustomValuesInfo.Types = parameters
                 .Select(par => par.Type)
                 .ToArray();
 
-            CustomPropertyNames = parameters
+            CustomValuesInfo.PropertyNames = parameters
                 .Select(par => par.PropertyName)
                 .ToArray();
 
-            CustomDescriptions = parameters
+            CustomValuesInfo.Descriptions = parameters
                 .Select(par => par.Description)
                 .ToArray();
 
@@ -72,17 +79,19 @@ namespace ADASProject.Models
         // Sorted by
         public string SortedBy { get; set; }
         public bool SortedByDescending { get; set; }
-        // Standart values info
+
+        // Standart values info 
+        public CatalogValuesInfo StandartValuesInfo { get; set; }
+        // Custom values info
+        public CatalogValuesInfo CustomValuesInfo { get; set; }
+    }
+
+    public class CatalogValuesInfo
+    {
         public string[] FromValues { get; set; }
         public string[] ToValues { get; set; }
         public string[] PropertyNames { get; set; }
         public string[] Descriptions { get; set; }
         public Type[] Types { get; set; }
-        // Custom values info
-        public string[] CustomFromValues { get; set; }
-        public string[] CustomToValues { get; set; }
-        public string[] CustomPropertyNames { get; set; }
-        public string[] CustomDescriptions { get; set; }
-        public Type[] CustomTypes { get; set; }
     }
 }

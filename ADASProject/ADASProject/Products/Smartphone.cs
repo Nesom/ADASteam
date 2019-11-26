@@ -2,7 +2,7 @@
 
 namespace ADASProject.Products
 {
-    [ClassName("Смартфон")]
+    [ClassName("Smartphone")]
     [ImageSize(350, 200)]
     public class Smartphone : Product<SmartphoneDescription>
     {
@@ -30,34 +30,34 @@ namespace ADASProject.Products
 
         public int Id { get; set; }
 
-        [Category("Мобильная связь")]
+        [Category("Mobile connection")]
         [Characteristic("Поддерживает 4G")]
         public bool IsUsing4G { get; set; }
 
-        [Category("Система")]
-        [Characteristic("Версия ОС")]
+        [Category("System")]
+        [Characteristic("OS version")]
         public string OSVersion { get; set; }
-        [Characteristic("Количество ядер")]
+        [Characteristic("Core count")]
         public int CoreCount { get; set; }
-        [Characteristic("Частота работы процессора")]
+        [Characteristic("CPU frequency")]
         public string Frequency { get; set; }
-        [Characteristic("Объем оперативной памяти")]
+        [Characteristic("RAM size")]
         public string Memory { get; set; }
 
-        [Category("Основная (тыловая) камера")]
-        [Characteristic("Количество мегапикселей основной камеры")]
+        [Category("Main camera")]
+        [Characteristic("The number of megapixels on main camera")]
         public int MainMegapixelCount { get; set; }
-        [Characteristic("Оптическая стабилизация")]
+        [Characteristic("Optical stabilization")]
         public bool Stabilization { get; set; }
 
-        [Category("Фронтальная камера")]
-        [Characteristic("Количество мегапикселей фронтальной камеры")]
+        [Category("Frontal camera")]
+        [Characteristic("The number of megapixels on frontal camera")]
         public int FrontMegapixelCount { get; set; }
-        [Characteristic("Автофокусировка")]
+        [Characteristic("Autofocus")]
         public bool AutoFocus { get; set; }
 
-        [Category("Питание")]
-        [Characteristic("Емкость аккамулятора")]
+        [Category("Battery")]
+        [Characteristic("Battary capacity")]
         public string BatteryCapacity { get; set; }
     }
 }

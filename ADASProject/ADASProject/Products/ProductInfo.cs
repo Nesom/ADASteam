@@ -26,24 +26,24 @@ namespace ADASProject.Products
 
         public int CountOfVotes { get; set; }
 
-        [Category("Основное")]
-        [Characteristic("Название")]
+        [Category("Main")]
+        [Characteristic("Name")]
         public string Name { get; set; }
-        [Characteristic("Количество товара")]
+        [Characteristic("Products count")]
         public int Count { get; set; }
-        [Characteristic("Цена")]
+        [Characteristic("Price")]
         public double Price { get; set; }
-        [Characteristic("Рейтинг", true)]
+        [Characteristic("Rating", true)]
         public double Rating { get; set; }
-        [Characteristic("Описание")]
+        [Characteristic("Description")]
         public string Description { get; set; }
 
-        [Category("Производственные параметры")]
-        [Characteristic("Гарантия")]
+        [Category("Production parameters")]
+        [Characteristic("Guarantee")]
         public string Guarantee { get; set; }
-        [Characteristic("Производитель")]
+        [Characteristic("Producer")]
         public string Producer { get; set; }
-        [Characteristic("Год издания")]
+        [Characteristic("Year of edition")]
         public int YearOfEdition { get; set; }
         
         public byte[] Image { get; set; }

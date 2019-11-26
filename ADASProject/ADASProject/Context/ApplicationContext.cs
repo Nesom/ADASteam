@@ -24,6 +24,7 @@ namespace ADASProject
         public DbSet<Comment> Comments { get; set; }
         public DbSet<CommentLike> CommentLikes { get; set; }
 
+        public DbSet<Relation> Relations { get; set; }
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
             : base(options)
@@ -35,6 +36,8 @@ namespace ADASProject
         {
             modelBuilder.Entity<CommentLike>()
                 .HasKey(c => new { c.UserId, c.CommentId });
+            modelBuilder.Entity<Relation>()
+                .HasKey(r => new { r.LesserId, r.BiggerId});
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

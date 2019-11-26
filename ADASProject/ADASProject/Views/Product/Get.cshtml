@@ -5,44 +5,7 @@
     var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
     TempData["GetId"] = Model.Id;
 }
-@*
-    <img src="@imgSrc" width="300" height="400" />
 
-    @foreach (var category in Model.StandartValues)
-    {
-        <h3>@category.Key</h3>
-        foreach (var value in category.Value)
-        {
-            <pre style="font-size:15px">   @value.Key  :  @value.Value</pre>
-        }
-    }
-
-    @foreach (var category in Model.Values)
-    {
-        <h3>@category.Key</h3>
-        foreach (var value in category.Value)
-        {
-            <pre style="font-size:15px">   @value.Key  :  @value.Value</pre>
-        }
-    }
-    <h3>Комментарии</h3>
-    @foreach (var comment in Model.Comments)
-    {
-        <pre style="font-size:15px">@comment.Item2 (+@comment.Item1.Rating)<pre style="font-size:13px">>@comment.Item1.Text
-        @if (TempData.Peek("role") != null && Model.Context.CanLike((int)TempData.Peek("id"), comment.Item1.Id)) {<a asp-controller="Product" asp-action="Like/@comment.Item1.Id">Like</a>}
-        @if (TempData.Peek("role") != null && !Model.Context.CanLike((int)TempData.Peek("id"), comment.Item1.Id)) {<a asp-controller="Product" asp-action="Unlike/@comment.Item1.Id">Unlike</a>}
-        @if (TempData.Peek("role") != null && TempData.Peek("role").ToString() == "admin") { <a asp-controller="Product" asp-action="RemoveComment/@comment.Item1.Id">Удалить</a>}</pre></pre>
-    }
-    @if (TempData.Peek("role") != null)
-    {
-        <form asp-controller="Product" asp-action="Comment" method="post">
-            <input name="id" type="number" value="@Model.Id" hidden />
-            <pre>Комментировать: <input name="text" type="text" style="width: 300px; height: 70px;" maxlength="1000" required /> </pre>
-            <button asp-controller="Product" asp-action="Comment" type="submit">Отправить</button>
-        </form>
-    }
-
-    <pre><a asp-controller="Order" asp-action="Buy/@Model.Id">Купить</a></pre>*@
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -50,7 +13,7 @@
     <link href="css/bootstrap.css" rel='stylesheet' type='text/css' />
 
     <script type='text/javascript' src="js/jquery-1.11.1.min.js"></script>
-    <link href="css/style.css" rel='stylesheet' type='text/css' />
+    <link href="~/css/style.css" rel='stylesheet' type='text/css' />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="keywords" content="Gretong Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template,
@@ -81,23 +44,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 </head>
 <body>
-    <div class="top_bg">
-        <div class="container">
-            <div class="header_top">
-                <div class="top_right">
-                    <ul>
-                        <li><a href="#">help</a></li>|
-                        <li><a href="contact.html">Contact</a></li>|
-                        <li><a href="#">Delivery information</a></li>
-                    </ul>
-                </div>
-                <div class="top_left">
-                    <h2><span></span> Call us : 032 2352 782</h2>
-                </div>
-                <div class="clearfix"> </div>
-            </div>
-        </div>
-    </div>
     <div class="header_bg">
         <div class="container">
             <div class="header">
@@ -174,6 +120,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                         <pre>@value.Value</pre>
                                     }
                                 }
+                                <fieldset>
+                                    <p>
+                                    Оставьте ваш отзыв</p>
+                                </fieldset>
                             </div>
                             <div class="single-bottom2">
                                 <h6>Related Products</h6>
@@ -259,6 +209,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <div class="clearfix"> </div>
                 </div>
             </div>
+            </div>
+        </div>
 </body>
 </html>
 

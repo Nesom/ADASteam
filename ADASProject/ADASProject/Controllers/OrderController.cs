@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ADASProject.Models;
+using ADASProject.Notifications;
 using ADASProject.Order;
 using ADASProject.Products;
 using Microsoft.AspNetCore.Authorization;
@@ -37,11 +38,11 @@ namespace ADASProject.Controllers
             if (HttpContext.Session.Keys.Contains("basket"))
                 value = HttpContext.Session.Get("basket");
 
-            if (!db.IsAvailable(id))
+            if (!await db.IsAvailable(id))
                 return RedirectToAction("Error", new ErrorViewModel()
                 {
                     ActionName = "Catalog",
-                    RequestInfo = "Товар не доступен"
+                    RequestInfo = "Product not available"
                 });
 
             HttpContext.Session.Set("basket", value.AddValue(id));
@@ -62,7 +63,7 @@ namespace ADASProject.Controllers
 
             foreach (var value in values)
             {
-                var product = db.GetProductInfo(value.Key);
+                var product = await db.GetProductInfo(value.Key);
                 model.Products.Add(product, value.Value);
                 model.Amount += product.Price * value.Value;
             }
@@ -90,12 +91,12 @@ namespace ADASProject.Controllers
             if (!HttpContext.Session.Keys.Contains("basket"))
                 return RedirectToAction("Index", "Home");
 
-            if (model.Count > 65535 || model.Count < 0 || !db.HasQuantity(model.Id, model.Count))
+            if (model.Count > 65535 || model.Count < 0 || !await db.HasQuantity(model.Id, model.Count))
                 return RedirectToAction("Error",
                     new ErrorViewModel()
                     {
                         ActionName = "Basket",
-                        RequestInfo = "Количество недоступно!"
+                        RequestInfo = "This count not available!"
                     });
 
             var basket = HttpContext.Session.Get("basket");
@@ -124,20 +125,20 @@ namespace ADASProject.Controllers
             var orderInfo = new OrderInfo();
             foreach (var item in values)
             {
-                if (db.HasQuantity(item.Key, item.Value))
+                if (await db.HasQuantity(item.Key, item.Value))
                 {
-                    var product = db.GetProductInfo(item.Key);
+                    var product = await db.GetProductInfo(item.Key);
                     orderInfo.SubOrders.Add(new SubOrder() { ProductId = item.Key, Count = item.Value });
                     orderInfo.Amount += product.Price * item.Value;
                 }
                 else
                 {
-                    var productName = db.GetProductInfo(item.Key);
+                    var productName = await db.GetProductInfo(item.Key);
                     return RedirectToAction("Error",
                         new ErrorViewModel()
                         {
                             ActionName = "Basket",
-                            RequestInfo = $"Отстутствует {item.Value} товаров на складе ({productName})"
+                            RequestInfo = $"Not available {item.Value} products in stock ({productName})"
                         });
                 }
             }
@@ -145,25 +146,24 @@ namespace ADASProject.Controllers
             var userId = (int)TempData.Peek("id");
             model.Address.UserId = userId;
             orderInfo.UserId = userId;
-            orderInfo.StatusInfo = Status.Проверяется;
+            orderInfo.StatusInfo = Status.Review;
             orderInfo.OrderTime = DateTime.Now;
 
-            
 
-            if (!db.TryToSaveOrder(orderInfo))
-                return RedirectToAction("Error",
-                                        new ErrorViewModel()
-                                        {
-                                            ActionName = "Basket",
-                                            RequestInfo = $"Ошибка при формировании заказа. Возможно отсутствуют некоторые товары."
-                                        });
+
+            if (!await db.TryToSaveOrder(orderInfo))
+                return RedirectToAction("Error", 
+                     new ErrorViewModel()
+                     {
+                         ActionName = "Basket",
+                         RequestInfo = $"Error creating order. Some products may be missing."
+                     });
 
             HttpContext.Session.Remove("basket");
 
-            // добавить возможность меня статус заказа
-            // добавить возможность оценивать продукт если статус = доставлено(получено)
+            await NotificationService.Service.SendOrderNotificationAsync((string)TempData.Peek("username"), orderInfo, Status.Review);
 
-
+            // добавить возможность оценивать продукт если статус = доставлено(получено) (??)
 
             return View(new OrderModel() { });
         }
@@ -173,17 +173,72 @@ namespace ADASProject.Controllers
         public async Task<IActionResult> GetOrders()
         {
             var model = new GetOrdersModel();
-            foreach(var order in db.Orders)
+            // Get all orders from DB
+            var orders = (IQueryable<OrderInfo>)db.Orders;
+            foreach (var order in orders)
             {
+                // Add all sub orders from this order
                 model.Products.Add(order, new List<Tuple<ProductInfo, int>>());
                 var subOrders = db.GetSubOrders(order.Id);
-                foreach(var subOrder in subOrders)
+                foreach (var subOrder in subOrders)
                 {
-                    var product = db.GetProductInfo(subOrder.ProductId);
+                    var product = await db.GetProductInfo(subOrder.ProductId);
                     model.Products[order].Add(Tuple.Create(product, subOrder.Count));
                 }
             }
             return View(model);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "admin, user")]
+        public async Task<IActionResult> GetOrder(int id)
+        {
+            var order = db.Orders.Find(id);
+
+            if (order.UserId != (int)TempData.Peek("id") && "admin" != (string)TempData.Peek("role"))
+                return RedirectToAction("Error",
+                           new ErrorViewModel()
+                           {
+                               ActionName = "GetOrders",
+                               RequestInfo = $"You dont have permissions."
+                           });
+
+            if (order == null)
+                return RedirectToAction("Error", "Home",
+                           new ErrorViewModel()
+                           {
+                               ActionName = "Index",
+                               RequestInfo = $"Order with id = {id} doesn't exist."
+                           });
+
+            // Get sub orders
+            order.SubOrders = db.GetSubOrders(order.Id);
+            // Create list of subOrders
+            var list = new List<Tuple<ProductInfo, int>>();
+            // Fill sub orders info
+            foreach (var subOrder in order.SubOrders)
+            {
+                var product = await db.GetProductInfo(subOrder.ProductId);
+                list.Add(Tuple.Create(product, subOrder.Count));
+            }
+            // Create and return model
+            var model = new GetOrderModel() { Order = order, SubOrders = list, Status = order.StatusInfo, Role = (string)TempData.Peek("role") };
+            return View(model);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "admin, user")]
+        public async Task<IActionResult> ChangeOrder(GetOrderModel model)
+        {
+            var order = db.Orders.Find(model.Order.Id);
+            // Get user
+            var user = await db.GetUser(order.UserId);
+            // Send mail about changes in status to this user
+            await NotificationService.Service.SendOrderNotificationAsync(user.Email, order, model.Status);
+            // Change and save order
+            order.StatusInfo = model.Status;
+            await db.SaveChangesAsync();
+            return RedirectToAction("PersonalArea", "Home");
         }
     }
 }

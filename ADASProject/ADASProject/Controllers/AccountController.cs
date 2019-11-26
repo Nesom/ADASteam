@@ -39,7 +39,8 @@ namespace ADASProject.Controllers
                     user = new User
                     {
                         Email = model.Email,
-                        Password = BCrypt.Net.BCrypt.HashPassword(model.Password), Role = "user"
+                        Password = BCrypt.Net.BCrypt.HashPassword(model.Password),
+                        Role = "user"
                     };
                     
                     db.Users.Add(user);

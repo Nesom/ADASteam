@@ -54,7 +54,7 @@ namespace ADASProject.Controllers
             var productInfo = ReflectionHelper.CreateProductInfo(model.StandartInfoValues, true);
             var product = Product<IDescription>.GetProduct(description, productInfo);
             product.ProductInfo.Image = ControllerHelper.ConvertFileToBytes(model.Image);
-            db.AddProduct(product);
+            await db.AddProduct(product);
             return RedirectToAction("Index", "Home");
         }
     }
