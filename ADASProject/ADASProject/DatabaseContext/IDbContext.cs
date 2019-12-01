@@ -2,7 +2,7 @@
 
 namespace ADASProject
 {
-    public interface IDbContext : IDbOrderWorkerAsync, IDbCommentWorkerAsync
+    public interface IDbContext : IDbOrderWorkerAsync, IDbCommentWorkerAsync, IDbProductVoteWorkerAsync
     {
     }
 }

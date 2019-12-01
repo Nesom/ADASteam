@@ -10,17 +10,24 @@ namespace ADASProject.Models
     {
         // Нужно удалить
         public static Dictionary<string, string> TypeToNameDict { get; }
+        public static Dictionary<string, Size> TypeToSizeDict { get; }
 
         static CatalogModel()
         {
             TypeToNameDict = new Dictionary<string, string>();
+            TypeToSizeDict = new Dictionary<string, Size>();
 
             var types = ReflectionHelper.GetAllProductClasses();
             foreach(var type in types)
             {
-                var attribute = ReflectionHelper.GetAttribute(type, typeof(Attributes.ClassName)) as Attributes.ClassName;
-                if (attribute != null)
-                    TypeToNameDict.Add(type.Name, attribute.Name);
+                var classNameAttribute = ReflectionHelper.GetAttribute(type, typeof(Attributes.ClassName)) as Attributes.ClassName;
+                if (classNameAttribute != null)
+                    TypeToNameDict.Add(type.Name, classNameAttribute.Name);
+                var sizeAttribute = ReflectionHelper.GetAttribute(type, typeof(Attributes.ImageSize)) as Attributes.ImageSize;
+                if (sizeAttribute == null)
+                    TypeToSizeDict[type.Name] = new Size(200, 200);
+                else
+                    TypeToSizeDict[type.Name] = sizeAttribute.Size;
             }
         }
 

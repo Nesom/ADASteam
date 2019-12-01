@@ -11,8 +11,8 @@
 
 @if (TempData.Peek("role") != null && TempData.Peek("role").ToString() == "admin")
 {
-    <a asp-controller="Edit" asp-action="ChouseAdd"><pre>Добавить товар</pre></a>
-    <a asp-controller="Edit" asp-action="ChouseRemove"><pre>Удалить товар</pre></a>
-    <a asp-controller="Order" asp-action="GetOrders"><pre>Посмотреть список заказов</pre></a>
+    <a asp-controller="Edit" asp-action="ChouseAdd"><pre>Add product</pre></a>
+    <a asp-controller="Edit" asp-action="ChouseRemove"><pre>Remove product</pre></a>
+    <a asp-controller="Order" asp-action="GetOrders"><pre>Check order list</pre></a>
 }
 

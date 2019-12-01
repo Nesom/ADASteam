@@ -265,3 +265,6 @@ C:\Users\User\Desktop\ADASProject\ADASProject\obj\Debug\netcoreapp2.1\ADASProjec
 C:\Users\User\Desktop\ADASProject\ADASProject\obj\Debug\netcoreapp2.1\Razor\Views\Home\EditerT.g.cshtml.cs
 C:\Users\User\Desktop\ADASProject\ADASProject\bin\Debug\netcoreapp2.1\Searching.dll
 C:\Users\User\Desktop\ADASProject\ADASProject\obj\Debug\netcoreapp2.1\Razor\Views\Order\GetOrder.g.cshtml.cs
+C:\Users\User\Desktop\ADASProject\ADASProject\obj\Debug\netcoreapp2.1\Razor\Views\Product\Search.g.cshtml.cs
+C:\Users\User\Desktop\ADASProject\ADASProject\obj\Debug\netcoreapp2.1\Razor\Views\Order\Payment.g.cshtml.cs
+C:\Users\User\Desktop\ADASProject\ADASProject\obj\Debug\netcoreapp2.1\Razor\Views\Order\Placement.g.cshtml.cs

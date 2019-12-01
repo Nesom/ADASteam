@@ -21,7 +21,7 @@ namespace ADASProject.Controllers
             db = context;
         }
 
-        [HttpPost]
+        [HttpGet]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public async Task<IActionResult> Error(ErrorViewModel model)
         {
@@ -31,7 +31,6 @@ namespace ADASProject.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "admin, user")]
         public async Task<IActionResult> Buy(int id)
         {
             var value = new byte[0];
@@ -39,18 +38,19 @@ namespace ADASProject.Controllers
                 value = HttpContext.Session.Get("basket");
 
             if (!await db.IsAvailable(id))
-                return RedirectToAction("Error", new ErrorViewModel()
-                {
-                    ActionName = "Catalog",
-                    RequestInfo = "Product not available"
-                });
+                return RedirectToAction("Error", "Home", 
+                    new ErrorViewModel()
+                    {
+                        ActionName = "Catalog",
+                        RequestInfo = "Product not available"
+                    });
 
             HttpContext.Session.Set("basket", value.AddValue(id));
+
             return RedirectToAction("Basket");
         }
 
         [HttpGet]
-        [Authorize(Roles = "admin, user")]
         public async Task<IActionResult> Basket()
         {
             if (!HttpContext.Session.Keys.Contains("basket"))
@@ -72,7 +72,6 @@ namespace ADASProject.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "admin, user")]
         public async Task<IActionResult> RemoveProduct(int id)
         {
             if (!HttpContext.Session.Keys.Contains("basket"))
@@ -81,11 +80,11 @@ namespace ADASProject.Controllers
             var basket = HttpContext.Session.Get("basket");
             basket.RemoveValue(id);
             HttpContext.Session.Set("basket", basket);
+
             return RedirectToAction("Basket");
         }
 
         [HttpPost]
-        [Authorize(Roles = "admin, user")]
         public async Task<IActionResult> ChangeCount(BasketModel model)
         {
             if (!HttpContext.Session.Keys.Contains("basket"))
@@ -110,6 +109,42 @@ namespace ADASProject.Controllers
         public async Task<IActionResult> Sending()
         {
             return View();
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "admin, user")]
+        public async Task<IActionResult> Payment()
+        {
+            if (!HttpContext.Session.Keys.Contains("basket"))
+                return RedirectToAction("Error",
+                    new ErrorViewModel()
+                    {
+                        ActionName = "Basket",
+                        RequestInfo = "Your basket is empty!"
+                    });
+
+            var basket = HttpContext.Session.Get("basket");
+            var values = basket.GetValues();
+            double amount = 0.0;
+            foreach(var value in values)
+            {
+                var product = await db.GetProductInfoAsync(value.Key);
+                amount += product.Price * value.Value;
+            }
+            return View(new OrderModel() { Amount =  amount, SecretCode = "R9J3D3WC" });
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "admin, user")]
+        public async Task<IActionResult> Placement()
+        {
+            var places = new List<string>()
+            {
+                "Kazan, Kremlevskaya 35A",
+                "Kazan, Gvardeyskaya 12",
+                "Elabuga, Mira 34"
+            };
+            return View(new OrderModel() { Places = places });
         }
 
         [HttpPost]
@@ -144,11 +179,9 @@ namespace ADASProject.Controllers
             }
 
             var userId = (int)TempData.Peek("id");
-            model.Address.UserId = userId;
             orderInfo.UserId = userId;
             orderInfo.StatusInfo = Status.Review;
             orderInfo.OrderTime = DateTime.Now;
-
 
 
             if (!await db.TryToSaveOrderAsync(orderInfo))
@@ -163,9 +196,7 @@ namespace ADASProject.Controllers
 
             await NotificationService.Service.SendOrderNotificationAsync((string)TempData.Peek("username"), orderInfo, Status.Review);
 
-            // добавить возможность оценивать продукт если статус = доставлено(получено) (??)
-
-            return View(new OrderModel() { });
+            return View();
         }
 
         [HttpGet]
@@ -174,7 +205,7 @@ namespace ADASProject.Controllers
         {
             var model = new GetOrdersModel();
             // Get all orders from DB
-            var orders = (IQueryable<OrderInfo>)await db.GetOrdersAsync();
+            var orders = await db.GetOrdersAsync();
             foreach (var order in orders)
             {
                 // Add all sub orders from this order

@@ -40,46 +40,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 </head>
 <body>
     <!-- header_top -->
-    <div class="top_bg">
-        <div class="container">
-            <div class="header_top">
-                <div class="top_right">
-                    <ul>
-                        <li><a href="helpp.html">help</a></li>|
-                        <li><a href="contact.html">Contact</a></li>|
-                        <li><a href="delivery.html">Delivery information</a></li>
-                    </ul>
-                </div>
-
-                <div class="clearfix"> </div>
-            </div>
-        </div>
-    </div>
     <!-- header -->
     <div class="header_bg">
         <div class="container">
             <div class="header">
-                <div class="head-t">
-                    <div class="logo">
-                        <a href="index.html"><img src="Телевизор.jpg" class="img-responsive" alt="" /> </a>
-                    </div>
-                    <!-- start header_right -->
-                    <div class="header_right">
-                        <div class="rgt-bottom">
-
-                            <div class="clearfix"> </div>
-                        </div>
-                        <div class="search">
-                            <form>
-                                <input type="text" value="" placeholder="search...">
-                                <input type="submit" value="">
-                            </form>
-                        </div>
-                        <div class="clearfix"> </div>
-                    </div>
-                    <div class="clearfix"> </div>
-                </div>
-                <!-- start header menu -->
                 <ul class="megamenu skyblue">
                     <li class="active grid"><a class="color1" asp-controller="Home" asp-action="Index">Home</a></li>
                     <li class="active grid"><a class="color1" asp-controller="Home" asp-action="Catalog">Catalog</a></li>
@@ -94,19 +58,21 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <div class="price-details">
                     <h3>Price Details</h3>
                     <span>Total</span>
-                    <span class="total1">@Model.Amount рублей</span>
+                    <span class="total1">@Model.Amount</span>
                     <span>Discount</span>
-                    <span class="total1">0 рублей</span>
-                    <span>Delivery Charges</span>
-                    <span class="total1">150.00</span>
+                    <span class="total1"></span>
                     <div class="clearfix"></div>
                 </div>
                 <ul class="total_price">
                     <li class="last_price"> <h4>TOTAL</h4></li>
-                    <li class="last_price"><span>@Model.Amount рублей</span></li>
-                    <div class="clearfix"> </div>
+                    @if (Model.Products.Count != 0)
+                    {
+                        <li style="margin-top:10px"class="last_price"><span>@Model.Amount</span></li>
+                        <h4><a asp-controller="Order" asp-action="Sending">Order</a></h4>
+                    }
                 </ul>
 
+                
 
                 <div class="clearfix"></div>
                 @*<a class="order" href="#">Place Order</a>
@@ -119,113 +85,20 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             </div>
             <div class="col-md-9 cart-items">
                 <h1>My Shopping Bag (@Model.Products.Count)</h1>
-                <script>
-                    $(document).ready(function (c) {
-                        $('.close1').on('click', function (c) {
-                            $('.cart-header').fadeOut('slow', function (c) {
-                                $('.cart-header').remove();
-                            });
-                        });
-                    });
-                </script>
-                <div class="cart-header">
-                    <div class="close1"> </div>
-                    <div class="cart-sec simpleCart_shelfItem">
-                        <div class="cart-item cyc">
-                            <img src="images/8.jpg" class="img-responsive" alt="" />
-                        </div>
-                        <div class="cart-item-info">
-                            <h3><a href="#">Mountain Hopper(XS R034)</a><span>Model No: 3578</span></h3>
-                            <ul class="qty">
-                                <li><p>Size : 5</p></li>
-                                <li><p>Qty : 1</p></li>
-                            </ul>
-
-                            <div class="delivery">
-                                <p>Service Charges : Rs.100.00</p>
-                                <span>Delivered in 2-3 bussiness days</span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </div>
-                        <div class="clearfix"></div>
-
-                    </div>
-                </div>
-                <script>
-                    $(document).ready(function (c) {
-                        $('.close2').on('click', function (c) {
-                            $('.cart-header2').fadeOut('slow', function (c) {
-                                $('.cart-header2').remove();
-                            });
-                        });
-                    });
-                </script>
-                <div class="cart-header2">
-                    <div class="close2"> </div>
-                    <div class="cart-sec simpleCart_shelfItem">
-                        <div class="cart-item cyc">
-                            <img src="images/11.jpg" class="img-responsive" alt="" />
-                        </div>
-                        <div class="cart-item-info">
-                            <h3><a href="#">Mountain Hopper(XS R034)</a><span>Model No: 3578</span></h3>
-                            <ul class="qty">
-                                <li><p>Size : 5</p></li>
-                                <li><p>Qty : 1</p></li>
-                            </ul>
-                            <div class="delivery">
-                                <p>Service Charges : Rs.100.00</p>
-                                <span>Delivered in 2-3 bussiness days</span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </div>
-                        <div class="clearfix"></div>
-
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="clearfix"> </div>
-        </div>
-    </div>
-    <div class="foot-top">
-        <div class="container">
-            <div class="col-md-6 s-c">
-                <li>
-                    <div class="fooll">
-                        <h5>follow us on</h5>
-                    </div>
-                </li>
-                <li>
-                    <div class="social-ic">
-                        <ul>
-                            <li><a href="#"><i class="facebok"> </i></a></li>
-                            <li><a href="#"><i class="twiter"> </i></a></li>
-                            <li><a href="#"><i class="goog"> </i></a></li>
-                            <li><a href="#"><i class="be"> </i></a></li>
-                            <li><a href="#"><i class="pp"> </i></a></li>
-                            <div class="clearfix"></div>
-                        </ul>
-                    </div>
-                </li>
-                <div class="clearfix"> </div>
-            </div>
-            <div class="col-md-6 s-c">
-                <div class="stay">
-                    <div class="stay-left">
-                        <form>
-                            <input type="text" placeholder="Enter your email to join our newsletter" required="">
-                        </form>
-                    </div>
-                    <div class="btn-1">
-                        <form>
-                            <input type="submit" value="join">
-                        </form>
-                    </div>
-                    <div class="clearfix"> </div>
-                </div>
+                @foreach (var element in Model.Products)
+                {
+                    <form>
+                        <pre style="font-size:15px">@element.Key.Name   Price: @element.Key.Price   Count: @element.Value --- <a asp-action="RemoveProduct/@element.Key.Id">Remove</a>  Set count: <input type="number" max="@element.Key.Count" min="1" name="count" /><input type="number" value="@element.Key.Id" name="Id" hidden /><input type="submit" asp-action="ChangeCount" formmethod="post" name="Submit" />     <a asp-controller="Product" asp-action="Get/@element.Key.Id">Detalis...</a></pre>
+                    </form>
+                }
+                @if (Model.Products.Count != 0)
+                {
+                    <h3 style="margin-top:10px">Amount: @Model.Amount руб</h3>
+                    <h4 style="margin-top:10px"><a asp-controller="Order" asp-action="Sending">Order</a></h4>
+                }
             </div>
             <div class="clearfix"> </div>
+
         </div>
     </div>
 </body>

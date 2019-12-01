@@ -3,7 +3,7 @@
 namespace ADASProject.Products
 {
     [ClassName("Smartphone")]
-    [ImageSize(350, 200)]
+    [ImageSize(180, 120)]
     public class Smartphone : Product<SmartphoneDescription>
     {
     }
@@ -31,7 +31,7 @@ namespace ADASProject.Products
         public int Id { get; set; }
 
         [Category("Mobile connection")]
-        [Characteristic("Поддерживает 4G")]
+        [Characteristic("Support 4G")]
         public bool IsUsing4G { get; set; }
 
         [Category("System")]
