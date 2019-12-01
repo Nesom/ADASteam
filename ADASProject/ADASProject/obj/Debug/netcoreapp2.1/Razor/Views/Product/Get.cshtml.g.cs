@@ -110,7 +110,7 @@ WriteAttributeValue("", 700, imgSrc, 700, 7, false);
             WriteLiteral("                 <div style=\"position:absolute; top:85%; left:35%\" class=\"item_add\"><span style=\"font-size:35px\" class=\"item_price\">");
             EndContext();
             BeginContext(1170, 115, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7070ec24e11649848e0894c4766b1f96", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "481d4d221b144ea380527344e4b5ae0e", async() => {
                 BeginContext(1254, 13, true);
                 WriteLiteral("Add to cart (");
                 EndContext();
@@ -209,7 +209,7 @@ WriteAttributeValue("", 700, imgSrc, 700, 7, false);
             WriteLiteral("            </table>\r\n    </div>\r\n    <div id=\"panely3\" class=\"tab-pane fade\">\r\n        ");
             EndContext();
             BeginContext(2679, 295, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0f2938f50b6b412f9e83806412e247c2", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "18338cb3b6b54c31a8977ed894b7d45c", async() => {
                 BeginContext(2744, 223, true);
                 WriteLiteral("\r\n            <textarea class=\"\" placeholder=\"Сообщение\" name=\"message\" rows=\"10\" cols=\"100\"></textarea><!--Поле для ввода сообщения-->\r\n            <input type=\"submit\" value=\"Отправить\" /><!--Кнопка отправить-->\r\n        ");
                 EndContext();

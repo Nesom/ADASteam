@@ -67,7 +67,7 @@ using ADASProject.Models;
             WriteLiteral("\r\n\r\n<!DOCTYPE HTML>\r\n<html>\r\n");
             EndContext();
             BeginContext(49, 17, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "97f7d3832bca431e888c45060fda9ada", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "bc3a7dd975f844fbbcea36248f0eb389", async() => {
                 BeginContext(55, 4, true);
                 WriteLiteral("\r\n\r\n");
                 EndContext();
@@ -87,7 +87,7 @@ using ADASProject.Models;
             WriteLiteral("\r\n");
             EndContext();
             BeginContext(68, 4482, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3d28498c470b443791a94ea365fe8e26", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "4c66309956584959b2b58cf19418d417", async() => {
                 BeginContext(74, 487, true);
                 WriteLiteral(@"
      <div class=""top_bg"">
@@ -107,7 +107,7 @@ using ADASProject.Models;
                     <li class=""active grid"">");
                 EndContext();
                 BeginContext(561, 67, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c11ba8998dc14cafb580cd8ec15fff53", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "fa4d4f64a34047d88d4f1a07f4866f5a", async() => {
                     BeginContext(620, 4, true);
                     WriteLiteral("Home");
                     EndContext();
@@ -132,7 +132,7 @@ using ADASProject.Models;
                 WriteLiteral("</li>\r\n                    <li class=\"active grid\">");
                 EndContext();
                 BeginContext(679, 72, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7471b07bc6054437ac10f3469dbd35bd", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "635b1871b7ce488182e191b0391f80f3", async() => {
                     BeginContext(740, 7, true);
                     WriteLiteral("Catalog");
                     EndContext();
@@ -197,7 +197,7 @@ using ADASProject.Models;
                 WriteLiteral(" рублей</span></li>\r\n                    <div class=\"clearfix\"> </div>\r\n                </ul>\r\n\r\n\r\n                <div class=\"clearfix\"></div>\r\n                ");
                 EndContext();
                 BeginContext(1955, 76, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3f005e2e6ed14fa1abb46140d7927e12", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ed332a3896074017bb4a4f9f6356b2b2", async() => {
                     BeginContext(2016, 11, true);
                     WriteLiteral("Place Order");
                     EndContext();
@@ -241,7 +241,7 @@ using ADASProject.Models;
                 WriteLiteral("                    <div class=\"cart-header\">\r\n                        ");
                 EndContext();
                 BeginContext(2314, 76, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "5f650610513341aebadf69d283301b3c", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ea0637e77f3a4c569093c6cc6b2cd138", async() => {
                     BeginContext(2360, 26, true);
                     WriteLiteral("<div class=\"close1\"></div>");
                     EndContext();
@@ -271,9 +271,9 @@ using ADASProject.Models;
                 WriteLiteral("\r\n                        <div class=\"cart-sec simpleCart_shelfItem\">\r\n                            <div class=\"cart-item cyc\">\r\n                                ");
                 EndContext();
                 BeginContext(2550, 129, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "068717e7e1304200b8e72e4c54862a39", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2f01eaea08d74c8aa0ac02351cd73385", async() => {
                     BeginContext(2611, 64, false);
-                    __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "f41d1971e7bf4f6fb341c4755b813da8", async() => {
+                    __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "f6122e66a4924863bc708468a7d1142e", async() => {
                     }
                     );
                     __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();

@@ -71,7 +71,7 @@ namespace ADASProject.Controllers
             var toValuesObj = ReflectionHelper.ConvertTypes(valuesInfo.ToValues, valuesInfo.Types);
 
             for (int i = 0; i < valuesInfo.Types.Length; i++)
-                values = ControllerHelper.FilterValues(values, type, valuesInfo.PropertyNames[i], fromValuesObj[i], toValuesObj[i]);
+                values = ControllerHelper1.FilterValues(values, type, valuesInfo.PropertyNames[i], fromValuesObj[i], toValuesObj[i]);
 
             return values;
         }

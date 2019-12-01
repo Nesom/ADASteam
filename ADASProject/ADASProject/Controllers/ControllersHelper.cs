@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ADASProject.Controllers
 {
-    public static class ControllerHelper
+    public static class ControllerHelper1
     {
         public static byte[] ConvertFileToBytes(IFormFile image)
         {

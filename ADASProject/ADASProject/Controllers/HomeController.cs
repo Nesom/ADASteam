@@ -125,7 +125,7 @@ namespace ADASProject.Controllers
                 model.CustomValuesInfo.Types = new Type[0];
             // Sort by parameter
             if (model.SortedBy != null)
-                products = ControllerHelper.OrderValuesByParameter(products, model.SortedBy, model.SortedByDescending);
+                products = ControllerHelper1.OrderValuesByParameter(products, model.SortedBy, model.SortedByDescending);
 
             model.Count = products.Count();
             model.Products = products;
