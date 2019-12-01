@@ -12789,11 +12789,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\rakhi\\OneDrive\\Рабочий стол\\ADASteamTO\\ADASProject\\ADASProject\\ADASProject.csproj",
+      "projectUniqueName": "C:\\Users\\rakhi\\OneDrive\\Рабочий стол\\ADASteamFinal\\ADASProject\\ADASProject\\ADASProject.csproj",
       "projectName": "ADASProject",
-      "projectPath": "C:\\Users\\rakhi\\OneDrive\\Рабочий стол\\ADASteamTO\\ADASProject\\ADASProject\\ADASProject.csproj",
+      "projectPath": "C:\\Users\\rakhi\\OneDrive\\Рабочий стол\\ADASteamFinal\\ADASProject\\ADASProject\\ADASProject.csproj",
       "packagesPath": "C:\\Users\\rakhi\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\rakhi\\OneDrive\\Рабочий стол\\ADASteamTO\\ADASProject\\ADASProject\\obj\\",
+      "outputPath": "C:\\Users\\rakhi\\OneDrive\\Рабочий стол\\ADASteamFinal\\ADASProject\\ADASProject\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
