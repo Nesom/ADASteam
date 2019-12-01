@@ -80,3 +80,10 @@ C:\Users\User\Desktop\ADASProject\ADASProject\obj\Release\netcoreapp2.1\ADASProj
 C:\Users\User\Desktop\ADASProject\ADASProject\obj\Release\netcoreapp2.1\ADASProject.dll
 C:\Users\User\Desktop\ADASProject\ADASProject\obj\Release\netcoreapp2.1\ADASProject.pdb
 C:\Users\User\Desktop\ADASProject\ADASProject\obj\Release\netcoreapp2.1\ADASProject.csproj.CopyComplete
+C:\Users\rakhi\OneDrive\Рабочий стол\ADASteamTO\ADASProject\ADASProject\obj\Release\netcoreapp2.1\ADASProject.csprojAssemblyReference.cache
+C:\Users\rakhi\OneDrive\Рабочий стол\ADASteamTO\ADASProject\ADASProject\obj\Release\netcoreapp2.1\ADASProject.RazorAssemblyInfo.cache
+C:\Users\rakhi\OneDrive\Рабочий стол\ADASteamTO\ADASProject\ADASProject\obj\Release\netcoreapp2.1\ADASProject.RazorAssemblyInfo.cs
+C:\Users\rakhi\OneDrive\Рабочий стол\ADASteamTO\ADASProject\ADASProject\obj\Release\netcoreapp2.1\ADASProject.AssemblyInfoInputs.cache
+C:\Users\rakhi\OneDrive\Рабочий стол\ADASteamTO\ADASProject\ADASProject\obj\Release\netcoreapp2.1\ADASProject.AssemblyInfo.cs
+C:\Users\rakhi\OneDrive\Рабочий стол\ADASteamTO\ADASProject\ADASProject\obj\Release\netcoreapp2.1\ADASProject.dll
+C:\Users\rakhi\OneDrive\Рабочий стол\ADASteamTO\ADASProject\ADASProject\obj\Release\netcoreapp2.1\ADASProject.pdb
