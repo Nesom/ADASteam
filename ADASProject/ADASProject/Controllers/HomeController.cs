@@ -1,55 +1,101 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
-using ADASProject.Models;
-using System.Linq;
-using System.Linq.Expressions;
+﻿using ADASProject.Models;
 using ADASProject.Products;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
+using System.Threading.Tasks;
 
 namespace ADASProject.Controllers
 {
     public class HomeController : Controller
     {
-        ApplicationContext db;
+        IDbContext db;
 
         public IActionResult Test() => View();
 
-        public HomeController(ApplicationContext context)
+        public HomeController(IDbContext context)
         {
             db = context;
         }
 
-        public static Dictionary<Type, EditerTModel> Cache { get; } 
-            = new Dictionary<Type, EditerTModel>();
+        public async Task<IActionResult> Index()
+        {
+            if (!TempData.ContainsKey("city"))
+                TempData["city"] = "Kazan"; //  Autodetect.GetCity(ip);
+            var products = (await db.GetProductInfosAsync())
+                .OrderByDescending(pr => pr.AddDate)
+                .Take(4)
+                .ToArray();
+            return View(new IndexModel() { First4Products = products });
+        }
+
+        #region HomeWork
+
+        public static Dictionary<Type, Tuple<string, PropertyInfo, bool>[]> cache { get; }
+            = new Dictionary<Type, Tuple<string, PropertyInfo, bool>[]>();
 
         [HttpGet]
         public async Task<IActionResult> EditerT(int id)
         {
-            var product = await db.GetProductInfo(id);
+            //var product = await db.GetProductInfoAsync(id);
 
-            var type = product.GetType();
+            //var type = product.GetType();
 
-            var model = new EditerTModel();
+            //var timer = new Stopwatch();
 
-            if (!Cache.ContainsKey(type))
-            {
-                var properties = type.GetProperties();
-                model.Types = properties
-                    .Select(pr => Tuple.Create(pr.Name, pr.PropertyType, pr.GetCustomAttributes(typeof(Attributes.ClassName), false) == null))
-                    .ToArray();
+            //timer.Start();
 
-                for(int i = 0; i < properties.Length; i++)
-                {
-                    model.StandartValues[i] = properties[i].GetValue(product);
-                }
+            //var model = new EditerTModel();
+            //if (!cache.ContainsKey(type))
+            //{
+            //    var properties = type.GetProperties();
+            //    var types = properties
+            //        .Select(pr => Tuple.Create(pr.Name, pr, pr.GetCustomAttributes(typeof(Attributes.ClassName), false) == null))
+            //        .ToArray();
+            //    cache[type] = types;
+            //}
+            //model.Types = cache[type];
+            //model.StandartValues = new object[model.Types.Length];
+            //for (int i = 0; i < model.Types.Length; i++)
+            //{
+            //    model.StandartValues[i] = model.Types[i].Item2.GetValue(product);
+            //}
+            //timer.Stop();
+            //model.TimeInTicks = timer.ElapsedTicks;
+            //return View(model);
 
-                Cache[type] = model;
-            }
-            model = Cache[type];
+            var type = Expression.Parameter(typeof(Type), "type");
+
+            var method = typeof(Type).GetMethod("GetProperties");
+
             
-            return View(model);
+
+            var properties =MethodCallExpression.Call(method, type);
+
+            var lambda = Expression.Lambda<Func<Type, object>>(properties, type);
+            var parser = lambda.Compile();
+
+            var t = parser(typeof(ProductInfo));
+
+            var d = (PropertyInfo[])t;
+
+            return View();
+
+            //for (int i = 0; i < properties.Length; i++)
+            //{
+            //    assigments.Add(Expression.Bind(Expression.Call(properties[i].GetValue(obj), toStr),
+            //        Expression.ArrayIndex(values, Expression.Constant(i))));
+            //}
+
+            //var body = Expression.MemberInit(
+            //    Expression.New(typeof(TParameters)
+            //        .GetConstructor(new Type[0])),
+            //    assigments);
         }
 
         [HttpPost]
@@ -63,15 +109,7 @@ namespace ADASProject.Controllers
         {
             return "Test";
         }
-
-        public IActionResult Index()
-        {
-            var products = db.Products
-                .OrderByDescending(pr => pr.AddDate)
-                .Take(4)
-                .ToArray();
-            return View(new IndexModel() { First4Products = products });
-        }
+        #endregion
 
         [HttpGet]
         [Authorize(Roles = "admin, user")]
@@ -79,9 +117,7 @@ namespace ADASProject.Controllers
         {
             var model = new PersonalAreaModel()
             {
-                Orders = db.Orders
-                    .Where(or => or.UserId == (int)TempData.Peek("id"))
-                    .ToArray()
+                Orders = (await db.GetOrdersAsync((int)TempData.Peek("id"))).ToArray()
             };
             return View(model);
         }
@@ -104,11 +140,11 @@ namespace ADASProject.Controllers
             else
                 selector = (pr) => pr.TableName == model.CategoryName + "Descriptions";
 
-            var products = db.Products.Where(selector);
+            var products = (await db.GetProductInfosAsync()).Where(selector);
             // Filter by custom values
             if (model.CustomValuesInfo != null && model.CustomValuesInfo.FromValues != null && model.CustomValuesInfo.ToValues != null)
             {
-                var descriptions = ControllerHelper.FilterCatalogValues(db.GetDescriptions(model.CategoryName + "Descriptions"),
+                var descriptions = ControllerHelper.FilterCatalogValues(await db.GetDescriptionsAsync(model.CategoryName + "Descriptions"),
                     ReflectionHelper.FoundType(model.CategoryName + "Description"),
                     model.CustomValuesInfo);
 
@@ -125,7 +161,7 @@ namespace ADASProject.Controllers
                 model.CustomValuesInfo.Types = new Type[0];
             // Sort by parameter
             if (model.SortedBy != null)
-                products = ControllerHelper1.OrderValuesByParameter(products, model.SortedBy, model.SortedByDescending);
+                products = ControllerHelper.OrderValuesByParameter(products, model.SortedBy, model.SortedByDescending);
 
             model.Count = products.Count();
             model.Products = products;

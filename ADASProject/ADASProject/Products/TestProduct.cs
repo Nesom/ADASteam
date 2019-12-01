@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace ADASProject.Products
 {
     [ClassName("TestClass")]
-    [ImageSize(200, 350)]
+    [ImageSize(120, 180)]
     public class TestProduct : Product<TestProductDescription>
     {
     }

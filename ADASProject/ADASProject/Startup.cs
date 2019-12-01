@@ -25,6 +25,8 @@ namespace ADASProject
             string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(connection));
 
+            services.AddScoped<IDbContext, ApplicationContext>();
+
             services.AddDistributedMemoryCache();
             services.AddSession(options =>
             {
@@ -36,12 +38,14 @@ namespace ADASProject
                 {
                     options.LoginPath = new PathString("/Account/Login");
                     options.AccessDeniedPath = new PathString("/Account/Login");
+                    options.Cookie.MaxAge = TimeSpan.FromMinutes(60);
                 });
 
             services.Configure<CookiePolicyOptions>(options =>
             {
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
+                options.ConsentCookie.MaxAge = TimeSpan.FromMinutes(60);
             });
 
             

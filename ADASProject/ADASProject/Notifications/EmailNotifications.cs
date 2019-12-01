@@ -42,13 +42,21 @@ namespace ADASProject.Notifications
             smtp.Credentials = new NetworkCredential("adasproject4@gmail.com", "adasproject4!!");
             smtp.EnableSsl = true;
             // отправляем пиьсмо
-            await smtp.SendMailAsync(m);
+            try
+            {
+                await smtp.SendMailAsync(m);
+            }
+            catch { }
         }
 
         public async Task SendOrderNotificationAsync(string email, OrderInfo order, Status type)
         {
             var body = $"<h3>Information about order ({order.Id}).<h3>\n" + orderMails[type].Item2 + "\n<h4>Thank you for using ADAS shop!<h4>";
-            await SendMailAsync(email, orderMails[type].Item1, body);
+            try
+            {
+                await SendMailAsync(email, orderMails[type].Item1, body);
+            }
+            catch { }
         }
 
         public Task SendRegisterNotificationAsync(string email, string password, RegisterMailType type)

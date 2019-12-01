@@ -1,12 +1,57 @@
 ﻿@model LoginModel
 
+@*<h2>Enter the site</h2>
+
+<a asp-action="Register" asp-controller="Account">Register</a>
+
+<form asp-action="Login" asp-controller="Account" asp-anti-forgery="true">
+    <div class="validation" asp-validation-summary="ModelOnly"></div>
+    <div>
+        <div class="form-group">
+            <label asp-for="Email">Enter your Email</label>
+            <input type="text" asp-for="Email" />
+            <span asp-validation-for="Email" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Password">Enter your password</label>
+            <input asp-for="Password" />
+            <span asp-validation-for="Password" />
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Login" class="btn" />
+        </div>
+    </div>
+</form>*@
 <!DOCTYPE HTML>
 <html>
 <head>
-
+    <title>Gretong a Ecommerce Category Flat Bootstarp Responsive Website Template | Register :: w3layouts</title>
+    <link href="css/bootstrap.css" rel='stylesheet' type='text/css' />
+    <!-- jQuery (necessary JavaScript plugins) -->
+    <script type='text/javascript' src="js/jquery-1.11.1.min.js"></script>
+    <!-- Custom Theme files -->
+    <link href="css/style.css" rel='stylesheet' type='text/css' />
+    <!-- Custom Theme files -->
+    <!--//theme-style-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="Gretong Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template,
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Playfair+Display:400,700,900' rel='stylesheet' type='text/css'>
+    <!-- start menu -->
+    <link href="css/megamenu.css" rel="stylesheet" type="text/css" media="all" />
+    <script type="text/javascript" src="js/megamenu.js"></script>
+    <script>$(document).ready(function(){$(".megamenu").megamenu();});</script>
+    <script src="js/menu_jquery.js"></script>
 </head>
 <body style="position:absolute; top:50px; left: 90px">
-
+    <!-- header_top -->
+    
+    <!-- header -->
+    
+    <!-- content -->
     <div class="container">
         <div class="main">
             <!-- start registration -->
@@ -58,21 +103,49 @@
 
 		})();
                     </script>
+                    @*<div class="registration_form">*@
 
+                        <!-- Form -->
+                        @*<form id="registration_form" action="contact.php" method="post" asp-anti-forgery="true">
+                            <div>
+                                <label>
+                                    <input placeholder="first name:" type="text" tabindex="1" required autofocus>
+                                </label>
+                            </div>
+                            <div>
+                                <label>
+                                    <input placeholder="password" type="password" tabindex="4" required>
+                                </label>
+                            </div>
+                            <div>
+                                <label>
+                                    <input placeholder="retype password" type="password" tabindex="4" required>
+                                </label>
+                            </div>
+                            <div>
+                                <input type="submit" value="create an account" id="register-submit">
+                            </div>
+                            <div class="sky-form">
+                                <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>i agree to shoppe.com &nbsp;<a class="terms" href="#"> terms of service</a> </label>
+                            </div>
+                        </form>*@
+                        <!-- /Form -->
+                    @*</div>*@
+                
                 <div class="registration_left">
-                    <h2 >Log in</h2>
+                    <h2>Log in</h2>
                     <div class="registration_form">
-                        <form asp-action="Login" asp-controller="Account">
+                        <form asp-action="Login" asp-controller="Account" asp-anti-forgery="true">
                             <div class="validation" asp-validation-summary="ModelOnly"></div>
                             <div>
-                                <div >
+                                <div class="form-group">
                                     <label asp-for="Email">Enter your Email</label>
-                                    <input style="width:300px" type="text" asp-for="Email" />
+                                    <input type="text" asp-for="Email" />
                                     <span asp-validation-for="Email" />
                                 </div>
                                 <div class="form-group">
                                     <label asp-for="Password">Enter your password</label>
-                                    <input style="width:300px" asp-for="Password" />
+                                    <input asp-for="Password" />
                                     <span asp-validation-for="Password" />
                                 </div>
                                 <div class="form-group">
@@ -80,7 +153,26 @@
                                 </div>
                             </div>
                         </form>
-
+                        <!-- Form -->
+                        @*<form id="registration_form" asp-action="Login" method="post">
+            <div>
+                <label>
+                    <input placeholder="email:" type="text" tabindex="3">
+                </label>
+            </div>
+            <div>
+                <label>
+                    <input placeholder="password" type="password" tabindex="4" required>
+                </label>
+            </div>
+            <div>
+                <input type="submit" value="Login" class="btn" />
+            </div>
+            <div class="forget">
+                <a href="#">forgot your password</a>
+            </div>
+        </form>*@
+                        <!-- /Form -->
                     </div>
                 </div>
                 <div class="clearfix"></div>
