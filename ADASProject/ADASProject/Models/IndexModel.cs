@@ -8,6 +8,6 @@ namespace ADASProject.Models
 {
     public class IndexModel
     {
-        public ProductInfo[] First4Products { get; set; }
+        public ProductInfo[] First4Productss { get; set; }
     }
 }
