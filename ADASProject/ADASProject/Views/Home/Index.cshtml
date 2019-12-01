@@ -3,21 +3,31 @@
 <html>
 <head>
     <title>Home</title>
-    <link href="css/bootstrap.css" rel='stylesheet' type='text/css' />
-    <script type='text/javascript' src="js/jquery-1.11.1.min.js"></script>
-    <link href="css/style.css" rel='stylesheet' type='text/css' />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="keywords" content="Gretong Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template,
-Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
-    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
-    <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Playfair+Display:400,700,900' rel='stylesheet' type='text/css'>
-    <link href="css/megamenu.css" rel="stylesheet" type="text/css" media="all" />
-    <script type="text/javascript" src="js/megamenu.js"></script>
-    <script>$(document).ready(function(){$(".megamenu").megamenu();});</script>
-    <script src="js/menu_jquery.js"></script>
-    <script src="js/simpleCart.min.js"></script>
+    <link href="css/megamenu.css" rel="stylesheet" type="text/css" />
+    <link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <style>
+        .grid_new {
+            padding: 0;
+        }
+
+            .grid_new li {
+                display: inherit;
+            }
+
+                .grid_new li:hover {
+                }
+
+                .grid_new li h5:hover {
+                    color: #ff6978;
+                }
+
+            .grid_new li {
+                width: 23%;
+                float: left;
+                margin: 0 1%
+            }
+    </style>
 </head>
 <body>
     <div class="header_bg">
@@ -131,26 +141,24 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     </div>
                 </div>
             </div>
-
         </div>
-    </div>
     </div>
     <div class="special">
         <div class="container">
             <h3>New Arrivals</h3>
             
-            <div class="specia-top">
-                <ul class="grid_2">
+            <div>
+                <ul class="grid_new" style="text-align:center; align-items:center; align-self:center">
                     @for (int i = 0; i < 4 && i < Model.First4Products.Length; i++)
                     {
                         var base64 = Convert.ToBase64String(Model.First4Products[i].Image);
                         var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
-                        <li>
-                            <a asp-controller="Product" asp-action="Get/@Model.First4Products[i].Id"><img src="@imgSrc" style="width:1000px" class="img-responsive" alt=""></a>
+                        <li style="width:23%">
+                            <a asp-controller="Product" asp-action="Get/@Model.First4Products[i].Id"><img src="@imgSrc" style="max-width:100%; width:auto; height:200px" alt=""></a>
                             <div class="special-info grid_1 simpleCart_shelfItem">
-                                <h5>@Model.First4Products[i].Name</h5>
+                                <a asp-controller="Product" asp-action="Get/@Model.First4Products[i].Id"><h5>@Model.First4Products[i].Name</h5></a>
                                 <div class="item_add"><span class="item_price"><h6>Price: @Model.First4Products[i].Price</h6></span></div>
-                                <div class="item_add"><span class="item_price"><a href="#">add to cart</a></span></div>
+                                <div class="item_add"><span class="item_price"><a style="background-color:teal" asp-controller="Order" asp-action="Buy/@Model.First4Products[i].Id">add to cart</a></span></div>
                             </div>
                         </li>
                     }

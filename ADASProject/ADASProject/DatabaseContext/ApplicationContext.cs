@@ -18,6 +18,8 @@ namespace ADASProject
         public DbSet<SmartphoneDescription> SmartphoneDescriptions { get; set; }
         public DbSet<TestProductDescription> TestProductDescriptions { get; set; }
 
+        public DbSet<ProductVote> ProductVotes { get; set; }
+
         public DbSet<OrderInfo> Orders { get; set; }
         public DbSet<SubOrder> SubOrders { get; set; }
         public DbSet<Address> Addresses { get; set; }
@@ -39,6 +41,8 @@ namespace ADASProject
                 .HasKey(c => new { c.UserId, c.CommentId });
             modelBuilder.Entity<Relation>()
                 .HasKey(r => new { r.LesserId, r.BiggerId });
+            modelBuilder.Entity<ProductVote>()
+                .HasKey(pr => new { pr.ProductId, pr.UserId });
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -373,6 +377,31 @@ namespace ADASProject
             return SubOrders
                 .Where(or => or.OrderId == orderId)
                 .ToList();
+        }
+        #endregion
+        #region productVoteWorker
+        public async Task VoteAsync(int productId, int userId, int vote)
+        {
+            if (!await IsVotedAsync(productId, userId) && vote > 0 && vote <= 5)
+            {
+                ProductVotes.Add(new ProductVote() { ProductId = productId, UserId = userId, Vote = vote });
+                var product = Products.Find(productId);
+                var sum = product.Rating * product.CountOfVotes++;
+                product.Rating = (sum + vote) / product.CountOfVotes;
+                await SaveChangesAsync();
+            }
+        }
+
+        public async Task<bool> IsVotedAsync(int productId, int userId)
+        {
+            return (await ProductVotes.FindAsync(new object[] { productId, userId })) == null;
+        }
+
+        public async Task<int> GetVoteAsync(int productId, int userId)
+        {
+            if (!await IsVotedAsync(productId, userId))
+                return (await ProductVotes.FindAsync(new object[] { productId, userId })).Vote;
+            return -1;
         }
         #endregion
     }

@@ -22,9 +22,17 @@ namespace ADASProject.Controllers
         public async Task<IActionResult> Get(GetModel model)
         {
             var product = await db.GetProductAsync(model.Id);
+
+            // Set custom values description
             model.Values = ReflectionHelper.GetCharacteristics(product.Description);
+            // Set standart (ProductInfo) values description
             model.StandartValues = ReflectionHelper.GetCharacteristics(product.ProductInfo);
+            // Set image field
             model.Image = product.ProductInfo.Image;
+            // Set can vote field
+            if (TempData.ContainsKey("id"))
+                model.CanVote = await db.IsVotedAsync(model.Id, (int)TempData.Peek("id"));
+            // Set comments
             var comments = await db.GetCommentsAsync(model.Id);
             foreach (var comment in comments)
             {
@@ -78,7 +86,7 @@ namespace ADASProject.Controllers
         [HttpGet]
         public async Task<IActionResult> GetRelationProducts(int id)
         {
-            var ids =(await db.GetRelationsAsync())
+            var ids = (await db.GetRelationsAsync())
                 .Where(r => r.LesserId == id || r.BiggerId == id)
                 .OrderByDescending(r => r.Count)
                 .Select(r => r.LesserId == id ? r.BiggerId : r.LesserId);
@@ -86,6 +94,28 @@ namespace ADASProject.Controllers
             foreach (var productId in ids)
                 products.Add(await db.GetProductInfoAsync(id));
             return View(products);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Search(string request)
+        {
+            var products = await db.GetProductInfosAsync();
+            return View(new SearchModel()
+            {
+                Products = products
+                    .Where(pr => request.Contains(pr.Name))
+            });
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "user, admin")]
+        public async Task<IActionResult> Rate(int productId, int rate)
+        {
+            if (!await db.IsVotedAsync(productId, (int)TempData.Peek("id")) && rate > 0 && rate <= 5)
+            {
+                await db.VoteAsync(productId, (int)TempData.Peek("id"), rate);
+            }
+            return RedirectToAction("Get/" + productId, "Product");
         }
     }
 }

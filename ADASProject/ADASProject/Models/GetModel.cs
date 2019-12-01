@@ -20,5 +20,6 @@ namespace ADASProject.Models
         public Dictionary<string, Dictionary<string, string>> StandartValues { get; set; }
         public List<Tuple<Comment, string>> Comments { get; set; }
         public byte[] Image { get; set; }
+        public bool CanVote { get; set; }
     }
 }
