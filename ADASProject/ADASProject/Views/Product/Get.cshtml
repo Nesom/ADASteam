@@ -20,7 +20,7 @@
 
 <div class="tab-content">
     <div id="panely1" class="tab-pane fade in active">
-        <img style="width:300px" class="etalage_thumb_image" src="@imgSrc" class="img-responsive" />
+        <img style="width:300px; position:relative; bottom:auto" class="etalage_thumb_image" src="@imgSrc" class="img-responsive" />
         @foreach (var e in Model.StandartValues.Concat(Model.Values))
         {
             foreach (var value in e.Value)
