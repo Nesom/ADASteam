@@ -21,6 +21,7 @@ namespace ADASProject.Controllers
         [HttpPost]
         public async Task<IActionResult> Get(GetModel model)
         {
+            var id = model.Id;
             var product = await db.GetProductAsync(model.Id);
 
             // Set custom values description
@@ -39,6 +40,15 @@ namespace ADASProject.Controllers
                 var user = await db.GetUserAsync(comment.UserId);
                 model.Comments.Add(Tuple.Create(comment, user.Email));
             }
+            var ids = (await db.GetRelationsAsync())
+                .Where(r => r.LesserId == id || r.BiggerId == id)
+                .OrderByDescending(r => r.Count)
+                .Select(r => r.LesserId == id ? r.BiggerId : r.LesserId)
+                .Take(4);
+            var products = new List<ProductInfo>();
+            foreach (var productId in ids)
+                products.Add(await db.GetProductInfoAsync(productId));
+            model.RelatedProducts = products;
             return View(model);
         }
 

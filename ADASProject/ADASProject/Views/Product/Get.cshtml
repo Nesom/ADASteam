@@ -13,9 +13,10 @@
 </script>
 
 <ul id="myTab2" class="nav nav-tabs">
-    <li><a data-toggle="tab" href="#panely1">Описание</a></li>
-    <li><a data-toggle="tab" href="#panely2">Характеристики</a></li>
-    <li><a data-toggle="tab" href="#panely3">Отзывы</a></li>
+    <li><a data-toggle="tab" href="#panely1">Description</a></li>
+    <li><a data-toggle="tab" href="#panely2">Characteristics</a></li>
+    <li><a data-toggle="tab" href="#panely3">Сomments</a></li>
+    <li><a data-toggle="tab" href="#panely4">Related products</a></li>
 </ul>
 
 <div class="tab-content">
@@ -56,8 +57,34 @@
         </form>
     </div>
     <div id="panely4" class="tab-pane fade">
-        <h3>Панель 4</h3>
-        <p>Содержимое 4 панели...</p>
+        @*@for (int i = 0; i < Model.RelatedProducts.Count; i += 4)
+        {
+            var size = CatalogModel.TypeToSizeDict[ModelHelper.GetCategoryName(Model.RelatedProducts[i].TableName)];
+            var heightPlus100 = size.Height + 100;*@
+            <div class="grids_of_4">
+                @for (int j = 0; j < 4 && j < Model.RelatedProducts.Count; j++)
+                {
+                    base64 = Convert.ToBase64String(Model.RelatedProducts[j].Image);
+                    imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+
+                    <div class="grid1_of_4">
+                        <div class="content_box" style="width:100%">
+                            <a asp-controller="Product" asp-action="Get/@Model.RelatedProducts[j].Id">
+                                <div style="height:@(CatalogModel.TypeToSizeDict[ModelHelper.GetCategoryName(Model.RelatedProducts[j].TableName)].Height)px;margin-top:10px; width:100%">
+                                    <img src="@imgSrc" style="width:auto; max-width:100%; height:100%" alt="" />
+                                </div>
+                            </a>
+                            <h4>@Model.RelatedProducts[j].Name</h4>
+                            <p>@CatalogModel.TypeToNameDict[ModelHelper.GetCategoryName(Model.RelatedProducts[j].TableName)]</p>
+                            <div class="grid_1 simpleCart_shelfItem">
+                                <div class="item_add"><span class="item_price"><h6>Price: @Model.RelatedProducts[j].Price</h6></span></div>
+                                <div class="item_add"><span class="item_price"><a style="background-color:teal" asp-controller="Order" asp-action="Buy/@Model.RelatedProducts[j].Id">add to cart</a></span></div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        @*}*@
     </div>
 </div>
 
