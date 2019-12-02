@@ -5,44 +5,7 @@
     var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
     TempData["GetId"] = Model.Id;
 }
-@*
-    <img src="@imgSrc" width="300" height="400" />
 
-    @foreach (var category in Model.StandartValues)
-    {
-        <h3>@category.Key</h3>
-        foreach (var value in category.Value)
-        {
-            <pre style="font-size:15px">   @value.Key  :  @value.Value</pre>
-        }
-    }
-
-    @foreach (var category in Model.Values)
-    {
-        <h3>@category.Key</h3>
-        foreach (var value in category.Value)
-        {
-            <pre style="font-size:15px">   @value.Key  :  @value.Value</pre>
-        }
-    }
-    <h3>Комментарии</h3>
-    @foreach (var comment in Model.Comments)
-    {
-        <pre style="font-size:15px">@comment.Item2 (+@comment.Item1.Rating)<pre style="font-size:13px">>@comment.Item1.Text
-        @if (TempData.Peek("role") != null && Model.Context.CanLike((int)TempData.Peek("id"), comment.Item1.Id)) {<a asp-controller="Product" asp-action="Like/@comment.Item1.Id">Like</a>}
-        @if (TempData.Peek("role") != null && !Model.Context.CanLike((int)TempData.Peek("id"), comment.Item1.Id)) {<a asp-controller="Product" asp-action="Unlike/@comment.Item1.Id">Unlike</a>}
-        @if (TempData.Peek("role") != null && TempData.Peek("role").ToString() == "admin") { <a asp-controller="Product" asp-action="RemoveComment/@comment.Item1.Id">Удалить</a>}</pre></pre>
-    }
-    @if (TempData.Peek("role") != null)
-    {
-        <form asp-controller="Product" asp-action="Comment" method="post">
-            <input name="id" type="number" value="@Model.Id" hidden />
-            <pre>Комментировать: <input name="text" type="text" style="width: 300px; height: 70px;" maxlength="1000" required /> </pre>
-            <button asp-controller="Product" asp-action="Comment" type="submit">Отправить</button>
-        </form>
-    }
-
-    <pre><a asp-controller="Order" asp-action="Buy/@Model.Id">Купить</a></pre>*@
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -61,23 +24,24 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <link href="css/megamenu.css" rel="stylesheet" type="text/css" media="all" />
     <link rel="stylesheet" href="css/etalage.css">
     <script type="text/javascript" src="js/megamenu.js"></script>
-    <script>$(document).ready(function(){$(".megamenu").megamenu();});</script>
+    <script>$(document).ready(function () { $(".megamenu").megamenu(); });</script>
     <script src="js/jquery.etalage.min.js"></script>
     <script src="js/menu_jquery.js"></script>
-    <script>jQuery(document).ready(function($){
+    <script>
+    jQuery(document).ready(function ($) {
 
-				$('#etalage').etalage({
-					thumb_image_width: 300,
-					thumb_image_height: 400,
-					source_image_width: 900,
-					source_image_height: 1200,
-					show_hint: true,
-					click_callback: function(image_anchor, instance_id){
-						alert('Callback example:\nYou clicked on an image with the anchor: "'+image_anchor+'"\n(in Etalage instance: "'+instance_id+'")');
-					}
-				});
+            $('#etalage').etalage({
+                thumb_image_width: 300,
+                thumb_image_height: 400,
+                source_image_width: 900,
+                source_image_height: 1200,
+                show_hint: true,
+                click_callback: function (image_anchor, instance_id) {
+                    alert('Callback example:\nYou clicked on an image with the anchor: "' + image_anchor + '"\n(in Etalage instance: "' + instance_id + '")');
+                }
+            });
 
-			});</script>
+        });</script>
 
 </head>
 <body>
@@ -86,8 +50,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             <div class="header">
                 <div class="head-t">
                     @*<div class="logo">
-                        <a asp-action="Index"><img src="~/images/logo.png" class="img-responsive" alt="" /> </a>
-                    </div>*@
+                            <a asp-action="Index"><img src="~/images/logo.png" class="img-responsive" alt="" /> </a>
+                        </div>*@
                     <div class="header_right">
                         <div class="clearfix"> </div>
                     </div>
@@ -95,7 +59,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 </div>
                 <ul class="megamenu skyblue">
                     <li class="active grid"><a class="color1" href="index.html">Home</a></li>
-                    </ul>
+                </ul>
             </div>
             <div class="container">
                 <div class="women_main">
@@ -103,100 +67,105 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <div class="row single">
                         <div class="col-md-9 det">
                             @*<div class="single_left">*@
-                            
-                                <div class="grid images_3_of_2">
-                                    <ul id="etalage">
-                                        <li>
-                                            <a href="optionallink.html">
-                                                <img class="etalage_thumb_image" src="@imgSrc" class="img-responsive" />
-                                               
-                                            </a>
-                                        </li>
-                                    </ul>
-                                    <div class="clearfix"></div>
-                                </div>
-                                <div class="desc1 span_3_of_2">
-                                    <h3>@Model.StandartValues.First().Value.First().Value</h3>
-                                    <span class="brand">Brand: @Model.StandartValues.First().Value.Skip(1).First().Value</span>
-                                    <br>
-                                    <span class="code">Product Code: Product 11</span>
-                                    <p>Количество на складе : @Model.StandartValues.First().Value.Skip(1).First().Value</p>
-                                    <div class="price">
-                                        <span class="text">Price:</span>
-                                        <span class="price-new">@Model.StandartValues.First().Value.Skip(2).First().Value</span><span class="price-old">@Model.StandartValues.First().Value.Skip(2).First().Value</span>
-                                        <!--<span class="price-tax">Ex Tax: $90.00</span>--><br>
-                                        <!--<span class="points"><small>Price in reward points: 400</small></span>--><br>
-                                    </div>
 
-                                    <div class="btn_form">
-                                        <a href="checkout.html">buy</a>
-                                    </div>
-                                    <!--<a href="#"><span>login to save in wishlist </span></a>-->
+                            <div class="grid images_3_of_2">
+                                <ul id="etalage">
+                                    <li>
+                                        <a href="optionallink.html">
+                                            <img class="etalage_thumb_image" src="@imgSrc" class="img-responsive" />
 
-                                </div>
-                            
+                                        </a>
+                                    </li>
+                                </ul>
                                 <div class="clearfix"></div>
-                        </div>
-                            
-                            
-                                <h6>Description</h6>
-                                <p class="prod-desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber tempor cum soluta nobis eleifend option</p>
-                            
-                            <div class="single-bottom1">
-                                <h6>Characteristics</h6>
-                                @*
-                                    <input type="radio" checked><br>
-                                    <input type="radio" checked><br>
-                                    <input type="radio" checked><br>
-                                *@
-                                @foreach (var e in Model.StandartValues.Concat(Model.Values))
-                                {
-                                    foreach (var value in e.Value)
-                                    {
-                                        <p>@value.Key :</p>
-                                        <pre>@value.Value</pre>
-                                    }
-                                }
                             </div>
-                            <div class="single-bottom2">
-                                <h6>Related Products</h6>
-                                <div class="product">
-                                    <div class="product-desc">
-                                        <div class="product-img">
-                                            <img src="Айфон.jpg" class="img-responsive " alt="" />
-                                        </div>
-                                        <div class="prod1-desc">
-                                            <h5><a class="product_link" href="#">Excepteur sint</a></h5>
-                                            <p class="product_descr"> Vivamus ante lorem, eleifend nec interdum non, ullamcorper et arcu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. </p>
-                                        </div>
-                                        <div class="clearfix"></div>
+                            <div class="desc1 span_3_of_2">
+                                <h3>@Model.StandartValues.First().Value.First().Value</h3>
+                                <span class="brand">Brand: @Model.StandartValues.First().Value.Skip(1).First().Value</span>
+                                <br>
+                                <span class="code">Product Code: Product 11</span>
+                                <p>Количество на складе : @Model.StandartValues.First().Value.Skip(1).First().Value</p>
+                                <div class="price">
+                                    <span class="text">Price:</span>
+                                    <span class="price-new">@Model.StandartValues.First().Value.Skip(2).First().Value</span><span class="price-old">@Model.StandartValues.First().Value.Skip(2).First().Value</span>
+                                    <!--<span class="price-tax">Ex Tax: $90.00</span>--><br>
+                                    <!--<span class="points"><small>Price in reward points: 400</small></span>--><br>
+                                </div>
+
+                                <div class="btn_form">
+                                    <a href="checkout.html">buy</a>
+                                </div>
+                                <!--<a href="#"><span>login to save in wishlist </span></a>-->
+
+                            </div>
+
+                            <div class="clearfix"></div>
+                        </div>
+
+
+                        <h6>Description</h6>
+                        <p class="prod-desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber tempor cum soluta nobis eleifend option</p>
+
+                        <div class="single-bottom1">
+                            <h6>Characteristics</h6>
+                            @*
+                                <input type="radio" checked><br>
+                                <input type="radio" checked><br>
+                                <input type="radio" checked><br>
+                            *@
+                            @foreach (var e in Model.StandartValues.Concat(Model.Values))
+                            {
+                                foreach (var value in e.Value)
+                                {
+                                    <p>@value.Key :</p>
+                                    <pre>@value.Value</pre>
+                                }
+                            }
+                            <fieldset>
+                                <p>
+                                    Оставьте ваш отзыв
+                                </p>
+                            </fieldset>
+                        </div>
+                        <div class="single-bottom2">
+                            <h6>Related Products</h6>
+                            <div class="product">
+                                <div class="product-desc">
+                                    <div class="product-img">
+                                        <img src="Айфон.jpg" class="img-responsive " alt="" />
                                     </div>
-                                    <div class="product_price">
-                                        <span class="price-access">$597.51</span>
-                                        <button class="button1"><span>Add to cart</span></button>
+                                    <div class="prod1-desc">
+                                        <h5><a class="product_link" href="#">Excepteur sint</a></h5>
+                                        <p class="product_descr"> Vivamus ante lorem, eleifend nec interdum non, ullamcorper et arcu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. </p>
                                     </div>
                                     <div class="clearfix"></div>
                                 </div>
-                                <div class="product">
-                                    <div class="product-desc">
-                                        <div class="product-img">
-                                            <img src="Айфон.jpg" class="img-responsive" alt="" />
-                                        </div>
-                                        <div class="prod1-desc">
-                                            <h5><a class="product_link" href="details.html">Excepteur sint</a></h5>
-                                            <p class="product_descr"> Vivamus ante lorem, eleifend nec interdum non, ullamcorper et arcu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. </p>
-                                        </div>
-                                        <div class="clearfix"></div>
+                                <div class="product_price">
+                                    <span class="price-access">$597.51</span>
+                                    <button class="button1"><span>Add to cart</span></button>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="product">
+                                <div class="product-desc">
+                                    <div class="product-img">
+                                        <img src="Айфон.jpg" class="img-responsive" alt="" />
                                     </div>
-                                    <div class="product_price">
-                                        <span class="price-access">$597.51</span>
-                                        <button class="button1"><span>Add to cart</span></button>
+                                    <div class="prod1-desc">
+                                        <h5><a class="product_link" href="details.html">Excepteur sint</a></h5>
+                                        <p class="product_descr"> Vivamus ante lorem, eleifend nec interdum non, ullamcorper et arcu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. </p>
                                     </div>
                                     <div class="clearfix"></div>
                                 </div>
+                                <div class="product_price">
+                                    <span class="price-access">$597.51</span>
+                                    <button class="button1"><span>Add to cart</span></button>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
                             @*</div>*@
                         </div>
-                        
+
                         <div class="clearfix"></div>
                     </div>
                     <!-- end content -->
@@ -242,8 +211,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <div class="clearfix"> </div>
                 </div>
             </div>
-            </div>
         </div>
+    </div>
 </body>
 </html>
 

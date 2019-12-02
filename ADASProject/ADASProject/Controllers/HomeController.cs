@@ -1,14 +1,14 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
-using ADASProject.Models;
-using System.Linq;
-using System.Linq.Expressions;
+﻿using ADASProject.Models;
 using ADASProject.Products;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace ADASProject.Controllers
 {
@@ -18,46 +18,84 @@ namespace ADASProject.Controllers
 
         public IActionResult Test() => View();
 
-        private string str;
-
         public HomeController(IDbContext context)
         {
             db = context;
         }
 
+        public async Task<IActionResult> Index()
+        {
+            if (!TempData.ContainsKey("city"))
+                TempData["city"] = "Kazan"; //  Autodetect.GetCity(ip);
+            var products = (await db.GetProductInfosAsync())
+                .OrderByDescending(pr => pr.AddDate)
+                .Take(4)
+                .ToArray();
+            return View(new IndexModel() { First4Products = products });
+        }
+
         #region HomeWork
-        public static Dictionary<Type, Tuple<string, PropertyInfo, bool>[]> Cache { get; }
+
+        public static Dictionary<Type, Tuple<string, PropertyInfo, bool>[]> cache { get; }
             = new Dictionary<Type, Tuple<string, PropertyInfo, bool>[]>();
 
         [HttpGet]
         public async Task<IActionResult> EditerT(int id)
         {
-            var product = await db.GetProductInfoAsync(id);
+            //var product = await db.GetProductInfoAsync(id);
 
-            var type = product.GetType();
+            //var type = product.GetType();
 
-            var timer = new Stopwatch();
+            //var timer = new Stopwatch();
 
-            timer.Start();
+            //timer.Start();
 
-            var model = new EditerTModel();
-            if (!Cache.ContainsKey(type))
-            {
-                var properties = type.GetProperties();
-                var types = properties
-                    .Select(pr => Tuple.Create(pr.Name, pr, pr.GetCustomAttributes(typeof(Attributes.ClassName), false) == null))
-                    .ToArray();
-                Cache[type] = types;
-            }
-            model.Types = Cache[type];
-            model.StandartValues = new object[model.Types.Length];
-            for (int i = 0; i < model.Types.Length; i++)
-            {
-                model.StandartValues[i] = model.Types[i].Item2.GetValue(product);
-            }
-            timer.Stop();
-            model.TimeInTicks = timer.ElapsedTicks;
-            return View(model);
+            //var model = new EditerTModel();
+            //if (!cache.ContainsKey(type))
+            //{
+            //    var properties = type.GetProperties();
+            //    var types = properties
+            //        .Select(pr => Tuple.Create(pr.Name, pr, pr.GetCustomAttributes(typeof(Attributes.ClassName), false) == null))
+            //        .ToArray();
+            //    cache[type] = types;
+            //}
+            //model.Types = cache[type];
+            //model.StandartValues = new object[model.Types.Length];
+            //for (int i = 0; i < model.Types.Length; i++)
+            //{
+            //    model.StandartValues[i] = model.Types[i].Item2.GetValue(product);
+            //}
+            //timer.Stop();
+            //model.TimeInTicks = timer.ElapsedTicks;
+            //return View(model);
+
+            var type = Expression.Parameter(typeof(Type), "type");
+
+            var method = typeof(Type).GetMethod("GetProperties");
+
+            
+
+            var properties =MethodCallExpression.Call(method, type);
+
+            var lambda = Expression.Lambda<Func<Type, object>>(properties, type);
+            var parser = lambda.Compile();
+
+            var t = parser(typeof(ProductInfo));
+
+            var d = (PropertyInfo[])t;
+
+            return View();
+
+            //for (int i = 0; i < properties.Length; i++)
+            //{
+            //    assigments.Add(Expression.Bind(Expression.Call(properties[i].GetValue(obj), toStr),
+            //        Expression.ArrayIndex(values, Expression.Constant(i))));
+            //}
+
+            //var body = Expression.MemberInit(
+            //    Expression.New(typeof(TParameters)
+            //        .GetConstructor(new Type[0])),
+            //    assigments);
         }
 
         [HttpPost]
@@ -72,15 +110,6 @@ namespace ADASProject.Controllers
             return "Test";
         }
         #endregion
-
-        public async Task<IActionResult> Index()
-        {
-            var products = (await db.GetProductInfosAsync())
-                .OrderByDescending(pr => pr.AddDate)
-                .Take(4)
-                .ToArray();
-            return View(new IndexModel() { First4Products = products });
-        }
 
         [HttpGet]
         [Authorize(Roles = "admin, user")]

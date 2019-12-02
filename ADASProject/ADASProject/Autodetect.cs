@@ -1,17 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net;
-using System.Text;
 
 namespace ADASProject
 {
     public static class Autodetect
     {
-        public static void GetAutodetect()
+        public static string GetCity(string ip)
         {
             Console.WriteLine("Waiting for location response...");
             // запрашиваем ip устройства
-            var locationResponse = new WebClient().DownloadString("https://2ip.ua/ru/services/information-service/site-location");
+            var client = new WebClient() { BaseAddress = ip };
+            var locationResponse = client.DownloadString("https://2ip.ua/ru/services/information-service/site-location");
             // получаем ip
             locationResponse = GetResponseToRequest(locationResponse, "ip=", 3, '"');
             var textOfRequest = "https://check-host.net/ip-info?host=";
@@ -23,8 +22,8 @@ namespace ADASProject
             var country = GetResponseToRequest(location, "Country", 74, '<');
             // выводим город
             var city = GetResponseToRequest(location, "City", 15, '<');
-            Console.WriteLine("{0}, {1}", country, city);
-            Console.ReadKey();
+
+            return city;
         }
         // метод, обрабатывающий строку для получения нужной информации
         private static string GetResponseToRequest(string locationResponse, string subString, int countOfSymbols, char symbol)
