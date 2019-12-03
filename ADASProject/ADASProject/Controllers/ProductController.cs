@@ -47,8 +47,12 @@ namespace ADASProject.Controllers
 
         [HttpPost]
         [Authorize(Roles = "user, admin")]
-        public async Task<IActionResult> Comment(int id, string text)
+        public async Task<IActionResult> Comment(int id, string text, string vote)
         {
+            int _vote = -1;
+            if (Int32.TryParse(vote, out _vote))
+                await db.ChangeVoteAsync(id, (int)TempData.Peek("id"), _vote);
+
             var userId = (int)TempData.Peek("id");
             await db.AddCommentAsync(new Comments.Comment() { UserId = userId, ProductId = id, Text = text });
             return RedirectToAction($"Get/{id}");

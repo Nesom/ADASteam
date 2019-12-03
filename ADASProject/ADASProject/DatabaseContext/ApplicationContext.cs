@@ -403,6 +403,17 @@ namespace ADASProject
                 return (await ProductVotes.FindAsync(new object[] { productId, userId })).Vote;
             return -1;
         }
+
+        public async Task ChangeVoteAsync(int productId, int userId, int newVote)
+        {
+            var vote = await ProductVotes.FindAsync(new object[] { productId, userId });
+            if (vote == null)
+            {
+                vote = new ProductVote() { ProductId = productId, UserId = userId };
+            }
+            vote.Vote = newVote;
+            await SaveChangesAsync();
+        }
         #endregion
     }
 }

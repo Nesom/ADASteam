@@ -1,10 +1,10 @@
 ﻿using ADASProject.Models;
 using ADASProject.Products;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -15,18 +15,24 @@ namespace ADASProject.Controllers
     public class HomeController : Controller
     {
         IDbContext db;
+        IHttpContextAccessor accessor;
 
         public IActionResult Test() => View();
 
-        public HomeController(IDbContext context)
+        public HomeController(IDbContext context, IHttpContextAccessor contextAccessor)
         {
             db = context;
+            accessor = contextAccessor;
         }
 
         public async Task<IActionResult> Index()
         {
-            if (!TempData.ContainsKey("city"))
-                TempData["city"] = "Kazan"; //  Autodetect.GetCity(ip);
+            var ip = accessor.HttpContext.Connection.RemoteIpAddress.ToString();
+            var city = Autodetect.GetCity(ip);
+            if (city != null)
+            {
+                TempData["city"] = city;
+            }
             var products = (await db.GetProductInfosAsync())
                 .OrderByDescending(pr => pr.AddDate)
                 .Take(4)
@@ -115,6 +121,7 @@ namespace ADASProject.Controllers
         [Authorize(Roles = "admin, user")]
         public async Task<IActionResult> PersonalArea()
         {
+            TempData.Remove("city");
             var model = new PersonalAreaModel()
             {
                 Orders = (await db.GetOrdersAsync((int)TempData.Peek("id"))).ToArray()
