@@ -38,7 +38,7 @@ namespace ADASProject.Controllers
                 value = HttpContext.Session.Get("basket");
 
             if (!await db.IsAvailable(id))
-                return RedirectToAction("Error", "Home", 
+                return RedirectToAction("Error", 
                     new ErrorViewModel()
                     {
                         ActionName = "Catalog",
