@@ -20,27 +20,18 @@
 
 <div class="tab-content">
     <div id="panely1" class="tab-pane fade in active">
+        <h1 style="position:relative">@Model.StandartValues.First().Value["Name"]</h1>
         <img style="width:300px" class="etalage_thumb_image" src="@imgSrc" class="img-responsive" />
-        @foreach (var e in Model.StandartValues.Concat(Model.Values))
-        {
-            foreach (var value in e.Value)
-            {
-                if (value.Key == "Price")
-                {
-                <div style="position:relative; top:auto; left:auto" class="item_add"><span style="font-size:35px" class="item_price"><a asp-controller="Order" asp-action="Buy/@Model.Id" style="background-color:grey;">Add to cart (@value.Value$)</a></span></div>
-            }
-        }
-    }
-    <p style="font-size:large" class="prod-desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber tempor cum soluta nobis eleifend option</p>
+        <p style="font-size:large;word-wrap: break-word" class="prod-desc">@Model.StandartValues.First().Value["Description"]</p>
+        <div style="position:relative" class="item_add"><span style="font-size:35px" class="item_price"><a asp-controller="Order" asp-action="Buy/@Model.Id" style="background-color:grey;">Add to cart (@Model.StandartValues.First().Value["Price"]$)</a></span></div>
+        <h4 style="position:relative">Products left : @Model.StandartValues.First().Value["Products count"]</h4>
     </div>
     <div id="panely2" class="tab-pane fade">
         <table class="table">
             @foreach (var e in Model.StandartValues.Concat(Model.Values))
             {
-                foreach (var value in e.Value)
+                foreach (var value in e.Value.Where(a => a.Key!="Description" && a.Key!="Price" && a.Key!="Name" && a.Key!="Products count" && a.Key!="Rating"))
                 {
-                    if (value.Key == "Price") { continue; }
-                    
                     <tr style="font-size:medium">
                         
                         <td scope="row"><strong>@value.Key</strong></td>
@@ -52,21 +43,43 @@
         </table>
     </div>
     <div id="panely3" class="tab-pane fade">
-       
-            @foreach (var e in Model.Comments)
-            {
-                <div class="form-group">
-                    <h3>@e.Item1.Text :</h3>
-                    <blockquote style="word-wrap: break-word">@e.Item2 <p>Rating : </p></blockquote>
-                    <p>Rating : </p>
-                </div>
-            }
-    
-    <form asp-controller="Product" asp-action="Comment" method="post" style="position:relative">
+
+        @foreach (var e in Model.Comments.Concat(Model.Comments))
+        {
+            <hr style="align-content:center; border:solid" />
+        <div class="form-group">
+            <h3>@e.Item2 :</h3>
+            <div class="container">
+                <blockquote style="word-wrap: break-word">@e.Item1.Text</blockquote><blockquote class="blockquote-reverse">Rating : @e.Item1.Rating</blockquote>
+            </div>
+
+            <button><a asp-controller="Product" asp-action="Like/@e.Item1.Id">Like</a></button>
+            <button><a asp-controller="Product" asp-action="Unlike/@e.Item1.Id">Dislike</a></button>
+        </div>
+        
+        }
+
+        <form asp-controller="Product" asp-action="Comment" method="post" style="position:relative">
+            <input name="id" type="number" value="@Model.Id" hidden />
+            <input style=" width:50%" name="text" type="text" style="width: 300px; height: 70px;" maxlength="1000" required />
+            <button asp-controller="Product" asp-action="Comment" type="submit">Отправить</button>
+        </form>
+        @*@foreach(var comment in Model.Comments)
+        {
+        <pre style="font-size:15px">@comment.Item2 (+@comment.Item1.Rating)<pre style="font-size:13px"»@comment.Item1.Text>
+        @if (TempData.Peek("role" != null && Model.Context.CanLike((int)TempData.Peek("id"), comment.Item1.Id))) {<a asp-controller="Product" asp-action="Like/@comment.Item1.Id">Like</a>}
+        @if (TempData.Peek("role" != null && !Model.Context.CanLike((int)TempData.Peek("id"), comment.Item1.Id))) {<a asp-controller="Product" asp-action="Unlike/@comment.Item1.Id">Unlike</a>}
+        @if (TempData.Peek("role" != null && TempData.Peek("role").ToString() == "admin")) { <a asp-controller="Product" asp-action="RemoveComment/@comment.Item1.Id">Удалить</a>;
+        }</pre></pre>
+        }
+        @if (TempData.Peek("role" != null))
+        {
+        <form asp-controller="Product" asp-action="Comment" method="post">
         <input name="id" type="number" value="@Model.Id" hidden />
-        <input style=" width:50%" name="text" type="text" style="width: 300px; height: 70px;" maxlength="1000" required />
+        <pre>Комментировать: <input name="text" type="text" style="width: 300px; height: 70px;" maxlength="1000" required /> </pre>
         <button asp-controller="Product" asp-action="Comment" type="submit">Отправить</button>
-    </form>
+        </form>
+        }*@
     </div>
     <div id="panely4" class="tab-pane fade">
         <h3>Панель 4</h3>
