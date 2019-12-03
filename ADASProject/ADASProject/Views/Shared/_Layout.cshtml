@@ -94,7 +94,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <a asp-controller="Home" asp-action="Index" style="position:absolute; left:20px; top:0px;"><img src="~/images/logo_new.png" style="position:absolute; left:20px; top:0px; width:130px"></a>
                     </li>
 
-                    <li class="element" style="position:absolute;right: calc(11.7% + 210px); top:20%; background-color:#E6E6E6">
+                    @*<li class="element" style="position:absolute;right: calc(11.7% + 210px); top:20%; background-color:#E6E6E6">
                         <div class="log">
                             <div class="login">
                                 <div id="loginContainer">
@@ -102,10 +102,19 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 </div>
                             </div>
                         </div>
-                    </li>
+                    </li>*@
 
                     @if (TempData.ContainsKey("username"))
                     {
+                        <li class="element" style="position:absolute;right: calc(11.7% + 210px); top:20%; background-color:#E6E6E6">
+                            <div class="log">
+                                <div class="login">
+                                    <div id="loginContainer">
+                                        <a class="color1" asp-area="" asp-controller="Order" asp-action="Basket" id="loginButton"><span>Checkout</span></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
                         <li class="element" style="position:absolute;left:200px; top:20%; background-color:#E6E6E6;width:auto">
                             <div class="log" style="width:auto">
                                 <div class="login" style="width:auto">

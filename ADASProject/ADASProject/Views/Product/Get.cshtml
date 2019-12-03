@@ -40,7 +40,9 @@
                 foreach (var value in e.Value)
                 {
                     if (value.Key == "Price") { continue; }
+                    
                     <tr style="font-size:medium">
+                        
                         <td scope="row"><strong>@value.Key</strong></td>
                         <td scope="row">@value.Value</td>
                     </tr>
@@ -51,19 +53,20 @@
     </div>
     <div id="panely3" class="tab-pane fade">
        
-            @foreach (var e in Model.Comments.Concat(Model.Comments.Concat(Model.Comments)))
+            @foreach (var e in Model.Comments)
             {
                 <div class="form-group">
                     <h3>@e.Item1.Text :</h3>
-                    <blockquote style="word-wrap: break-word">@e.Item2</blockquote>
+                    <blockquote style="word-wrap: break-word">@e.Item2 <p>Rating : </p></blockquote>
                     <p>Rating : </p>
                 </div>
             }
-        
-        <form asp-controller="Product" asp-action="Comment" method="post" style="position:relative">
-            <textarea asp-for="Comments" class="" placeholder="Сообщение" name="message" rows="10" cols="100"></textarea><!--Поле для ввода сообщения-->
-            <input type="submit" value="Comment" /><!--Кнопка отправить-->
-        </form>
+    
+    <form asp-controller="Product" asp-action="Comment" method="post" style="position:relative">
+        <input name="id" type="number" value="@Model.Id" hidden />
+        <input style=" width:50%" name="text" type="text" style="width: 300px; height: 70px;" maxlength="1000" required />
+        <button asp-controller="Product" asp-action="Comment" type="submit">Отправить</button>
+    </form>
     </div>
     <div id="panely4" class="tab-pane fade">
         <h3>Панель 4</h3>
