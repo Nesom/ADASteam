@@ -29,14 +29,17 @@ namespace ADASProject.Controllers
         {
             var ip = accessor.HttpContext.Connection.RemoteIpAddress.ToString();
             var city = Autodetect.GetCity(ip);
+
             if (city != null)
-            {
                 TempData["city"] = city;
-            }
+            else
+                TempData["city"] = "Kazan'";
+
             var products = (await db.GetProductInfosAsync())
                 .OrderByDescending(pr => pr.AddDate)
                 .Take(4)
                 .ToArray();
+
             return View(new IndexModel() { First4Products = products });
         }
 
