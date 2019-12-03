@@ -26,12 +26,12 @@
             foreach (var value in e.Value)
             {
                 if (value.Key == "Price")
-                {@*<h1 style="position:absolute; top:50%; right:55%; color:darkred">@value.Key : @value.Value</h1>*@
-                <div style="position:absolute; top:85%; left:35%" class="item_add"><span style="font-size:35px" class="item_price"><a asp-controller="Order" asp-action="Buy/@Model.Id" style="background-color:grey;">Add to cart (@value.Value$)</a></span></div>
+                {
+                <div style="position:relative; top:auto; left:auto" class="item_add"><span style="font-size:35px" class="item_price"><a asp-controller="Order" asp-action="Buy/@Model.Id" style="background-color:grey;">Add to cart (@value.Value$)</a></span></div>
             }
         }
     }
-        <p style="font-size:large" class="prod-desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber tempor cum soluta nobis eleifend option</p>
+    <p style="font-size:large" class="prod-desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber tempor cum soluta nobis eleifend option</p>
     </div>
     <div id="panely2" class="tab-pane fade">
         <table class="table">
@@ -50,9 +50,19 @@
         </table>
     </div>
     <div id="panely3" class="tab-pane fade">
-        <form action="" method="post" style="position:absolute; top:20%">
-            <textarea class="" placeholder="Сообщение" name="message" rows="10" cols="100"></textarea><!--Поле для ввода сообщения-->
-            <input type="submit" value="Отправить" /><!--Кнопка отправить-->
+       
+            @foreach (var e in Model.Comments.Concat(Model.Comments.Concat(Model.Comments)))
+            {
+                <div class="form-group">
+                    <h3>@e.Item1.Text :</h3>
+                    <blockquote style="word-wrap: break-word">@e.Item2</blockquote>
+                    <p>Rating : </p>
+                </div>
+            }
+        
+        <form asp-controller="Product" asp-action="Comment" method="post" style="position:relative">
+            <textarea asp-for="Comments" class="" placeholder="Сообщение" name="message" rows="10" cols="100"></textarea><!--Поле для ввода сообщения-->
+            <input type="submit" value="Comment" /><!--Кнопка отправить-->
         </form>
     </div>
     <div id="panely4" class="tab-pane fade">
