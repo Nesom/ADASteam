@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -45,66 +45,46 @@ namespace ADASProject.Controllers
 
         #region HomeWork
 
-        public static Dictionary<Type, Tuple<string, PropertyInfo, bool>[]> cache { get; }
-            = new Dictionary<Type, Tuple<string, PropertyInfo, bool>[]>();
+        private static Func<Type, PropertyInfo[]> getProperties = null;
 
         [HttpGet]
         public async Task<IActionResult> EditerT(int id)
         {
-            //var product = await db.GetProductInfoAsync(id);
+            var product = await db.GetProductInfoAsync(id);
 
-            //var type = product.GetType();
+            var timer = new Stopwatch();
+            timer.Start();
 
-            //var timer = new Stopwatch();
+            if (getProperties == null)
+            {
+                var type = Expression.Parameter(typeof(Type), "type");
 
-            //timer.Start();
+                var methods = typeof(Type).GetMethods();
+                var method = methods.Where(m => m.Name == "GetProperties").FirstOrDefault();
 
-            //var model = new EditerTModel();
-            //if (!cache.ContainsKey(type))
-            //{
-            //    var properties = type.GetProperties();
-            //    var types = properties
-            //        .Select(pr => Tuple.Create(pr.Name, pr, pr.GetCustomAttributes(typeof(Attributes.ClassName), false) == null))
-            //        .ToArray();
-            //    cache[type] = types;
-            //}
-            //model.Types = cache[type];
-            //model.StandartValues = new object[model.Types.Length];
-            //for (int i = 0; i < model.Types.Length; i++)
-            //{
-            //    model.StandartValues[i] = model.Types[i].Item2.GetValue(product);
-            //}
-            //timer.Stop();
-            //model.TimeInTicks = timer.ElapsedTicks;
-            //return View(model);
+                var props = Expression.Call(type, method, new Expression[0]);
+                var lambda = Expression.Lambda<Func<Type, PropertyInfo[]>>(props, type);
+                getProperties = lambda.Compile();
+            }
+            var properties = getProperties(typeof(ProductInfo));
 
-            var type = Expression.Parameter(typeof(Type), "type");
+            var model = new EditerTModel();
+            model.Types = properties
+                .Select(property =>
+                    Tuple.Create(property.Name, property,
+                    property.GetCustomAttribute(typeof(Attributes.ClassName)) != null))
+                .ToArray();
 
-            var method = typeof(Type).GetMethod("GetProperties");
+            model.StandartValues = new object[model.Types.Length];
+            for (int i = 0; i < model.Types.Length; i++)
+            {
+                model.StandartValues[i] = model.Types[i].Item2.GetValue(product);
+            }
 
-            
+            timer.Stop();
+            model.TimeInTicks = timer.ElapsedTicks;
 
-            var properties =MethodCallExpression.Call(method, type);
-
-            var lambda = Expression.Lambda<Func<Type, object>>(properties, type);
-            var parser = lambda.Compile();
-
-            var t = parser(typeof(ProductInfo));
-
-            var d = (PropertyInfo[])t;
-
-            return View();
-
-            //for (int i = 0; i < properties.Length; i++)
-            //{
-            //    assigments.Add(Expression.Bind(Expression.Call(properties[i].GetValue(obj), toStr),
-            //        Expression.ArrayIndex(values, Expression.Constant(i))));
-            //}
-
-            //var body = Expression.MemberInit(
-            //    Expression.New(typeof(TParameters)
-            //        .GetConstructor(new Type[0])),
-            //    assigments);
+            return View(model);
         }
 
         [HttpPost]
