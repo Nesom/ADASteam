@@ -1,0 +1,92 @@
+﻿@model GetModel
+
+@{
+    var base64 = Convert.ToBase64String(Model.Image);
+    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+    TempData["GetId"] = Model.Id;
+}
+
+<script>
+    $(function () {
+        $("#myTab2 li:eq(0) a").tab('show');
+    });
+</script>
+
+<ul id="myTab2" class="nav nav-tabs">
+    <li><a data-toggle="tab" href="#panely1">Description</a></li>
+    <li><a data-toggle="tab" href="#panely2">Characteristics</a></li>
+    <li><a data-toggle="tab" href="#panely3">Сomments</a></li>
+    <li><a data-toggle="tab" href="#panely4">Related products</a></li>
+</ul>
+
+<div class="tab-content">
+    <div id="panely1" class="tab-pane fade in active">
+        <img style="width:300px; position:relative; bottom:auto" class="etalage_thumb_image" src="@imgSrc" class="img-responsive" />
+        @foreach (var e in Model.StandartValues.Concat(Model.Values))
+        {
+            foreach (var value in e.Value)
+            {
+                if (value.Key == "Price")
+                {@*<h1 style="position:absolute; top:50%; right:55%; color:darkred">@value.Key : @value.Value</h1>*@
+                <div style="position:absolute; top:85%; left:35%" class="item_add"><span style="font-size:35px" class="item_price"><a asp-controller="Order" asp-action="Buy/@Model.Id" style="background-color:grey;">Add to cart (@value.Value$)</a></span></div>
+            }
+        }
+    }
+        <p style="font-size:large" class="prod-desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber tempor cum soluta nobis eleifend option</p>
+    </div>
+    <div id="panely2" class="tab-pane fade">
+        <table class="table">
+            @foreach (var e in Model.StandartValues.Concat(Model.Values))
+            {
+                foreach (var value in e.Value)
+                {
+                    if (value.Key == "Price") { continue; }
+                    <tr style="font-size:medium">
+                        <td scope="row"><strong>@value.Key</strong></td>
+                        <td scope="row">@value.Value</td>
+                    </tr>
+                }
+
+            }
+        </table>
+    </div>
+    <div id="panely3" class="tab-pane fade">
+        <form action="" method="post" style="position:absolute; top:20%">
+            <textarea class="" placeholder="Сообщение" name="message" rows="10" cols="100"></textarea><!--Поле для ввода сообщения-->
+            <input type="submit" value="Отправить" /><!--Кнопка отправить-->
+        </form>
+    </div>
+    <div id="panely4" class="tab-pane fade">
+        @*@for (int i = 0; i < Model.RelatedProducts.Count; i += 4)
+        {
+            var size = CatalogModel.TypeToSizeDict[ModelHelper.GetCategoryName(Model.RelatedProducts[i].TableName)];
+            var heightPlus100 = size.Height + 100;*@
+            <div class="grids_of_4">
+                @for (int j = 0; j < 4 && j < Model.RelatedProducts.Count; j++)
+                {
+                    base64 = Convert.ToBase64String(Model.RelatedProducts[j].Image);
+                    imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+
+                    <div class="grid1_of_4">
+                        <div class="content_box" style="width:100%">
+                            <a asp-controller="Product" asp-action="Get/@Model.RelatedProducts[j].Id">
+                                <div style="height:@(CatalogModel.TypeToSizeDict[ModelHelper.GetCategoryName(Model.RelatedProducts[j].TableName)].Height)px;margin-top:10px; width:100%">
+                                    <img src="@imgSrc" style="width:auto; max-width:100%; height:100%" alt="" />
+                                </div>
+                            </a>
+                            <h4>@Model.RelatedProducts[j].Name</h4>
+                            <p>@CatalogModel.TypeToNameDict[ModelHelper.GetCategoryName(Model.RelatedProducts[j].TableName)]</p>
+                            <div class="grid_1 simpleCart_shelfItem">
+                                <div class="item_add"><span class="item_price"><h6>Price: @Model.RelatedProducts[j].Price</h6></span></div>
+                                <div class="item_add"><span class="item_price"><a style="background-color:teal" asp-controller="Order" asp-action="Buy/@Model.RelatedProducts[j].Id">add to cart</a></span></div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        @*}*@
+    </div>
+</div>
+
+
+
