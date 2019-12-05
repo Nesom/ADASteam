@@ -1,4 +1,5 @@
 ﻿using ADASProject.Comments;
+using ADASProject.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace ADASProject.Models
             Values = new Dictionary<string, Dictionary<string, string>>();
             StandartValues = new Dictionary<string, Dictionary<string, string>>();
             Comments = new List<Tuple<Comment, string>>();
+            RelatedProducts = new List<ProductInfo>();
         }
 
         public int Id { get; set; }
@@ -21,5 +23,6 @@ namespace ADASProject.Models
         public List<Tuple<Comment, string>> Comments { get; set; }
         public byte[] Image { get; set; }
         public bool CanVote { get; set; }
+        public List<ProductInfo> RelatedProducts { get; set; }
     }
 }

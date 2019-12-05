@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\User\\Desktop\\ADASProject\\ADASProject\\ADASProject.csproj": {}
+    "C:\\Users\\Анжела\\Desktop\\ADASteam\\ADASProject\\ADASProject\\ADASProject.csproj": {}
   },
   "projects": {
-    "C:\\Users\\User\\Desktop\\ADASProject\\ADASProject\\ADASProject.csproj": {
+    "C:\\Users\\Анжела\\Desktop\\ADASteam\\ADASProject\\ADASProject\\ADASProject.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\User\\Desktop\\ADASProject\\ADASProject\\ADASProject.csproj",
+        "projectUniqueName": "C:\\Users\\Анжела\\Desktop\\ADASteam\\ADASProject\\ADASProject\\ADASProject.csproj",
         "projectName": "ADASProject",
-        "projectPath": "C:\\Users\\User\\Desktop\\ADASProject\\ADASProject\\ADASProject.csproj",
-        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\User\\Desktop\\ADASProject\\ADASProject\\obj\\",
+        "projectPath": "C:\\Users\\Анжела\\Desktop\\ADASteam\\ADASProject\\ADASProject\\ADASProject.csproj",
+        "packagesPath": "C:\\Users\\Анжела\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Анжела\\Desktop\\ADASteam\\ADASProject\\ADASProject\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Анжела\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -61,6 +61,7 @@
               "version": "[2.1.2, )"
             },
             "Microsoft.NETCore.App": {
+              "suppressParent": "All",
               "target": "Package",
               "version": "[2.1.0, )",
               "autoReferenced": true

@@ -39,6 +39,16 @@ namespace ADASProject.Controllers
                 var user = await db.GetUserAsync(comment.UserId);
                 model.Comments.Add(Tuple.Create(comment, user.Email));
             }
+            var id = model.Id;
+            var ids = (await db.GetRelationsAsync())
+                .Where(r => r.LesserId == id || r.BiggerId == id)
+                .OrderByDescending(r => r.Count)
+                .Select(r => r.LesserId == id ? r.BiggerId : r.LesserId)
+                .Take(4);
+            var products = new List<ProductInfo>();
+            foreach (var productId in ids)
+                products.Add(await db.GetProductInfoAsync(productId));
+            model.RelatedProducts = products;
             return View(model);
         }
 
@@ -85,19 +95,6 @@ namespace ADASProject.Controllers
             if (TempData["GetId"] != null)
                 return RedirectToAction($"Get/{TempData["GetId"]}");
             return RedirectToAction("Index", "Home");
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> GetRelationProducts(int id)
-        {
-            var ids = (await db.GetRelationsAsync())
-                .Where(r => r.LesserId == id || r.BiggerId == id)
-                .OrderByDescending(r => r.Count)
-                .Select(r => r.LesserId == id ? r.BiggerId : r.LesserId);
-            var products = new List<ProductInfo>();
-            foreach (var productId in ids)
-                products.Add(await db.GetProductInfoAsync(id));
-            return View(products);
         }
 
         [HttpGet]
