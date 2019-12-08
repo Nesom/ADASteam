@@ -106,7 +106,7 @@
                         <a asp-controller="Product" asp-action="Get/@Model.First4Products[i].Id"><img src="@imgSrc" style="max-width:100%; width:auto; height:200px" alt=""></a>
                         <div class="special-info grid_1 simpleCart_shelfItem">
                             <a asp-controller="Product" asp-action="Get/@Model.First4Products[i].Id"><h5>@Model.First4Products[i].Name</h5></a>
-                            <div class="item_add"><span class="item_price"><h6>Price: @Model.First4Products[i].Price</h6></span></div>
+                            <div class="item_add"><span class="item_price"><h6>Price: @Model.First4Products[i].Price$</h6></span></div>
                             <div class="item_add"><span class="item_price"><a style="background-color:teal" asp-controller="Order" asp-action="Buy/@Model.First4Products[i].Id">add to cart</a></span></div>
                         </div>
                     </li>
