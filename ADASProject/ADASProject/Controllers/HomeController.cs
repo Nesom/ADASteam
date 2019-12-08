@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
@@ -99,6 +100,31 @@ namespace ADASProject.Controllers
             return "Test";
         }
         #endregion
+
+        [HttpGet]
+        public async Task<IActionResult> SetCity()
+        {
+            var cityList = new List<string>()
+            {
+                "Kazan'",
+                "Moscow",
+                "Yekaterinburg",
+                "St. Petersburg",
+                "Ufa",
+                "Novosibirsk",
+                "Omsk",
+                "Samara",
+                "Krasnoyarsk"
+            };
+            return View(new SetCityModel() { Cities = cityList });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SetCity(SetCityModel model)
+        {
+            TempData["city"] = model.City;
+            return RedirectToAction("Index");
+        }
 
         [HttpGet]
         [Authorize(Roles = "admin, user")]

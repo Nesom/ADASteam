@@ -33,29 +33,44 @@ namespace ADASProject
 
         public static IDescription CreateProductDescription(string name, string[] values)
         {
-            var type = FoundType(name);
-            var propertyType = GetPropertyType(type, "Description");
+            IDescription description = null;
+            try
+            {
+                // Type of product class
+                var type = FoundType(name);
+                // Type of description type
+                var propertyType = GetPropertyType(type, "Description");
 
-            var list = new List<Type>();
-            foreach(var value in GetCharacteristicInfo(propertyType))
-                list.Add(value.Type);
+                var list = new List<Type>();
+                foreach (var value in GetCharacteristicInfo(propertyType))
+                    list.Add(value.Type);
 
-            var types = list.ToArray();
-            var objValues = ConvertTypes(values, types);
+                var types = list.ToArray();
+                // Convert values from string
+                var objValues = ConvertTypes(values, types);
 
-            return (IDescription)propertyType.GetConstructor(types).Invoke(objValues);
+                description = (IDescription)propertyType.GetConstructor(types).Invoke(objValues);
+            }
+            catch { }
+            return description;
         }
 
         public static ProductInfo CreateProductInfo(string[] values, bool onlyForShow = false)
         {
-            var list = new List<Type>();
-            foreach (var value in GetCharacteristicInfo(typeof(ProductInfo), onlyForShow))
-                list.Add(value.Type);
+            ProductInfo product = null;
+            try
+            {
+                var list = new List<Type>();
+                foreach (var value in GetCharacteristicInfo(typeof(ProductInfo), onlyForShow))
+                    list.Add(value.Type);
+                var types = list.ToArray();
+                // Convert values from string
+                var objValues = ConvertTypes(values, types);
 
-            var types = list.ToArray();
-            var objValues = ConvertTypes(values, types);
-
-            return (ProductInfo)typeof(ProductInfo).GetConstructor(types).Invoke(objValues);
+                product = (ProductInfo)typeof(ProductInfo).GetConstructor(types).Invoke(objValues);
+            }
+            catch { }
+            return product;
         }
 
         public static object[] ConvertTypes(string[] values, Type[] types)

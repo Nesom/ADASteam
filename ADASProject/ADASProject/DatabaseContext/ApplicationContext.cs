@@ -17,6 +17,8 @@ namespace ADASProject
         public DbSet<ProductInfo> Products { get; set; }
         public DbSet<SmartphoneDescription> SmartphoneDescriptions { get; set; }
         public DbSet<TestProductDescription> TestProductDescriptions { get; set; }
+        public DbSet<TVDescription> TVDescriptions { get; set; }
+        public DbSet<LaptopDescription> LaptopDescriptions { get; set; }
 
         public DbSet<ProductVote> ProductVotes { get; set; }
 
@@ -55,41 +57,50 @@ namespace ADASProject
         }
 
         #region productWorker
-        public async Task AddProductAsync(Product<IDescription> product)
+        public async Task<bool> TryToAddProductAsync(Product<IDescription> product)
         {
-            var name = product.Description.GetType().Name + 's';
+            try
+            {
+                var name = product.Description.GetType().Name + 's';
 
-            // Get DbSet<"TableName"> property
-            var property = ReflectionHelper.GetProperty(this, name);
-            // Get property value
-            var propertyValue = property.GetValue(this);
-            // Get property type
-            var type = property.PropertyType;
+                // Get DbSet<"TableName"> property
+                var property = ReflectionHelper.GetProperty(this, name);
+                // Get property value
+                var propertyValue = property.GetValue(this);
+                // Get property type
+                var type = property.PropertyType;
 
-            var productType = product.Description.GetType();
+                var productType = product.Description.GetType();
 
-            product.ProductInfo.AddDate = DateTime.Now;
-            product.ProductInfo.TableName = name;
+                product.ProductInfo.AddDate = DateTime.Now;
+                product.ProductInfo.TableName = name;
 
-            await Products.AddAsync(product.ProductInfo);
-            await SaveChangesAsync();
+                await Products.AddAsync(product.ProductInfo);
+                await SaveChangesAsync();
 
-            var id = Products.Last().Id;
-            product.Description.Id = id;
+                var id = Products.Last().Id;
+                product.Description.Id = id;
 
-            // Find and invoke method "Add" in property type
-            type.GetMethod("Add", new Type[1] { productType })
-                .Invoke(propertyValue, new object[1] { product.Description });
-            await SaveChangesAsync();
+                // Find and invoke method "Add" in property type
+                type.GetMethod("Add", new Type[1] { productType })
+                    .Invoke(propertyValue, new object[1] { product.Description });
+                await SaveChangesAsync();
+            }
+            catch
+            {
+                return false;
+            }
+            return true;
         }
 
-        public async Task RemoveProductAsync(int id)
+        public async Task<bool> TryToRemoveProductAsync(int id)
         {
             var product = await Products.FindAsync(id);
             if (product == null)
-                return;
+                return false;
             Products.Remove(product);
             await SaveChangesAsync();
+            return true;
         }
 
         public async Task<bool> IsAvailable(int id)

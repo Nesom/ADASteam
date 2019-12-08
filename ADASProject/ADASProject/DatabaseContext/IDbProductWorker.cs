@@ -8,8 +8,8 @@ namespace ADASProject.DatabaseContext
 {
     public interface IDbProductWorkerAsync
     {
-        Task AddProductAsync(Product<IDescription> product);
-        Task RemoveProductAsync(int id);
+        Task<bool> TryToAddProductAsync(Product<IDescription> product);
+        Task<bool> TryToRemoveProductAsync(int id);
 
         Task<bool> IsAvailable(int id);
         Task<bool> HasQuantity(int id, int count);

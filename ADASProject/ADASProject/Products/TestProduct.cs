@@ -29,7 +29,7 @@ namespace ADASProject.Products
         public int Id { get; set; }
 
         [Category("Mobile connection")]
-        [Characteristic("Поддерживает 4G")]
+        [Characteristic("Support 4G")]
         public bool IsUsing4G { get; set; }
 
         [Category("System")]
