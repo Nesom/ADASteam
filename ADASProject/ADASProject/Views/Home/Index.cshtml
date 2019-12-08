@@ -100,11 +100,13 @@
                     {
                         var base64 = Convert.ToBase64String(Model.First4Products[i].Image);
                         var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
-                        <li style="width:23%">
+                        <li style="width:23%; margin-top:15px">
                             <a asp-controller="Product" asp-action="Get/@Model.First4Products[i].Id"><img src="@imgSrc" style="max-width:100%; width:auto; height:200px" alt=""></a>
                             <div class="special-info grid_1 simpleCart_shelfItem">
-                                <a asp-controller="Product" asp-action="Get/@Model.First4Products[i].Id"><h5>@Model.First4Products[i].Name</h5></a>
-                                <div class="item_add"><span class="item_price"><h6>Price: @Model.First4Products[i].Price</h6></span></div>
+                                <div style="height:40px">
+                                    <a asp-controller="Product" asp-action="Get/@Model.First4Products[i].Id"><h5>@Model.First4Products[i].Name</h5></a>
+                                </div>
+                                <div class="item_add"><h5 class="item_price">Price: @Model.First4Products[i].Price$</h5></div>
                                 <div class="item_add"><span class="item_price"><a style="background-color:teal" asp-controller="Order" asp-action="Buy/@Model.First4Products[i].Id">add to cart</a></span></div>
                             </div>
                         </li>

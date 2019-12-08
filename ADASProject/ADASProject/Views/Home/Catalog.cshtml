@@ -203,10 +203,12 @@
                                                         <img src="@imgSrc" style="width:auto; max-width:100%; height:100%" alt="" />
                                                     </div>
                                                 </a>
-                                                <h4>@category[j].Name</h4>
-                                                <p>@CatalogModel.TypeToNameDict[ModelHelper.GetCategoryName(category[i].TableName)]</p>
+                                                <div style="height:40px">
+                                                    <h4>@category[j].Name</h4>
+                                                </div>
+                                                <h5>@CatalogModel.TypeToNameDict[ModelHelper.GetCategoryName(category[i].TableName)]</h5>
                                                 <div class="grid_1 simpleCart_shelfItem">
-                                                    <div class="item_add"><span class="item_price"><h6>Price: @category[j].Price</h6></span></div>
+                                                    <div class="item_add"><h5 class="item_price">Price: @category[j].Price$</h5></div>
                                                     <div class="item_add"><span class="item_price"><a style="background-color:teal" asp-controller="Order" asp-action="Buy/@category[j].Id">add to cart</a></span></div>
                                                 </div>
                                             </div>
