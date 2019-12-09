@@ -27,6 +27,7 @@
     </style>
 </head>
 <body>
+
     <div class="header_bg">
         <div class="container">
             <div class="header">
@@ -44,6 +45,7 @@
             </div>
         </div>
     </div>
+
     <div class="arriv">
         <div class="container">
             <div class="arriv-top">
@@ -80,7 +82,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="col-md-4 arriv-right1">
                     <img src="~/images/Телевизор.jpg" class="img-responsive" alt="">
                     <div class="arriv-info2">
@@ -91,9 +92,9 @@
         </div>
     </div>
     <div class="special">
+        <h3>New Arrivals</h3>
         <div class="container">
             <h3>New Arrivals</h3>
-            
             <div>
                 <ul class="grid_new" style="text-align:center; align-items:center; align-self:center">
                     @for (int i = 0; i < 4 && i < Model.First4Products.Length; i++)
@@ -111,10 +112,6 @@
                             </div>
                         </li>
                     }
-
-                    <div class="clearfix"> </div>
-                </ul>
-            </div>
         </div>
     </div>
 </body>

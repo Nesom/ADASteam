@@ -34,10 +34,13 @@ namespace ADASProject.Controllers
                 model.CanVote = await db.IsVotedAsync(model.Id, (int)TempData.Peek("id"));
             // Set comments
             var comments = await db.GetCommentsAsync(model.Id);
+            bool isLiked = false;
             foreach (var comment in comments)
             {
                 var user = await db.GetUserAsync(comment.UserId);
-                model.Comments.Add(Tuple.Create(comment, user.Email));
+                if (TempData.ContainsKey("id"))
+                    isLiked = await db.IsVotedAsync(model.Id, (int)TempData.Peek("id"));
+                model.Comments.Add(Tuple.Create(comment, user.Email, isLiked));
             }
             var id = model.Id;
             var ids = (await db.GetRelationsAsync())

@@ -38,14 +38,14 @@
                     <div class="price-details" style="width:200px">
                         <p style="font-size:large"><strong>Price Details</strong></p>
                         <span style="font-size:medium">Total</span>
-                        <span class="total1" style="font-size:medium">@Model.Amount rubels</span>
+                        <span class="total1" style="font-size:medium">@Model.Amount$</span>
                         <span style="font-size:medium">Delivery Charges</span>
-                        <span class="total1" style="font-size:medium">150.00</span>
+                        <span class="total1" style="font-size:medium">150$</span>
                         <div class="clearfix"></div>
                     </div>
                     <ul class="total_price">
                         <li class="last_price"> <h4>TOTAL</h4></li>
-                        <li class="last_price"><span>@Model.Amount rubels</span></li>
+                        <li class="last_price"><span>@Model.Amount$</span></li>
                         <div class="clearfix"> </div>
                     </ul>
 
@@ -65,12 +65,14 @@
                                 <div class="cart-item cyc">
                                     <a asp-controller="Product" asp-action="Get/@element.Key.Id"><img src="@imgSrc" class="img-responsive" alt="" /></a>
                                 </div>
-                                <div class="cart-item-info">
-                                    <h3><a href="#">@element.Key.Name</a><span></span></h3>
-                                    <h3>Amount: <input style="width:10%" type="number" max="@element.Key.Count" min="1" name="count" /><input type="number" value="@element.Key.Id" name="Id" hidden /></h3>
-                                    <input type="submit" asp-action="ChangeCount" formmethod="post" name="Изменить" />
-                                    <h1>Price : @element.Key.Price</h1>
-                                </div>
+                                <form>
+                                    <div class="cart-item-info">
+                                        <h3><a href="#">@element.Key.Name</a><span></span></h3>
+                                        <h3>Amount: <input style="width:10%" type="number" max="@element.Key.Count" min="1" name="count" value="@element.Value"/><input type="number" value="@element.Key.Id" name="Id" hidden /></h3>
+                                        <input type="submit" asp-action="ChangeCount" formmethod="post" name="Изменить" />
+                                        <h1>Price : @element.Key.Price</h1>
+                                    </div>
+                                </form>
                                 <div class="clearfix"></div>
                             </div>
                         </div>

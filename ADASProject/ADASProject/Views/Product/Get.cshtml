@@ -12,6 +12,31 @@
     });
 </script>
 
+<div>
+    <h3 style="position:relative">@Model.StandartValues.First().Value["Name"]</h3>
+    <img style="width:17%" class="etalage_thumb_image" src="@imgSrc" class="img-responsive" />
+    <h2 style="position:absolute; top:15%;left:30%"><strong>@Model.StandartValues.First().Value["Price"]$</strong></h2>
+    <h4 style="position:absolute; top:23%;left:30%">Products left : @Model.StandartValues.First().Value["Products count"]</h4>
+    @switch (int.Parse(Model.StandartValues.First().Value["Rating"]))
+    {
+        case 0:<h4 style="position:relative; font-size:200%">&#9734;&#9734;&#9734;&#9734;&#9734;</h4>
+            break;
+        case 1: <h4 style="position:relative; width:14%">Rating : &#9733;&#9734;&#9734;&#9734;&#9734;</h4>
+            break;
+        case 2: <h4 style="position:relative">Rating : &#9733;&#9733;&#9734;&#9734;&#9734;</h4>
+            break;
+        case 3: <h4 style="position:relative">Rating : &#9733;&#9733;&#9733;&#9734;&#9734;</h4>
+            break;
+        case 4: <h4 style="position:relative">Rating : &#9733;&#9733;&#9733;&#9733;&#9734;</h4>
+            break;
+        case 5: <h4 style="position:relative">Rating : &#9733;&#9733;&#9733;&#9733;&#9733;</h4>
+            break;
+        default: <h4 style="position:relative">Rating : 10/10!</h4>
+            break;
+    }
+    <div style="position:absolute;top:31%; left:21%; width:25%" class="item_add"><span style="font-size:130%" class="item_price"><a asp-controller="Order" asp-action="Buy/@Model.Id" style="background-color:teal">Add to cart</a></span></div>
+</div>
+
 <ul id="myTab2" class="nav nav-tabs">
     <li><a data-toggle="tab" href="#panely1">Description</a></li>
     <li><a data-toggle="tab" href="#panely2">Characteristics</a></li>
@@ -19,55 +44,88 @@
     <li><a data-toggle="tab" href="#panely4">Related products</a></li>
 </ul>
 
-<div class="tab-content">
+<div class="tab-content" style="position:relative">
     <div id="panely1" class="tab-pane fade in active">
-        <img style="width:300px" class="etalage_thumb_image" src="@imgSrc" class="img-responsive" />
-        @foreach (var e in Model.StandartValues.Concat(Model.Values))
-        {
-            foreach (var value in e.Value)
+        <h2><strong>Description</strong></h2>
+        <p style="max-width:60%; font-size:large;word-wrap: break-word" class="prod-desc">@Model.StandartValues.First().Value["Description"]hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh</p>
+        <h2><strong>Main characteristics</strong></h2>
+        <table class="table" style="max-width:60%">
+            @foreach (var e in Model.StandartValues.Where(r => r.Key == "Production parameters"))
             {
-                if (value.Key == "Price")
+                @foreach (var y in e.Value)
                 {
-                <div style="position:relative; top:auto; left:auto" class="item_add"><span style="font-size:35px" class="item_price"><a asp-controller="Order" asp-action="Buy/@Model.Id" style="background-color:grey;">Add to cart (@value.Value$)</a></span></div>
+                    <tr style="font-size:medium">
+                        <td scope="row">
+                            @y.Key
+                        </td>
+                        <td scope="row" style="text-align:end">@y.Value</td>
+                    </tr>
+                }
             }
-        }
-    }
-    <p style="font-size:large" class="prod-desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber tempor cum soluta nobis eleifend option</p>
+        </table>
     </div>
     <div id="panely2" class="tab-pane fade">
         <table class="table">
             @foreach (var e in Model.StandartValues.Concat(Model.Values))
             {
-                foreach (var value in e.Value)
+                @if (e.Key != "Main" && e.Key != "Production parameters")
                 {
-                    if (value.Key == "Price") { continue; }
-                    
+                <tr style="font-size:medium">
+                    <td scope="row" style="text-align:center"><h4><strong>@e.Key</strong></h4></td>
+                    <td></td>
+                </tr>
+                }
+                foreach (var value in e.Value.Where(a => a.Key != "Description" && a.Key != "Price" && a.Key != "Name" && a.Key != "Products count" && a.Key != "Rating" && e.Key != "Production parameters"))
+                {
                     <tr style="font-size:medium">
-                        
-                        <td scope="row"><strong>@value.Key</strong></td>
-                        <td scope="row">@value.Value</td>
+                        <td scope="row">@value.Key</td>
+                        <td scope="row" style="text-align:end">@value.Value</td>
                     </tr>
                 }
-
             }
         </table>
     </div>
     <div id="panely3" class="tab-pane fade">
-       
-            @foreach (var e in Model.Comments)
+
+        @foreach (var e in Model.Comments)
+        {
+        <div class="form-group">
+            <h3>@e.Item2 :</h3>
+            <div class="container">
+                <blockquote style="word-wrap: break-word">@e.Item1.Text</blockquote><blockquote class="blockquote-reverse">
+
+
+    @if (e.Item3 && TempData.Peek("role") != null)
+    {
+        <button style="position:relative; background:white;border: 1px solid #7a7b7e;width: 4%;height: 4%;border-radius: 8px;"><a asp-controller="Product" asp-action="Like/@e.Item1.Id"><img style="width:60%; position:center" src="~/images/несердце.png" /></a></button>
+    }
+    @if (!e.Item3 && TempData.Peek("role") != null)
+    {
+        <button style="position:relative; background:white;border: 1px solid #7a7b7e;width: 4%;height: 4%;border-radius: 10px;"><a asp-controller="Product" asp-action="Unlike/@e.Item1.Id"><img style="width:60%" src="~/images/сердце.png" /></a></button>
+    }
+    @e.Item1.Rating
+</blockquote>
+            </div>
+            @if (TempData.Peek("role") != null && TempData.Peek("role").ToString() == "admin")
             {
-                <div class="form-group">
-                    <h3>@e.Item1.Text :</h3>
-                    <blockquote style="word-wrap: break-word">@e.Item2 <p>Rating : </p></blockquote>
-                    <p>Rating : </p>
-                </div>
+                <button><a asp-controller="Product" asp-action="RemoveComment/@e.Item1.Id">Remove comment</a></button>
             }
-    
-    <form asp-controller="Product" asp-action="Comment" method="post" style="position:relative">
-        <input name="id" type="number" value="@Model.Id" hidden />
-        <input style=" width:50%" name="text" type="text" style="width: 300px; height: 70px;" maxlength="1000" required />
-        <button asp-controller="Product" asp-action="Comment" type="submit">Отправить</button>
-    </form>
+        </div>
+        
+        }
+        @if(Model.Comments.Count == 0)
+        {
+            <div>
+                <h3 style="color:silver"><strong>Be the first one to leave the comment!</strong></h3>
+                <br />
+                <br />
+            </div>
+        }
+        <form asp-controller="Product" asp-action="Comment" method="post" style="position:relative">
+            <input name="id" type="number" value="@Model.Id" hidden />
+            <input style=" width:50%" name="text" type="text" style="width: 300px; height: 70px;" maxlength="1000" required />
+            <button asp-controller="Product" asp-action="Comment" type="submit">Send</button>
+        </form>
     </div>
     <div id="panely4" class="tab-pane fade">
         <div class="grids_of_4">
