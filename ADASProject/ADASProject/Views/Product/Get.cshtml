@@ -105,23 +105,21 @@ ReactDOM.render(<LikeButton />, document.getElementById('main'));
         </table>
     </div>
     <div id="panely2" class="tab-pane fade">
-        <table class="table">
+        
             @foreach (var e in Model.Values)
-            {
-                <tr style="font-size:medium; text-align:center">                   
-                    <td scope="row" ><h4 style="text-align:center"><strong>@e.Key</strong></h4></td>
-                    <td></td>
-                </tr>
-                
-                foreach (var value in e.Value)
-                {
+            {                  
+                <h4 style="text-align:center"><strong>@e.Key</strong></h4>
+                <table class="table">
+                    @foreach (var value in e.Value)
+                    {
                     <tr style="font-size:medium">
                         <td scope="row">@value.Key</td>
                         <td scope="row" style="text-align:end">@value.Value</td>
                     </tr>
-                }
+                    }
+                </table>
             }
-        </table>
+        
     </div>
     <div id="panely3" class="tab-pane fade">
         
@@ -166,7 +164,12 @@ ReactDOM.render(<LikeButton />, document.getElementById('main'));
             <textarea style=" width:50%" name="text" type="text" style="width: 300px; height: 70px;" maxlength="1000" required></textarea>
             <button asp-controller="Product" asp-action="Comment" type="submit">Send</button>
         </form>
-        <h3>Rate : <a>&#9734;</a><a>&#9734;</a><a>&#9734;</a><a>&#9734;</a><a>&#9734;</a></h3>
+        <from>
+        Rate : <select style="width:3%" size="1%">
+    <option>1</option>
+    <option>2</option>
+</select></from>
+        
         }
     </div>
 </div>
