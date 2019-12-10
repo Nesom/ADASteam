@@ -55,28 +55,35 @@ ReactDOM.render(<LikeButton />, document.getElementById('main'));
 </script>
 
 <div>
-    <h3 style="position:relative">@Model.StandartValues["Main"]["Name"]</h3>
+    <h2 style="position:relative; margin-bottom:2%; margin-left:2%">@Model.StandartValues["Main"]["Name"]</h2>
     <img style="width:17%" class="etalage_thumb_image" src="@imgSrc" class="img-responsive" />
-    <h2 style="position:absolute; top:15%;left:30%"><strong>@Model.StandartValues["Main"]["Price"]$</strong></h2>
-    <h4 style="position:absolute; top:23%;left:30%">Products left : @Model.StandartValues["Main"]["Products count"]</h4>
-    @switch (int.Parse(Model.StandartValues["Main"]["Rating"]))
+    @{
+        double _rating = Double.Parse(Model.StandartValues["Main"]["Rating"]);
+        int rating = (int)_rating;
+        if (_rating % 1 > 0.5)
+        {
+            rating++;
+        }
+    }
+    @switch (rating)
     {
-        case 0:<h4 style="position:relative; font-size:200%">&#9734;&#9734;&#9734;&#9734;&#9734;</h4>
+        default:<h4 style="position:absolute; top:21%; left:30%; font-size:200%">&#9734;&#9734;&#9734;&#9734;&#9734;</h4>
             break;
-        case 1: <h4 style="position:relative; font-size:200%">&#9733;&#9734;&#9734;&#9734;&#9734;</h4>
+        case 1: <h4 style="position:absolute; top:21%; left:30%; font-size:200%">&#9733;&#9734;&#9734;&#9734;&#9734;</h4>
             break;
-        case 2: <h4 style="position:relative; font-size:200%">&#9733;&#9733;&#9734;&#9734;&#9734;</h4>
+        case 2: <h4 style="position:absolute; top:21%; left:30%; font-size:200%">&#9733;&#9733;&#9734;&#9734;&#9734;</h4>
             break;
-        case 3: <h4 style="position:relative; font-size:200%">&#9733;&#9733;&#9733;&#9734;&#9734;</h4>
+        case 3: <h4 style="position:absolute; top:21%; left:30%; font-size:200%">&#9733;&#9733;&#9733;&#9734;&#9734;</h4>
             break;
-        case 4: <h4 style="position:relative; font-size:200%">&#9733;&#9733;&#9733;&#9733;&#9734;</h4>
+        case 4: <h4 style="position:absolute; top:21%; left:30%; font-size:200%">&#9733;&#9733;&#9733;&#9733;&#9734;</h4>
             break;
-        case 5: <h4 style="position:relative; font-size:200%">&#9733;&#9733;&#9733;&#9733;&#9733;</h4>
-            break;
-        default: <h4 style="position:relative; font-size:200%">Rating : 10/10!</h4>
+        case 5: <h4 style="position:absolute; top:21%; left:30%; font-size:200%">&#9733;&#9733;&#9733;&#9733;&#9733;</h4>
             break;
     }
-    <div style="position:absolute;top:31%; left:21%; width:25%" class="item_add"><span style="font-size:130%" class="item_price"><a asp-controller="Order" asp-action="Buy/@Model.Id" style="background-color:teal">Add to cart</a></span></div>
+    <h2 style="position:absolute; top:15%;left:30%"><strong>@Model.StandartValues["Main"]["Price"]$</strong></h2>
+    <h4 style="position:absolute; top:27%;left:30%">Products left : @Model.StandartValues["Main"]["Products count"]</h4>
+
+    <div style="position:absolute;top:32%; left:21%; width:25%" class="item_add"><span style="font-size:130%" class="item_price"><a asp-controller="Order" asp-action="Buy/@Model.Id" style="background-color:teal">Add to cart</a></span></div>
 </div>
 
 <ul id="myTab2" class="nav nav-tabs">
@@ -130,6 +137,21 @@ ReactDOM.render(<LikeButton />, document.getElementById('main'));
             <div class="form-group">
                 <h3>@e.Item2 :</h3>
                 <div class="container">
+                    @switch (e.Item4)
+                    {
+                        default:<h4 style="position:relative; font-size:200%">&#9734;&#9734;&#9734;&#9734;&#9734;</h4>
+                            break;
+                        case 1: <h4 style="position:relative; font-size:200%">&#9733;&#9734;&#9734;&#9734;&#9734;</h4>
+                            break;
+                        case 2: <h4 style="position:relative; font-size:200%">&#9733;&#9733;&#9734;&#9734;&#9734;</h4>
+                            break;
+                        case 3: <h4 style="position:relative; font-size:200%">&#9733;&#9733;&#9733;&#9734;&#9734;</h4>
+                            break;
+                        case 4: <h4 style="position:relative; font-size:200%">&#9733;&#9733;&#9733;&#9733;&#9734;</h4>
+                            break;
+                        case 5: <h4 style="position:relative; font-size:200%">&#9733;&#9733;&#9733;&#9733;&#9733;</h4>
+                            break;
+                    }
                     <blockquote style="word-wrap: break-word">@e.Item1.Text </blockquote><blockquote class="blockquote-reverse">
 
 
@@ -188,14 +210,38 @@ ReactDOM.render(<LikeButton />, document.getElementById('main'));
                 <div class="grid1_of_4">
                     <div class="content_box" style="width:100%">
                         <a asp-controller="Product" asp-action="Get/@Model.RelatedProducts[j].Id">
-                            <div style="height:180px;margin-top:10px; width:100%">
+                            <div style="height:250px;margin-top:10px; width:100%">
                                 <img src="@imgSrc" style="width:auto; max-width:100%; height:100%" alt="" />
                             </div>
                         </a>
-                        <h4>@Model.RelatedProducts[j].Name</h4>
-                        <p>@CatalogModel.TypeToNameDict[ModelHelper.GetCategoryName(Model.RelatedProducts[j].TableName)]</p>
+                        <div style="height:40px">
+                            <h4>@Model.RelatedProducts[j].Name</h4>
+                        </div>
+                        <h5>@CatalogModel.TypeToNameDict[ModelHelper.GetCategoryName(Model.RelatedProducts[j].TableName)]</h5>
                         <div class="grid_1 simpleCart_shelfItem">
-                            <div class="item_add"><span class="item_price"><h6>Price: @Model.RelatedProducts[j].Price</h6></span></div>
+                            @{
+                                rating = (int)Model.RelatedProducts[j].Rating;
+                                if (Model.RelatedProducts[j].Rating % 1 > 0.5)
+                                {
+                                    rating++;
+                                }
+                            }
+                            @switch (rating)
+                            {
+                                default:<h4 style="position:relative; font-size:200%">&#9734;&#9734;&#9734;&#9734;&#9734;</h4>
+                                    break;
+                                case 1: <h4 style="position:relative; font-size:200%">&#9733;&#9734;&#9734;&#9734;&#9734;</h4>
+                                    break;
+                                case 2: <h4 style="position:relative; font-size:200%">&#9733;&#9733;&#9734;&#9734;&#9734;</h4>
+                                    break;
+                                case 3: <h4 style="position:relative; font-size:200%">&#9733;&#9733;&#9733;&#9734;&#9734;</h4>
+                                    break;
+                                case 4: <h4 style="position:relative; font-size:200%">&#9733;&#9733;&#9733;&#9733;&#9734;</h4>
+                                    break;
+                                case 5: <h4 style="position:relative; font-size:200%">&#9733;&#9733;&#9733;&#9733;&#9733;</h4>
+                                    break;
+                            }
+                            <div class="item_add"><h4 class="item_price">@Model.RelatedProducts[j].Price$</h4></div>
                             <div class="item_add"><span class="item_price"><a style="background-color:teal" asp-controller="Order" asp-action="Buy/@Model.RelatedProducts[j].Id">add to cart</a></span></div>
                         </div>
                     </div>

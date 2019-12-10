@@ -420,20 +420,21 @@ namespace ADASProject
             if (newVote < 0 || newVote > 5)
                 return;
 
+            var product = Products.Find(productId);
             var vote = await ProductVotes.FindAsync(new object[] { productId, userId });
             if (vote == null)
-            {
-                ProductVotes.Add(new ProductVote() { ProductId = productId, UserId = userId, Vote = newVote });
-                var product = Products.Find(productId);
+            { 
+                await ProductVotes.AddAsync(new ProductVote() { ProductId = productId, UserId = userId, Vote = newVote });
                 var sum = product.Rating * product.CountOfVotes++;
                 product.Rating = (sum + newVote) / product.CountOfVotes;
-                await SaveChangesAsync();
             }
             else
             {
+                var sum = product.Rating * product.CountOfVotes - vote.Vote;
                 vote.Vote = newVote;
-                await SaveChangesAsync();
+                product.Rating = (sum + newVote) / product.CountOfVotes;
             }
+            await SaveChangesAsync();
         }
         #endregion
     }

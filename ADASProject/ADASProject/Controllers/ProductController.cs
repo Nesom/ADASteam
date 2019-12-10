@@ -40,7 +40,8 @@ namespace ADASProject.Controllers
                 var user = await db.GetUserAsync(comment.UserId);
                 if (TempData.ContainsKey("id"))
                     isLiked = await db.CanLikeAsync((int)TempData.Peek("id"), comment.Id);
-                model.Comments.Add(Tuple.Create(comment, user.Email, isLiked));
+                var vote = await db.GetVoteAsync(model.Id, comment.UserId);
+                model.Comments.Add(Tuple.Create(comment, user.Email, isLiked, vote));
             }
             var id = model.Id;
             var ids = (await db.GetRelationsAsync())
@@ -62,12 +63,14 @@ namespace ADASProject.Controllers
         [Authorize(Roles = "user, admin")]
         public async Task<IActionResult> Comment(int id, string text, string vote)
         {
+            // Change vote
             int _vote = -1;
             if (Int32.TryParse(vote, out _vote))
                 await db.ChangeVoteAsync(id, (int)TempData.Peek("id"), _vote);
-
+            // Add comment
             var userId = (int)TempData.Peek("id");
-            await db.AddCommentAsync(new Comments.Comment() { UserId = userId, ProductId = id, Text = text });
+            var comment = new Comments.Comment() { UserId = userId, ProductId = id, Text = text };
+            await db.AddCommentAsync(comment);
             return RedirectToAction($"Get/{id}");
         }
 

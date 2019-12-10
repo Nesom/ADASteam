@@ -220,7 +220,29 @@
                                                 </div>
                                                 <h5>@CatalogModel.TypeToNameDict[ModelHelper.GetCategoryName(category[i].TableName)]</h5>
                                                 <div class="grid_1 simpleCart_shelfItem">
-                                                    <div class="item_add"><h5 class="item_price">Price: @category[j].Price$</h5></div>
+                                                    @{ 
+                                                        int rating = (int)category[j].Rating;
+                                                        if (category[j].Rating % 1 > 0.5)
+                                                        {
+                                                            rating++;
+                                                        }
+                                                    }
+                                                    @switch (rating)
+                                                    {
+                                                        default:<h4 style="position:relative; font-size:200%">&#9734;&#9734;&#9734;&#9734;&#9734;</h4>
+                                                            break;
+                                                        case 1: <h4 style="position:relative; font-size:200%">&#9733;&#9734;&#9734;&#9734;&#9734;</h4>
+                                                            break;
+                                                        case 2: <h4 style="position:relative; font-size:200%">&#9733;&#9733;&#9734;&#9734;&#9734;</h4>
+                                                            break;
+                                                        case 3: <h4 style="position:relative; font-size:200%">&#9733;&#9733;&#9733;&#9734;&#9734;</h4>
+                                                            break;
+                                                        case 4: <h4 style="position:relative; font-size:200%">&#9733;&#9733;&#9733;&#9733;&#9734;</h4>
+                                                            break;
+                                                        case 5: <h4 style="position:relative; font-size:200%">&#9733;&#9733;&#9733;&#9733;&#9733;</h4>
+                                                            break;
+                                                    }
+                                                    <div class="item_add"><h4 class="item_price" style="font-weight:500">@category[j].Price$</h4></div>
                                                     <div class="item_add"><span class="item_price"><a style="background-color:teal" asp-controller="Order" asp-action="Buy/@category[j].Id">add to cart</a></span></div>
                                                 </div>
                                             </div>

@@ -106,7 +106,7 @@
                                 <div style="height:40px">
                                     <a asp-controller="Product" asp-action="Get/@Model.First4Products[i].Id"><h5>@Model.First4Products[i].Name</h5></a>
                                 </div>
-                                <div class="item_add"><h5 class="item_price">Price: @Model.First4Products[i].Price$</h5></div>
+                                <div class="item_add"><h5 class="item_price" style="font-size:15px">@Model.First4Products[i].Price$</h5></div>
                                 <div class="item_add"><span class="item_price"><a style="background-color:teal" asp-controller="Order" asp-action="Buy/@Model.First4Products[i].Id">add to cart</a></span></div>
                             </div>
                         </li>
