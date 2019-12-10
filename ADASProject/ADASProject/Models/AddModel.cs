@@ -6,13 +6,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Drawing;
 
 namespace ADASProject.Models
 {
     public class AddModel : PageModel
     {
         public static List<TypeInfo> StandartInfo
-            = ReflectionHelper.GetCharacteristicInfo(typeof(Products.ProductInfo));
+            = ReflectionHelper.GetCharacteristicInfo(typeof(Products.ProductInfo), true);
 
         public AddModel() { }
 

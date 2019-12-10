@@ -1,0 +1,37 @@
+﻿@model OrderModel
+
+<head>
+    <style>
+        .div_or {
+            border: solid;
+            border-width: 2px;
+            border-color: #838383;
+            margin-top: 10px;
+            border-radius: 3px 4px;
+        }
+
+        .pre_new {
+            font-size: 16px;
+            font-weight: 400;
+            margin-left: 5px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <p class="pre_new">Payment</p>
+    <p class="pre_new">Amount = @Model.Amount</p>
+    <p class="pre_new">Send money here [4554 8356 3925 9234] (VISA) with comment @Model.SecretCode</p>
+
+    <p class="pre_new">Write your address</p>
+    <form asp-controller="Order" asp-action="Order" method="post">
+        <p class="pre_new">Country  <input asp-for="Address.Country" type="text" maxlength="32" /></p>
+        <p class="pre_new">City  <input asp-for="Address.Sity" type="text" maxlength="32"/></p>
+        <p class="pre_new">Street  <input asp-for="Address.Street" type="text" maxlength="32"/></p>
+        <p class="pre_new">Home number  <input asp-for="Address.HouseNumber" type="text" maxlength="8"/></p>
+        <p class="pre_new">Apartment number  <input asp-for="Address.ApartmentNumber" type="text" maxlength="8"/></p>
+        <p class="pre_new">Postcode  <input asp-for="Address.PostOfficeIndex" type="number" maxlength="12"/></p>
+        <input type="submit" name="Order" />
+    </form>
+</body>

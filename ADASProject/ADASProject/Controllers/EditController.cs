@@ -11,9 +11,9 @@ namespace ADASProject.Controllers
 {
     public class EditController : Controller
     {
-        ApplicationContext db;
+        IDbContext db;
 
-        public EditController(ApplicationContext context)
+        public EditController(IDbContext context)
         {
             db = context;
         }
@@ -37,6 +37,8 @@ namespace ADASProject.Controllers
 
             if (nameToTypeDict.ContainsKey(model.Name))
                 model.Name = nameToTypeDict[model.Name];
+            else
+                return RedirectToAction("Error", new ErrorViewModel() { ActionName = "Index", RequestInfo = "Type is not found" });
 
             var type = ReflectionHelper.FoundType(model.Name);
             var newModel = ReflectionHelper.CreateAddModelByType(type);
@@ -51,13 +53,26 @@ namespace ADASProject.Controllers
         public async Task<IActionResult> AddHelper(AddModel model)
         {
             var description = ReflectionHelper.CreateProductDescription(model.Name, model.Values);
-            var productInfo = ReflectionHelper.CreateProductInfo(model.StandartInfoValues);
-            var product = new Product<IDescription>();
-            product.Description = description;
-            product.ProductInfo = productInfo;
+            var productInfo = ReflectionHelper.CreateProductInfo(model.StandartInfoValues, true);
+
+            if (description == null || productInfo == null)
+                return RedirectToAction(
+                    "Error",
+                    new ErrorViewModel() { ActionName = "Index", RequestInfo = "Product creation error!" });
+
+            var product = Product<IDescription>.GetProduct(description, productInfo);
             product.ProductInfo.Image = ControllerHelper.ConvertFileToBytes(model.Image);
-            db.AddProduct(product);
+            await db.TryToAddProductAsync(product);
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost]
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public async Task<IActionResult> Error(ErrorViewModel model)
+        {
+            if (model == null)
+                model = new ErrorViewModel();
+            return View(model);
         }
     }
 }

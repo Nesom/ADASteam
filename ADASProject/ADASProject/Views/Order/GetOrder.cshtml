@@ -1,0 +1,81 @@
+﻿@model GetOrderModel
+<head>
+    <style>
+        .div_or {
+            border: solid;
+            border-width: 2px;
+            border-color: #838383;
+            margin-top: 10px;
+            border-radius: 3px 4px;
+        }
+
+        .pre_new {
+            font-size: 16px;
+            font-weight: 400;
+            margin-left: 5px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .button_new{
+            border-radius: 4px 5px;
+            border-width: 3px;
+            border: solid;
+            background-color:#f0f0f0;
+            margin-left:5px;
+            margin-bottom:10px;
+        }
+
+        .select_or{
+            border-radius: 4px 5px;
+            border-width: 3px;
+            border: solid;
+            background-color:#f0f0f0;
+            margin-left:10px;
+            margin-bottom:10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="div_or">
+        <p class="pre_new">Order number: @Model.Order.Id</p>
+        <p class="pre_new">Order amount: @Model.Order.Amount</p>
+        <p class="pre_new">Products</p>
+        @foreach (var subOrder in Model.SubOrders)
+        {
+            <p class="pre_new" style="margin-left:25px">@subOrder.Item1.Name (@subOrder.Item2)</p>
+        }
+        @if (Model.Role == "admin")
+        {
+            <form asp-controller="Order" asp-action="ChangeOrder" method="post">
+                <select class="select_or" asp-for="Status">
+                    <option value="@ADASProject.Order.Status.Review">Review</option>
+                    <option value="@ADASProject.Order.Status.Sent">Sent</option>
+                    <option value="@ADASProject.Order.Status.Delivered">Delivered</option>
+                    <option value="@ADASProject.Order.Status.Received">Received</option>
+                </select>
+                <input asp-for="Order.Id" value="@Model.Order.Id" hidden />
+                <button class="button_new">Submit</button>
+            </form>
+        }
+        else
+        {
+            <p class="pre_new">Status: @Model.Order.StatusInfo</p>
+            @if (Model.Order.StatusInfo != ADASProject.Order.Status.Received)
+            {
+                <form asp-controller="Order" asp-action="ChangeOrder" method="post">
+                    <select class="select_or" asp-for="Status">
+                        <option value="@Model.Order.StatusInfo">@Model.Order.StatusInfo</option>
+                        <option value="@ADASProject.Order.Status.Received">Received</option>
+                    </select>
+                    <input asp-for="Order.Id" value="@Model.Order.Id" hidden />
+                    <button class="button_new">Submit</button>
+                </form>
+            }
+        }
+    </div>
+
+</body>
+
+
+

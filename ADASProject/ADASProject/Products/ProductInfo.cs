@@ -5,12 +5,13 @@ namespace ADASProject.Products
 {
     public class ProductInfo
     {
-        public ProductInfo(string name, int count, double price, 
+        public ProductInfo(string name, int count, double price, string description,
             string guarantee, string producer, int yearOfEdition)
         {
             Name = name;
             Count = count;
             Price = price;
+            Description = description;
             Guarantee = guarantee;
             Producer = producer;
             YearOfEdition = yearOfEdition;
@@ -23,25 +24,28 @@ namespace ADASProject.Products
 
         public int CountOfOrders { get; set; }
 
-        public double Rating { get; set; }
         public int CountOfVotes { get; set; }
 
-        [Category("Основное")]
-        [Characteristic("Название")]
+        [Category("Main")]
+        [Characteristic("Name")]
         public string Name { get; set; }
-        [Characteristic("Количество товара")]
+        [Characteristic("Products count")]
         public int Count { get; set; }
-        [Characteristic("Цена")]
+        [Characteristic("Price")]
         public double Price { get; set; }
+        [Characteristic("Rating", true)]
+        public double Rating { get; set; }
+        [Characteristic("Description")]
+        public string Description { get; set; }
 
-        [Category("Производственные параметры")]
-        [Characteristic("Гарантия")]
+        [Category("Production parameters")]
+        [Characteristic("Guarantee")]
         public string Guarantee { get; set; }
-        [Characteristic("Производитель")]
+        [Characteristic("Producer")]
         public string Producer { get; set; }
-        [Characteristic("Год издания")]
+        [Characteristic("Year of edition")]
         public int YearOfEdition { get; set; }
-
+        
         public byte[] Image { get; set; }
     }
 }

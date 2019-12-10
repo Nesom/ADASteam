@@ -1,4 +1,5 @@
 ﻿namespace ADASProject.Order
 {
-    public enum Status { Проверяется, Отправлено, Доставлено, Получено }
+    // Ordered by stages
+    public enum Status { Review, Sent, Delivered, Received }
 }

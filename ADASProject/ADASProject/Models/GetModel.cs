@@ -1,4 +1,5 @@
 ﻿using ADASProject.Comments;
+using ADASProject.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,15 +13,18 @@ namespace ADASProject.Models
         {
             Values = new Dictionary<string, Dictionary<string, string>>();
             StandartValues = new Dictionary<string, Dictionary<string, string>>();
-            Comments = new List<Tuple<Comment, string>>();
+            RelatedProducts = new List<ProductInfo>();
+            Comments = new List<Tuple<Comment, string, bool>>();
         }
-
-        public ApplicationContext Context { get; set; }
 
         public int Id { get; set; }
         public Dictionary<string, Dictionary<string, string>> Values { get; set; }
         public Dictionary<string, Dictionary<string, string>> StandartValues { get; set; }
-        public List<Tuple<Comment, string>> Comments { get; set; }
+
+        // Comment | Username | IsLiked
+        public List<Tuple<Comment, string, bool>> Comments { get; set; }
         public byte[] Image { get; set; }
+        public bool CanVote { get; set; }
+        public List<ProductInfo> RelatedProducts { get; set; }
     }
 }

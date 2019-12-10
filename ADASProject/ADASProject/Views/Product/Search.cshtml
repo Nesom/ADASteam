@@ -1,0 +1,5 @@
+﻿@model SearchModel
+@foreach(var product in Model.Products)
+{
+    <pre><a asp-controller="Product" asp-action="Get/@product.Id">@product.Name</a> (@product.Rating) @product.Price</pre>
+}

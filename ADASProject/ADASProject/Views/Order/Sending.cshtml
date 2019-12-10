@@ -1,10 +1,8 @@
-﻿@model OrderModel
-    <form asp-controller="Order" asp-action="Order" method="post">
-        <pre>Страна  <input asp-for="Address.Country" type="text"/></pre>
-        <pre>Город  <input asp-for="Address.Sity" type="text"/></pre>
-        <pre>Улица  <input asp-for="Address.Street" type="text"/></pre>
-        <pre>Номер дома  <input asp-for="Address.HouseNumber" type="text"/></pre>
-        <pre>Номер квартиры  <input asp-for="Address.ApartmentNumber" type="text"/></pre>
-        <pre>Почтовый индекс  <input asp-for="Address.PostOfficeIndex" type="number"/></pre>
-        <input type="submit" name="Заказать"/>
-    </form>
+﻿<head>
+
+</head>
+<body>
+    <a asp-controller="Order" asp-action="Payment"><h4>Order delivery</h4></a>
+    <a asp-controller="Order" asp-action="Placement"><h4>Get in place</h4></a>
+</body>
+

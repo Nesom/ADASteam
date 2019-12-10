@@ -1,36 +1,235 @@
 ﻿@model CatalogModel
 
-<style>
-    .block {
-        float: left;
-        width: 320px;
-        margin-top: 10px;
-        margin-left: 20px;
-        margin-right: 20px;
-        margin-bottom: 10px;
-        text-align: center;
-    }
-</style>
-@foreach (var category in Model.ProductsByCategory)
-{
-    <pre style="font-size:30px; text-align:center">@category.Key</pre>
-    @foreach (var element in category.Value)
-    {
-        <div class="block">
-            <pre style="font-size:25px; align-self:center">@element.Name</pre>
-            @{
-                var base64 = Convert.ToBase64String(element.Image);
-                var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+<!DOCTYPE HTML>
+<html>
+<head>
+    <style>
+        .float-input {
+            float: left
+        }
+    </style>
+
+    <style>
+        .b {
+            width: 80px;
+            height: 30px;
+            border-radius: 3px;
+        }
+
+        .a {
+            text-decoration: none;
+            outline: none;
+            display: inline-block;
+            width: 140px;
+            height: 45px;
+            line-height: 45px;
+            border-radius: 45px;
+            margin: 10px 20px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 11px;
+            text-transform: uppercase;
+            text-align: center;
+            letter-spacing: 3px;
+            font-weight: 600;
+            color: #524f4e;
+            background: white;
+            box-shadow: 0 8px 15px rgba(0,0,0,.1);
+            transition: .3s;
+        }
+
+            .a:hover {
+                background: #A0A0A0;
+                box-shadow: 0 15px 20px #AFAFAF;
+                color: white;
+                transform: translateY(-7px);
             }
-            <img src="@imgSrc" width="250" height="330" />
-            <pre style="margin-top:10px">Цена: @element.Price</pre>
-            <pre>Год издания: @element.YearOfEdition</pre>
-            <pre>Производитель: @element.Producer</pre>
-            <pre><a asp-controller="Product" asp-action="Get/@element.Id">Посмотреть подробную информацию</a></pre>
-            <pre><a asp-controller="Order" asp-action="Buy/@element.Id">Купить</a></pre>
+    </style>
+</head>
+<body>
+    <div class="top_bg">
+
+    </div>
+    <div class="header_bg">
+        <div class="container">
+            <div class="header">
+                <div class="head-t">
+                    <div class="header_right">
+                        <div class="clearfix"> </div>
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+                <ul class="megamenu skyblue">
+                    <li class="active grid"><a class="color1" asp-action="Index">Home</a></li>
+                    <li class="active grid"><a class="color1" asp-action="Catalog">Catalog</a></li>
+            </div>
+
+            <!-- content -->
+            <div class="container">
+                <div class="women_main">
+                    <!-- start sidebar -->
+                    <div class="col-md-3 s-d">
+                        <div class="w_sidebar">
+                            <section class="sky-form">
+                                <h4>categories</h4>
+                                <form asp-controller="Home" asp-action="Catalog" method="get">
+                                    <div class="row1 scroll-pane">
+                                        <div class="col col-4">
+                                            @foreach (var check in CatalogModel.TypeToNameDict)
+                                            {
+                                                <label><button class="a" name="CategoryName" value="@check.Key" asp-controller="Home" asp-action="Catalog">@check.Value</button></label>
+                                            }
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </section>
+                            <form asp-controller="Home" asp-action="Catalog" method="get">
+                                <section class="sky-form">
+                                    <h4>Filters</h4>
+                                    <div class="row1 scroll-pane" style="height:auto">
+                                        <div class="col col-4">
+                                            @for (int i = 0; i < Model.StandartValuesInfo.Types.Length; i++)
+                                            {
+                                                @switch (Model.StandartValuesInfo.Types[i].Name)
+                                                {
+                                                    case "Double":
+                                                        {
+                                                            <p>@Model.StandartValuesInfo.Descriptions[i]: </p><input class="float-input, b" maxlength="16" type="number" step="0.1" asp-for="StandartValuesInfo.FromValues[i]" /><input class="b" maxlength="16" type="number" step="0.1" asp-for="StandartValuesInfo.ToValues[i]" />;
+                                                            break;
+                                                        }
+
+                                                    case "Int32":
+                                                        {
+                                                            <p>@Model.StandartValuesInfo.Descriptions[i]: </p><input class="float-input, b" maxlength="16" type="number" asp-for="StandartValuesInfo.FromValues[i]" /><input class="b" maxlength="16" type="number" asp-for="StandartValuesInfo.ToValues[i]" />;
+                                                            break;
+                                                        }
+                                                    default:
+                                                        {
+                                                            <p>@Model.StandartValuesInfo.Descriptions[i]: </p><input class="float-input, b" maxlength="100" type="text" asp-for="StandartValuesInfo.FromValues[i]" /><input class="b" maxlength="100" type="text" asp-for="StandartValuesInfo.ToValues[i]" />;
+                                                            break;
+                                                        }
+                                                }
+                                            }
+                                            <br />
+                                            @for (int i = 0; i < Model.CustomValuesInfo.Types.Length; i++)
+                                            {
+                                                @switch (Model.CustomValuesInfo.Types[i].Name)
+                                                {
+                                                    case "Double":
+                                                        {
+                                                            <p>@Model.CustomValuesInfo.Descriptions[i]: </p><input class="float-input, b" maxlength="16" type="number" step="0.1" asp-for="CustomValuesInfo.FromValues[i]" /><input class="b" type="number" maxlength="16" step="0.1" asp-for="CustomValuesInfo.ToValues[i]" />;
+                                                            break;
+                                                        }
+
+                                                    case "Int32":
+                                                        {
+                                                            <p>@Model.CustomValuesInfo.Descriptions[i]: </p><input class="float-input, b" maxlength="16" type="number" asp-for="CustomValuesInfo.FromValues[i]" /><input class="b" maxlength="16" type="number" asp-for="CustomValuesInfo.ToValues[i]" />;
+                                                            break;
+                                                        }
+                                                    default:
+                                                        {
+                                                            <p>@Model.CustomValuesInfo.Descriptions[i]: </p><input class="float-input, b" maxlength="100" type="text" asp-for="CustomValuesInfo.FromValues[i]" /><input class="b" maxlength="100" type="text" asp-for="CustomValuesInfo.ToValues[i]" />;
+                                                            break;
+                                                        }
+                                                }
+                                            }
+                                            <input type="text" value="@Model.CategoryName" asp-for="CategoryName" hidden />
+                                            <br /><button class="a" style="margin-left:10px" asp-controller="Home" asp-action="Catalog">Submit</button>
+                                        </div>
+                                    </div>
+                                </section>
+                                <section class="sky-form">
+                                    <h4>Sort</h4>
+                                    <div class="row1 scroll-pane">
+                                        <div class="col col-4">
+                                            @if (Model.SortedBy == null)
+                                            {
+                                                <label><input type="radio" name="SortedBy" checked />Not sorted</label>
+                                            }
+                                            else
+                                            {
+                                                <label><input type="radio" name="SortedBy" />Not sorted</label>
+                                            }
+                                            @if (Model.SortedBy == "Price")
+                                            {
+                                                <label><input asp-for="SortedBy" type="radio" name="SortedBy" value="Price" checked />Sorted by price</label>
+                                            }
+                                            else
+                                            {
+                                                <label><input asp-for="SortedBy" type="radio" name="SortedBy" value="Price" />Sorted by price</label>
+                                            }
+                                            @if (Model.SortedBy == "Rating")
+                                            {
+                                                <label><input asp-for="SortedBy" type="radio" name="SortedBy" value="Rating" checked />Sorted by rating</label>
+                                            }
+                                            else
+                                            {
+                                                <label><input asp-for="SortedBy" type="radio" name="SortedBy" value="Rating" />Sorted by rating</label>
+                                            }
+
+                                            <br />
+                                            <label><input asp-for="SortedByDescending" type="checkbox" />Sort by descending</label>
+                                            <button class="a" style="margin-left:10px; vertical-align:bottom" asp-controller="Home" asp-action="Catalog">Submit</button>
+                                        </div>
+                                    </div>
+                                </section>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- start content -->
+                    <div class="col-md-9 w_content">
+                        <div class="women">
+                            <a href="#"><h4>Result - <span>@Model.Count items</span> </h4></a>
+                            <div class="clearfix"></div>
+                        </div>
+                        <!-- grids_of_4 -->
+
+                        @foreach (var category in Model.Products.GroupBy(pr => pr.TableName).Select(group => group.ToArray()))
+                        {
+                            for (int i = 0; i < category.Length;)
+                            {
+                                var size = CatalogModel.TypeToSizeDict[ModelHelper.GetCategoryName(category[i].TableName)];
+                                var heightPlus100 = size.Height + 100;
+                                <div class="grids_of_4">
+                                    @for (int j = i; j < i + 4 && j < category.Length; j++)
+                                    {
+                                        var base64 = Convert.ToBase64String(category[j].Image);
+                                        var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+
+                                        <div class="grid1_of_4">
+                                            <div class="content_box" style="width:100%">
+                                                <a asp-controller="Product" asp-action="Get/@category[j].Id">
+                                                    <div style="height:@(CatalogModel.TypeToSizeDict[ModelHelper.GetCategoryName(category[i].TableName)].Height)px;margin-top:10px; width:100%">
+                                                        <img src="@imgSrc" style="width:auto; max-width:100%; height:100%" alt="" />
+                                                    </div>
+                                                </a>
+                                                <div style="height:40px">
+                                                    <h4>@category[j].Name</h4>
+                                                </div>
+                                                <h5>@CatalogModel.TypeToNameDict[ModelHelper.GetCategoryName(category[i].TableName)]</h5>
+                                                <div class="grid_1 simpleCart_shelfItem">
+                                                    <div class="item_add"><h5 class="item_price">Price: @category[j].Price$</h5></div>
+                                                    <div class="item_add"><span class="item_price"><a style="background-color:teal" asp-controller="Order" asp-action="Buy/@category[j].Id">add to cart</a></span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    @{i += 4;}
+                                </div>
+                            }
+                            <div class="clearfix"></div>
+                            <br />
+                        }
+                    </div>
+                    <div class="clearfix"></div>
+
+                    <!-- end content -->
+                </div>
+            </div>
         </div>
-    }
-}
+    </div>
+</body>
+</html>
 
 
 

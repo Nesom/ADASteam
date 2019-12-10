@@ -1,6 +1,6 @@
 ﻿@model LoginModel
 
-<h2>Enter the site</h2>
+@*<h2>Enter the site</h2>
 
 <a asp-action="Register" asp-controller="Account">Register</a>
 
@@ -21,4 +21,81 @@
             <input type="submit" value="Login" class="btn" />
         </div>
     </div>
-</form>
+</form>*@
+<!DOCTYPE HTML>
+<html>
+<head>
+
+</head>
+<body style="position:absolute; top:50px; left: 90px">
+    
+    
+    <div class="container">
+        <div class="main">
+            <div class="registration">
+                <div class="registration_left">
+
+                    <script>
+			(function() {
+
+			var inputs = document.createElement('input');
+
+			var supports = {};
+
+			supports.autofocus   = 'autofocus' in inputs;
+			supports.required    = 'required' in inputs;
+			supports.placeholder = 'placeholder' in inputs;
+
+			if(!supports.autofocus) {
+
+			}
+
+			if(!supports.required) {
+
+			}
+
+			if(!supports.placeholder) {
+
+			}
+
+			var send = document.getElementById('register-submit');
+			if(send) {
+				send.onclick = function () {
+					this.innerHTML = '...Sending';
+				}
+			}
+
+		})();
+                    </script>
+
+                <div class="registration_left">
+                    <h2>Log in</h2>
+                    <div class="registration_form">
+                        <form asp-action="Login" asp-controller="Account" asp-anti-forgery="true">
+                            <div class="validation" asp-validation-summary="ModelOnly"></div>
+                            <div>
+                                <div class="form-group">
+                                    <label asp-for="Email">Enter your Email</label>
+                                    <input type="text" asp-for="Email" />
+                                    <span asp-validation-for="Email" />
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Password">Enter your password</label>
+                                    <input asp-for="Password" />
+                                    <span asp-validation-for="Password" />
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" value="Login" class="btn" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+        </div>
+
+</body>
+</html>

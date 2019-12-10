@@ -1,10 +1,11 @@
 ﻿@model AddModel
-<pre style="font-size:18px">Доступные типы: </pre>
-@foreach(var name in Model.ProductNames)
-{
-    <pre style="font-size:16px">@name</pre>
-}
+<pre style="font-size:18px">Available types: </pre>
 <form asp-controller="Edit" asp-action="Add" method="post">
-    <input type="text" asp-for="Name"/>
-    <input type="submit" name="Отправить"/>
+    <select asp-for="Name">
+        @foreach (var name in Model.ProductNames)
+        {
+            <option value="@name" style="font-size:16px">@name</option>
+        }
+    </select>
+    <input type="submit" name="Submit"/>
 </form>
