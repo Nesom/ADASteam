@@ -6,24 +6,25 @@
     TempData["GetId"] = Model.Id;
 }
 <style>
-#main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-.like {
-    color: #ea0000;
-    outline: none;
-    background: #fff;
-    border: none;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 1.1em;
-    box-shadow: 0 0 22px 4px rgba(0,0,0,0.1);
-    height: 40px;
-    width: 100px;
-    transition: box-shadow 0.3s;
-}
+    #main {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .like {
+        color: #ea0000;
+        outline: none;
+        background: #fff;
+        border: none;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 1.1em;
+        box-shadow: 0 0 22px 4px rgba(0,0,0,0.1);
+        height: 40px;
+        width: 100px;
+        transition: box-shadow 0.3s;
+    }
 </style>
 <script>
     $(function () {
@@ -37,7 +38,7 @@
     this.state = { liked: false };
     this.handleClick = this.handleClick.bind(this);
   }
-  
+
   handleClick(event) {
     this.setState({ liked: !this.state.liked});
   }
@@ -106,51 +107,51 @@ ReactDOM.render(<LikeButton />, document.getElementById('main'));
         </table>
     </div>
     <div id="panely2" class="tab-pane fade">
-        
-            @foreach (var e in Model.Values)
-            {                  
-                <h4 style="text-align:center"><strong>@e.Key</strong></h4>
-                <table class="table">
-                    @foreach (var value in e.Value)
-                    {
+
+        @foreach (var e in Model.Values)
+        {
+            <h4 style="text-align:center"><strong>@e.Key</strong></h4>
+            <table class="table">
+                @foreach (var value in e.Value)
+                {
                     <tr style="font-size:medium">
                         <td scope="row">@value.Key</td>
                         <td scope="row" style="text-align:end">@value.Value</td>
                     </tr>
-                    }
-                </table>
-            }
-        
+                }
+            </table>
+        }
+
     </div>
     <div id="panely3" class="tab-pane fade">
-        
+
         @foreach (var e in Model.Comments)
         {
-        <div class="form-group">
-            <h3>@e.Item2 :</h3>
-            <div class="container">
-                <blockquote style="word-wrap: break-word">@e.Item1.Text </blockquote><blockquote class="blockquote-reverse">
+            <div class="form-group">
+                <h3>@e.Item2 :</h3>
+                <div class="container">
+                    <blockquote style="word-wrap: break-word">@e.Item1.Text </blockquote><blockquote class="blockquote-reverse">
 
 
-                    @if (e.Item3 && TempData.Peek("role") != null)
-                    {
-                        <button style="position:relative; background:white;border: 1px solid #7a7b7e;width: 4%;height: 4%;border-radius: 8px;"><a asp-controller="Product" asp-action="Like/@e.Item1.Id"><img style="width:60%; position:center" src="~/images/несердце.png" /></a></button>
-                    }
-                    @if (!e.Item3 && TempData.Peek("role") != null)
-                    {
-                        <button style="position:relative; background:white;border: 1px solid #7a7b7e;width: 4%;height: 4%;border-radius: 10px;"><a asp-controller="Product" asp-action="Unlike/@e.Item1.Id"><img style="width:60%" src="~/images/сердце.png" /></a></button>
-                    }
-                    @e.Item1.Rating
-                </blockquote>
+                        @if (e.Item3 && TempData.Peek("role") != null)
+                        {
+                            <button style="position:relative; background:white;border: 1px solid #7a7b7e;width: 4%;height: 4%;border-radius: 8px;"><a asp-controller="Product" asp-action="Like/@e.Item1.Id"><img style="width:60%; position:center" src="~/images/несердце.png" /></a></button>
+                        }
+                        @if (!e.Item3 && TempData.Peek("role") != null)
+                        {
+                            <button style="position:relative; background:white;border: 1px solid #7a7b7e;width: 4%;height: 4%;border-radius: 10px;"><a asp-controller="Product" asp-action="Unlike/@e.Item1.Id"><img style="width:60%" src="~/images/сердце.png" /></a></button>
+                        }
+                        @e.Item1.Rating
+                    </blockquote>
+                </div>
+                @if (TempData.Peek("role") != null && TempData.Peek("role").ToString() == "admin")
+                {
+                    <a asp-controller="Product" asp-action="RemoveComment/@e.Item1.Id"><button>Remove comment</button></a>
+                }
             </div>
-            @if (TempData.Peek("role") != null && TempData.Peek("role").ToString() == "admin")
-            {
-                <a asp-controller="Product" asp-action="RemoveComment/@e.Item1.Id"><button>Remove comment</button></a>
-            }
-        </div>
-        
+
         }
-        @if(Model.Comments.Count == 0)
+        @if (Model.Comments.Count == 0)
         {
             <div>
                 <h3 style="color:silver"><strong>Be the first one to leave the comment!</strong></h3>
@@ -160,20 +161,47 @@ ReactDOM.render(<LikeButton />, document.getElementById('main'));
         }
         @if (TempData.Peek("role") != null)
         {
-    <form asp-controller="Product" asp-action="Comment" method="post" style="position:relative">
-        Rate : 
-        <select style="width:30px" name="vote">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-        </select>
-        <input name="id" type="number" value="@Model.Id" hidden />
-        <textarea width:50%" name="text" type="text" style="width: 300px; height: 70px;" maxlength="1000" required></textarea>
-        <button asp-controller="Product" asp-action="Comment" type="submit">Send</button>
-    </form>
+            <form asp-controller="Product" asp-action="Comment" method="post" style="position:relative">
+                Rate :
+                <select style="width:30px; margin-bottom:10px" name="vote">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                <br />
+                <input name="id" type="number" value="@Model.Id" hidden />
+                <textarea width:50%" name="text" type="text" style="width: 300px; height: 70px;" maxlength="1000" required></textarea>
+                <br />
+                <button asp-controller="Product" asp-action="Comment" type="submit">Send</button>
+            </form>
         }
+    </div>
+    <div id="panely4" class="tab-pane fade">
+        <div class="grids_of_4">
+            @for (int j = 0; j < 4 && j < Model.RelatedProducts.Count; j++)
+            {
+                base64 = Convert.ToBase64String(Model.RelatedProducts[j].Image);
+                imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+
+                <div class="grid1_of_4">
+                    <div class="content_box" style="width:100%">
+                        <a asp-controller="Product" asp-action="Get/@Model.RelatedProducts[j].Id">
+                            <div style="height:180px;margin-top:10px; width:100%">
+                                <img src="@imgSrc" style="width:auto; max-width:100%; height:100%" alt="" />
+                            </div>
+                        </a>
+                        <h4>@Model.RelatedProducts[j].Name</h4>
+                        <p>@CatalogModel.TypeToNameDict[ModelHelper.GetCategoryName(Model.RelatedProducts[j].TableName)]</p>
+                        <div class="grid_1 simpleCart_shelfItem">
+                            <div class="item_add"><span class="item_price"><h6>Price: @Model.RelatedProducts[j].Price</h6></span></div>
+                            <div class="item_add"><span class="item_price"><a style="background-color:teal" asp-controller="Order" asp-action="Buy/@Model.RelatedProducts[j].Id">add to cart</a></span></div>
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
     </div>
+</div>
 
