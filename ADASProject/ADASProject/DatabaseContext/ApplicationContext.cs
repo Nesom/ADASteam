@@ -417,13 +417,23 @@ namespace ADASProject
 
         public async Task ChangeVoteAsync(int productId, int userId, int newVote)
         {
+            if (newVote < 0 || newVote > 5)
+                return;
+
             var vote = await ProductVotes.FindAsync(new object[] { productId, userId });
             if (vote == null)
             {
-                vote = new ProductVote() { ProductId = productId, UserId = userId };
+                ProductVotes.Add(new ProductVote() { ProductId = productId, UserId = userId, Vote = newVote });
+                var product = Products.Find(productId);
+                var sum = product.Rating * product.CountOfVotes++;
+                product.Rating = (sum + newVote) / product.CountOfVotes;
+                await SaveChangesAsync();
             }
-            vote.Vote = newVote;
-            await SaveChangesAsync();
+            else
+            {
+                vote.Vote = newVote;
+                await SaveChangesAsync();
+            }
         }
         #endregion
     }

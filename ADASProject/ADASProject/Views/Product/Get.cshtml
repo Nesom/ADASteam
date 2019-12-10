@@ -132,20 +132,20 @@ ReactDOM.render(<LikeButton />, document.getElementById('main'));
                 <blockquote style="word-wrap: break-word">@e.Item1.Text </blockquote><blockquote class="blockquote-reverse">
 
 
-    @if (e.Item3 && TempData.Peek("role") != null)
-    {
-        <button style="position:relative; background:white;border: 1px solid #7a7b7e;width: 4%;height: 4%;border-radius: 8px;"><a asp-controller="Product" asp-action="Like/@e.Item1.Id"><img style="width:60%; position:center" src="~/images/несердце.png" /></a></button>
-    }
-    @if (!e.Item3 && TempData.Peek("role") != null)
-    {
-        <button style="position:relative; background:white;border: 1px solid #7a7b7e;width: 4%;height: 4%;border-radius: 10px;"><a asp-controller="Product" asp-action="Unlike/@e.Item1.Id"><img style="width:60%" src="~/images/сердце.png" /></a></button>
-    }
-    @e.Item1.Rating
-</blockquote>
+                    @if (e.Item3 && TempData.Peek("role") != null)
+                    {
+                        <button style="position:relative; background:white;border: 1px solid #7a7b7e;width: 4%;height: 4%;border-radius: 8px;"><a asp-controller="Product" asp-action="Like/@e.Item1.Id"><img style="width:60%; position:center" src="~/images/несердце.png" /></a></button>
+                    }
+                    @if (!e.Item3 && TempData.Peek("role") != null)
+                    {
+                        <button style="position:relative; background:white;border: 1px solid #7a7b7e;width: 4%;height: 4%;border-radius: 10px;"><a asp-controller="Product" asp-action="Unlike/@e.Item1.Id"><img style="width:60%" src="~/images/сердце.png" /></a></button>
+                    }
+                    @e.Item1.Rating
+                </blockquote>
             </div>
             @if (TempData.Peek("role") != null && TempData.Peek("role").ToString() == "admin")
             {
-                <button><a asp-controller="Product" asp-action="RemoveComment/@e.Item1.Id">Remove comment</a></button>
+                <a asp-controller="Product" asp-action="RemoveComment/@e.Item1.Id"><button>Remove comment</button></a>
             }
         </div>
         
@@ -160,19 +160,20 @@ ReactDOM.render(<LikeButton />, document.getElementById('main'));
         }
         @if (TempData.Peek("role") != null)
         {
-        <form asp-controller="Product" asp-action="Comment" method="post" style="position:relative">
-            <input name="id" type="number" value="@Model.Id" hidden />
-            <textarea style=" width:50%" name="text" type="text" style="width: 300px; height: 70px;" maxlength="1000" required></textarea>
-            <button asp-controller="Product" asp-action="Comment" type="submit">Send</button>
-        </form>
-    <div id="panely4" class="tab-pane fade">
-        <from>
-        Rate : <select style="width:3%" size="1%">
-    <option>1</option>
-    <option>2</option>
-</select></from>
+    <form asp-controller="Product" asp-action="Comment" method="post" style="position:relative">
+        Rate : 
+        <select style="width:30px" name="vote">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+        <input name="id" type="number" value="@Model.Id" hidden />
+        <textarea width:50%" name="text" type="text" style="width: 300px; height: 70px;" maxlength="1000" required></textarea>
+        <button asp-controller="Product" asp-action="Comment" type="submit">Send</button>
+    </form>
+        }
+        </div>
     </div>
-</div>
-
-
 
