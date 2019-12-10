@@ -5,33 +5,74 @@
     var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
     TempData["GetId"] = Model.Id;
 }
-
+<style>
+#main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.like {
+    color: #ea0000;
+    outline: none;
+    background: #fff;
+    border: none;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.1em;
+    box-shadow: 0 0 22px 4px rgba(0,0,0,0.1);
+    height: 40px;
+    width: 100px;
+    transition: box-shadow 0.3s;
+}
+</style>
 <script>
     $(function () {
         $("#myTab2 li:eq(0) a").tab('show');
     });
+@*</script>
+<script>*@
+    class LikeButton extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { liked: false };
+    this.handleClick = this.handleClick.bind(this);
+  }
+  
+  handleClick(event) {
+    this.setState({ liked: !this.state.liked});
+  }
+  render() {
+    let buttonText = this.state.liked? 'Unlike': 'Like';
+    return (
+      <button onClick={this.handleClick} className="like">
+        <i className="fa fa-heart"></i>&nbsp;
+        {buttonText}</button>
+     );
+  }
+}
+ReactDOM.render(<LikeButton />, document.getElementById('main'));
 </script>
 
 <div>
-    <h3 style="position:relative">@Model.StandartValues.First().Value["Name"]</h3>
+    <h3 style="position:relative">@Model.StandartValues["Main"]["Name"]</h3>
     <img style="width:17%" class="etalage_thumb_image" src="@imgSrc" class="img-responsive" />
-    <h2 style="position:absolute; top:15%;left:30%"><strong>@Model.StandartValues.First().Value["Price"]$</strong></h2>
-    <h4 style="position:absolute; top:23%;left:30%">Products left : @Model.StandartValues.First().Value["Products count"]</h4>
-    @switch (int.Parse(Model.StandartValues.First().Value["Rating"]))
+    <h2 style="position:absolute; top:15%;left:30%"><strong>@Model.StandartValues["Main"]["Price"]$</strong></h2>
+    <h4 style="position:absolute; top:23%;left:30%">Products left : @Model.StandartValues["Main"]["Products count"]</h4>
+    @switch (int.Parse(Model.StandartValues["Main"]["Rating"]))
     {
         case 0:<h4 style="position:relative; font-size:200%">&#9734;&#9734;&#9734;&#9734;&#9734;</h4>
             break;
-        case 1: <h4 style="position:relative; width:14%">Rating : &#9733;&#9734;&#9734;&#9734;&#9734;</h4>
+        case 1: <h4 style="position:relative; font-size:200%">&#9733;&#9734;&#9734;&#9734;&#9734;</h4>
             break;
-        case 2: <h4 style="position:relative">Rating : &#9733;&#9733;&#9734;&#9734;&#9734;</h4>
+        case 2: <h4 style="position:relative; font-size:200%">&#9733;&#9733;&#9734;&#9734;&#9734;</h4>
             break;
-        case 3: <h4 style="position:relative">Rating : &#9733;&#9733;&#9733;&#9734;&#9734;</h4>
+        case 3: <h4 style="position:relative; font-size:200%">&#9733;&#9733;&#9733;&#9734;&#9734;</h4>
             break;
-        case 4: <h4 style="position:relative">Rating : &#9733;&#9733;&#9733;&#9733;&#9734;</h4>
+        case 4: <h4 style="position:relative; font-size:200%">&#9733;&#9733;&#9733;&#9733;&#9734;</h4>
             break;
-        case 5: <h4 style="position:relative">Rating : &#9733;&#9733;&#9733;&#9733;&#9733;</h4>
+        case 5: <h4 style="position:relative; font-size:200%">&#9733;&#9733;&#9733;&#9733;&#9733;</h4>
             break;
-        default: <h4 style="position:relative">Rating : 10/10!</h4>
+        default: <h4 style="position:relative; font-size:200%">Rating : 10/10!</h4>
             break;
     }
     <div style="position:absolute;top:31%; left:21%; width:25%" class="item_add"><span style="font-size:130%" class="item_price"><a asp-controller="Order" asp-action="Buy/@Model.Id" style="background-color:teal">Add to cart</a></span></div>
@@ -47,7 +88,7 @@
 <div class="tab-content" style="position:relative">
     <div id="panely1" class="tab-pane fade in active">
         <h2><strong>Description</strong></h2>
-        <p style="max-width:60%; font-size:large;word-wrap: break-word" class="prod-desc">@Model.StandartValues.First().Value["Description"]hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh</p>
+        <p style="max-width:60%; font-size:large;word-wrap: break-word" class="prod-desc">@Model.StandartValues["Main"]["Description"]</p>
         <h2><strong>Main characteristics</strong></h2>
         <table class="table" style="max-width:60%">
             @foreach (var e in Model.StandartValues.Where(r => r.Key == "Production parameters"))
@@ -65,34 +106,30 @@
         </table>
     </div>
     <div id="panely2" class="tab-pane fade">
-        <table class="table">
-            @foreach (var e in Model.StandartValues.Concat(Model.Values))
-            {
-                @if (e.Key != "Main" && e.Key != "Production parameters")
-                {
-                <tr style="font-size:medium">
-                    <td scope="row" style="text-align:center"><h4><strong>@e.Key</strong></h4></td>
-                    <td></td>
-                </tr>
-                }
-                foreach (var value in e.Value.Where(a => a.Key != "Description" && a.Key != "Price" && a.Key != "Name" && a.Key != "Products count" && a.Key != "Rating" && e.Key != "Production parameters"))
-                {
+        
+            @foreach (var e in Model.Values)
+            {                  
+                <h4 style="text-align:center"><strong>@e.Key</strong></h4>
+                <table class="table">
+                    @foreach (var value in e.Value)
+                    {
                     <tr style="font-size:medium">
                         <td scope="row">@value.Key</td>
                         <td scope="row" style="text-align:end">@value.Value</td>
                     </tr>
-                }
+                    }
+                </table>
             }
-        </table>
+        
     </div>
     <div id="panely3" class="tab-pane fade">
-
+        
         @foreach (var e in Model.Comments)
         {
         <div class="form-group">
             <h3>@e.Item2 :</h3>
             <div class="container">
-                <blockquote style="word-wrap: break-word">@e.Item1.Text</blockquote><blockquote class="blockquote-reverse">
+                <blockquote style="word-wrap: break-word">@e.Item1.Text </blockquote><blockquote class="blockquote-reverse">
 
 
     @if (e.Item3 && TempData.Peek("role") != null)
@@ -121,36 +158,19 @@
                 <br />
             </div>
         }
+        @if (TempData.Peek("role") != null)
+        {
         <form asp-controller="Product" asp-action="Comment" method="post" style="position:relative">
             <input name="id" type="number" value="@Model.Id" hidden />
-            <input style=" width:50%" name="text" type="text" style="width: 300px; height: 70px;" maxlength="1000" required />
+            <textarea style=" width:50%" name="text" type="text" style="width: 300px; height: 70px;" maxlength="1000" required></textarea>
             <button asp-controller="Product" asp-action="Comment" type="submit">Send</button>
         </form>
-    </div>
     <div id="panely4" class="tab-pane fade">
-        <div class="grids_of_4">
-            @for (int j = 0; j < 4 && j < Model.RelatedProducts.Count; j++)
-            {
-                base64 = Convert.ToBase64String(Model.RelatedProducts[j].Image);
-                imgSrc = String.Format("data:image/gif;base64,{0}", base64);
-
-                <div class="grid1_of_4">
-                    <div class="content_box" style="width:100%">
-                        <a asp-controller="Product" asp-action="Get/@Model.RelatedProducts[j].Id">
-                            <div style="height:180px;margin-top:10px; width:100%">
-                                <img src="@imgSrc" style="width:auto; max-width:100%; height:100%" alt="" />
-                            </div>
-                        </a>
-                        <h4>@Model.RelatedProducts[j].Name</h4>
-                        <p>@CatalogModel.TypeToNameDict[ModelHelper.GetCategoryName(Model.RelatedProducts[j].TableName)]</p>
-                        <div class="grid_1 simpleCart_shelfItem">
-                            <div class="item_add"><span class="item_price"><h6>Price: @Model.RelatedProducts[j].Price</h6></span></div>
-                            <div class="item_add"><span class="item_price"><a style="background-color:teal" asp-controller="Order" asp-action="Buy/@Model.RelatedProducts[j].Id">add to cart</a></span></div>
-                        </div>
-                    </div>
-                </div>
-            }
-        </div>
+        <from>
+        Rate : <select style="width:3%" size="1%">
+    <option>1</option>
+    <option>2</option>
+</select></from>
     </div>
 </div>
 
