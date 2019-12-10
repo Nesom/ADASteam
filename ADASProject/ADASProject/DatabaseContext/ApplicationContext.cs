@@ -16,7 +16,6 @@ namespace ADASProject
 
         public DbSet<ProductInfo> Products { get; set; }
         public DbSet<SmartphoneDescription> SmartphoneDescriptions { get; set; }
-        public DbSet<TestProductDescription> TestProductDescriptions { get; set; }
         public DbSet<TVDescription> TVDescriptions { get; set; }
         public DbSet<LaptopDescription> LaptopDescriptions { get; set; }
 

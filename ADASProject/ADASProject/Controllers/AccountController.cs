@@ -75,7 +75,7 @@ namespace ADASProject.Controllers
 
                     return RedirectToAction("Index", "Home");
                 }
-                ModelState.AddModelError("", "Некорректные логин и(или) пароль");
+                ModelState.AddModelError("", "Incorrect login and(or) password");
             }
             return View(model);
         }
@@ -100,7 +100,9 @@ namespace ADASProject.Controllers
 
         public async Task<IActionResult> Logout()
         {
-            TempData.Clear();
+            TempData.Remove("username");
+            TempData.Remove("role");
+            TempData.Remove("id");
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Login", "Account");
         }

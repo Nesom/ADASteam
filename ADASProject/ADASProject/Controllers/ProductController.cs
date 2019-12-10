@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using ADASProject.Models;
+﻿using ADASProject.Models;
 using ADASProject.Products;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Searching;
 
 namespace ADASProject.Controllers
 {
@@ -106,11 +107,17 @@ namespace ADASProject.Controllers
         [HttpGet]
         public async Task<IActionResult> Search(string request)
         {
-            var products = await db.GetProductInfosAsync();
+            var products = (await db.GetProductInfosAsync())
+                .Select(pr => new Product(pr.Id, pr.Name, pr.Description));
+            var ids = Searcher.Search(request, products);
+
+            var serachedProducts = new List<ProductInfo>();
+            foreach(var id in ids)
+                serachedProducts.Add(await db.GetProductInfoAsync(id));
+
             return View(new SearchModel()
             {
-                Products = products
-                    .Where(pr => request.Contains(pr.Name))
+                Products = serachedProducts
             });
         }
 

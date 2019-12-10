@@ -8,6 +8,6 @@ namespace ADASProject.Models
 {
     public class SearchModel
     {
-        public IQueryable<ProductInfo> Products { get; set; }
+        public IEnumerable<ProductInfo> Products { get; set; }
     }
 }

@@ -44,8 +44,8 @@ namespace ADASProject
 
             services.Configure<CookiePolicyOptions>(options =>
             {
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
+                //options.CheckConsentNeeded = context => true;
+                //options.MinimumSameSitePolicy = SameSiteMode.None;
                 options.ConsentCookie.MaxAge = TimeSpan.FromMinutes(60);
             });
 

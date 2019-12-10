@@ -57,7 +57,7 @@ namespace ADASProject.Products
         public bool AutoFocus { get; set; }
 
         [Category("Battery")]
-        [Characteristic("Battary capacity")]
+        [Characteristic("Battery capacity")]
         public string BatteryCapacity { get; set; }
     }
 }
