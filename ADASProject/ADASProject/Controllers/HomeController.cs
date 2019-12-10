@@ -28,13 +28,16 @@ namespace ADASProject.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var ip = accessor.HttpContext.Connection.RemoteIpAddress.ToString();
-            var city = Autodetect.GetCity(ip);
+            if (!TempData.ContainsKey("city"))
+            {
+                var ip = accessor.HttpContext.Connection.RemoteIpAddress.ToString();
+                var city = Autodetect.GetCity(ip);
 
-            if (city != null)
-                TempData["city"] = city;
-            else
-                TempData["city"] = "Kazan'";
+                if (city != null && city.Length > 2)
+                    TempData["city"] = city;
+                else
+                    TempData["city"] = "Kazan'";
+            }
 
             var products = (await db.GetProductInfosAsync())
                 .OrderByDescending(pr => pr.AddDate)
