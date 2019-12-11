@@ -1,5 +1,90 @@
 ﻿@model SearchModel
-@foreach(var product in Model.Products)
-{
-    <pre><a asp-controller="Product" asp-action="Get/@product.Id">@product.Name</a> (@product.Rating) @product.Price</pre>
-}
+<body>
+    <div class="top_bg">
+
+    </div>
+    <div class="header_bg">
+        <div class="container">
+            <div class="header">
+                <div class="head-t">
+                    <div class="header_right">
+                        <div class="clearfix"> </div>
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+                <ul class="megamenu skyblue">
+                    <li class="active grid"><a class="color1" asp-action="Index">Home</a></li>
+                    <li class="active grid"><a class="color1" asp-action="Catalog">Catalog</a></li>
+                    </ul>
+            </div>
+
+                <div class="container">
+                    <div class="women_main">
+                        <div class="col-md-9 w_content">
+                            <div class="women">
+                                <a href="#"><h4>Result - <span>@Model.Products.Count() items</span> </h4></a>
+                                <div class="clearfix"></div>
+                            </div>
+                            @{
+                                var category = Model.Products.ToArray();
+                            }
+                            @for (int i = 0; i < category.Length;)
+                            {
+                                var size = CatalogModel.TypeToSizeDict[ModelHelper.GetCategoryName(category[i].TableName)];
+                                var heightPlus100 = size.Height + 100;
+                                <div class="grids_of_4">
+                                    @for (int j = i; j < i + 4 && j < category.Length; j++)
+                                    {
+                                        var base64 = Convert.ToBase64String(category[j].Image);
+                                        var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+
+                                        <div class="grid1_of_4">
+                                            <div class="content_box" style="width:100%">
+                                                <a asp-controller="Product" asp-action="Get/@category[j].Id">
+                                                    <div style="height:@(CatalogModel.TypeToSizeDict[ModelHelper.GetCategoryName(category[i].TableName)].Height)px;margin-top:10px; width:100%">
+                                                        <img src="@imgSrc" style="width:auto; max-width:100%; height:100%" alt="" />
+                                                    </div>
+                                                </a>
+                                                <div style="height:40px">
+                                                    <h4>@category[j].Name</h4>
+                                                </div>
+                                                <h5>@CatalogModel.TypeToNameDict[ModelHelper.GetCategoryName(category[i].TableName)]</h5>
+                                                <div class="grid_1 simpleCart_shelfItem">
+                                                    @{
+                                                        int rating = (int)category[j].Rating;
+                                                        if (category[j].Rating % 1 > 0.5)
+                                                        {
+                                                            rating++;
+                                                        }
+                                                    }
+                                                    @switch (rating)
+                                                    {
+                                                        default:<h4 style="position:relative; font-size:200%">&#9734;&#9734;&#9734;&#9734;&#9734;</h4>
+                                                            break;
+                                                        case 1: <h4 style="position:relative; font-size:200%">&#9733;&#9734;&#9734;&#9734;&#9734;</h4>
+                                                            break;
+                                                        case 2: <h4 style="position:relative; font-size:200%">&#9733;&#9733;&#9734;&#9734;&#9734;</h4>
+                                                            break;
+                                                        case 3: <h4 style="position:relative; font-size:200%">&#9733;&#9733;&#9733;&#9734;&#9734;</h4>
+                                                            break;
+                                                        case 4: <h4 style="position:relative; font-size:200%">&#9733;&#9733;&#9733;&#9733;&#9734;</h4>
+                                                            break;
+                                                        case 5: <h4 style="position:relative; font-size:200%">&#9733;&#9733;&#9733;&#9733;&#9733;</h4>
+                                                            break;
+                                                    }
+                                                    <div class="item_add"><h4 class="item_price" style="font-weight:500">@category[j].Price$</h4></div>
+                                                    <div class="item_add"><span class="item_price"><a style="background-color:teal" asp-controller="Order" asp-action="Buy/@category[j].Id">add to cart</a></span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    @{i += 4;}
+                                </div>
+                            }
+                            <div class="clearfix"></div>
+                            <br />
+                        </div>
+                </div>
+        </div>
+    </div>
+</body>
