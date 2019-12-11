@@ -59,7 +59,7 @@ using ADASProject.Models;
         public async override global::System.Threading.Tasks.Task ExecuteAsync()
         {
             BeginContext(21, 506, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0964a0feb8654874a8eca681774938c6", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7b23075c69e847e3850d7a6a05f0aa8a", async() => {
                 BeginContext(27, 493, true);
                 WriteLiteral(@"
     <style>
@@ -98,17 +98,17 @@ using ADASProject.Models;
             WriteLiteral("\r\n");
             EndContext();
             BeginContext(529, 382, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a41bbc2a0af04834abd6f38626f6e30c", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "33f884e030cd437d9c39646a45957e7e", async() => {
                 BeginContext(535, 37, true);
                 WriteLiteral("\r\n    <h4>Chouse your city</h4>\r\n    ");
                 EndContext();
                 BeginContext(572, 330, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a165133e441646b09bc1f48bf64f4317", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a3deaccec4d8481791609d1253dc6115", async() => {
                     BeginContext(635, 10, true);
                     WriteLiteral("\r\n        ");
                     EndContext();
                     BeginContext(645, 192, false);
-                    __tagHelperExecutionContext = __tagHelperScopeManager.Begin("select", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "b879b9e5e17e4c768a7135314dee93e8", async() => {
+                    __tagHelperExecutionContext = __tagHelperScopeManager.Begin("select", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "be388d9cd6c9465594dea4516b308378", async() => {
                         BeginContext(686, 2, true);
                         WriteLiteral("\r\n");
                         EndContext();
@@ -122,7 +122,7 @@ using ADASProject.Models;
                         WriteLiteral("                ");
                         EndContext();
                         BeginContext(767, 36, false);
-                        __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f7364370658041d8b74f1253e32a74fc", async() => {
+                        __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3f70ddc2d2304ebe939b0f60e0196322", async() => {
                             BeginContext(790, 4, false);
 #line 28 "C:\Users\User\Documents\GitHub\ADASteam\ADASProject\ADASProject\Views\Home\SetCity.cshtml"
                                  Write(city);

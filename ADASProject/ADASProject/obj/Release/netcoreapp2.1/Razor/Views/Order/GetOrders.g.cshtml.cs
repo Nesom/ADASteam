@@ -54,7 +54,7 @@ using ADASProject.Models;
         public async override global::System.Threading.Tasks.Task ExecuteAsync()
         {
             BeginContext(23, 414, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c50e9e4d465c4894a66aeb809a6d89fa", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "515731d557e242329bba08819aa477c7", async() => {
                 BeginContext(29, 401, true);
                 WriteLiteral(@"
     <style>
@@ -91,7 +91,7 @@ using ADASProject.Models;
             WriteLiteral("\r\n");
             EndContext();
             BeginContext(439, 843, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a2548171252540dd9c3c94dcdc6d5770", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "e36e2bf8689846808deaf423a07c547c", async() => {
                 BeginContext(445, 2, true);
                 WriteLiteral("\r\n");
                 EndContext();
@@ -192,7 +192,7 @@ using ADASProject.Models;
                 WriteLiteral("            ");
                 EndContext();
                 BeginContext(1091, 159, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "5dfc14ac81194b5380f514bec9400715", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f1f44ac183474eba90580387ccf4af9a", async() => {
                     BeginContext(1192, 54, true);
                     WriteLiteral("<p class=\"pre_new\" style=\"font-weight:600\">Details</p>");
                     EndContext();
