@@ -32,7 +32,7 @@ namespace ADASProject.Controllers
             model.Image = product.ProductInfo.Image;
             // Set can vote field
             if (TempData.ContainsKey("id"))
-                model.CanVote = await db.IsVotedAsync(model.Id, (int)TempData.Peek("id"));
+                model.CanVote = !await db.IsCommentedAsync((int)TempData.Peek("id"), model.Id);
             // Set comments
             var comments = await db.GetCommentsAsync(model.Id);
             bool isLiked = false;
@@ -71,7 +71,8 @@ namespace ADASProject.Controllers
             // Add comment
             var userId = (int)TempData.Peek("id");
             var comment = new Comments.Comment() { UserId = userId, ProductId = id, Text = text };
-            await db.AddCommentAsync(comment);
+            if (!await db.IsCommentedAsync((int)TempData.Peek("id"), id))
+                await db.AddCommentAsync(comment);
             return RedirectToAction($"Get/{id}");
         }
 

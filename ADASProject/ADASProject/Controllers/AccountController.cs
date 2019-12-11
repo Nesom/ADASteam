@@ -103,6 +103,7 @@ namespace ADASProject.Controllers
             TempData.Remove("username");
             TempData.Remove("role");
             TempData.Remove("id");
+            TempData.Remove("city");
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Login", "Account");
         }

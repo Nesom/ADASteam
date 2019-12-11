@@ -13,6 +13,7 @@ namespace ADASProject.DatabaseContext
         Task LikeCommentAsync(int userId, int commentId);
         Task UnlikeCommentAsync(int userId, int commentId);
 
+        Task<bool> IsCommentedAsync(int userId, int productId);
         Task<bool> CanLikeAsync(int userId, int commentId);
 
         Task<Comment> GetCommentAsync(int commentId);

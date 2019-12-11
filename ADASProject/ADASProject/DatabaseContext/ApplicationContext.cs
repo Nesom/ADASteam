@@ -264,6 +264,14 @@ namespace ADASProject
             await SaveChangesAsync();
         }
 
+        public async Task<bool> IsCommentedAsync(int userId, int productId)
+        {
+            var comment = Comments
+                .Where(c => c.UserId == userId && c.ProductId == productId)
+                .FirstOrDefault();
+            return comment != null;
+        }
+
         public async Task<bool> CanLikeAsync(int userId, int commentId)
         {
             var like = await CommentLikes.FindAsync(new object[2] { userId, commentId });
@@ -404,14 +412,12 @@ namespace ADASProject
 
         public async Task<bool> IsVotedAsync(int productId, int userId)
         {
-            return (await ProductVotes.FindAsync(new object[] { productId, userId })) == null;
+            return (await ProductVotes.FindAsync(new object[] { productId, userId })) != null;
         }
 
         public async Task<int> GetVoteAsync(int productId, int userId)
         {
-            if (!await IsVotedAsync(productId, userId))
-                return (await ProductVotes.FindAsync(new object[] { productId, userId })).Vote;
-            return -1;
+            return (await ProductVotes.FindAsync(new object[] { productId, userId })).Vote;
         }
 
         public async Task ChangeVoteAsync(int productId, int userId, int newVote)

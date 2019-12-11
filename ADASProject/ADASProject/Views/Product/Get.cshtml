@@ -181,7 +181,7 @@ ReactDOM.render(<LikeButton />, document.getElementById('main'));
                 <br />
             </div>
         }
-        @if (TempData.Peek("role") != null)
+        @if (Model.CanVote)
         {
             <form asp-controller="Product" asp-action="Comment" method="post" style="position:relative">
                 Rate :
