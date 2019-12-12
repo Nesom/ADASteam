@@ -363,3 +363,4 @@ C:\Users\User\Documents\GitHub\ADASteam\ADASProject\ADASProject\obj\Debug\netcor
 C:\Users\User\Documents\GitHub\ADASteam\ADASProject\ADASProject\obj\Debug\netcoreapp2.1\ADASProject.RazorTargetAssemblyInfo.cs
 C:\Users\User\Documents\GitHub\ADASteam\ADASProject\ADASProject\obj\Debug\netcoreapp2.1\ADASProject.Views.pdb
 C:\Users\User\Documents\GitHub\ADASteam\ADASProject\ADASProject\obj\Debug\netcoreapp2.1\ADASProject.csproj.CopyComplete
+C:\Users\User\Desktop\ADASProject\ADASProject\obj\Debug\netcoreapp2.1\Razor\Views\Home\SetCity.g.cshtml.cs

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\User\\Documents\\GitHub\\ADASteam\\ADASProject\\ADASProject\\ADASProject.csproj": {}
+    "C:\\Users\\User\\Desktop\\ADASProject\\ADASProject\\ADASProject.csproj": {}
   },
   "projects": {
-    "C:\\Users\\User\\Documents\\GitHub\\ADASteam\\ADASProject\\ADASProject\\ADASProject.csproj": {
+    "C:\\Users\\User\\Desktop\\ADASProject\\ADASProject\\ADASProject.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\User\\Documents\\GitHub\\ADASteam\\ADASProject\\ADASProject\\ADASProject.csproj",
+        "projectUniqueName": "C:\\Users\\User\\Desktop\\ADASProject\\ADASProject\\ADASProject.csproj",
         "projectName": "ADASProject",
-        "projectPath": "C:\\Users\\User\\Documents\\GitHub\\ADASteam\\ADASProject\\ADASProject\\ADASProject.csproj",
+        "projectPath": "C:\\Users\\User\\Desktop\\ADASProject\\ADASProject\\ADASProject.csproj",
         "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\User\\Documents\\GitHub\\ADASteam\\ADASProject\\ADASProject\\obj\\",
+        "outputPath": "C:\\Users\\User\\Desktop\\ADASProject\\ADASProject\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
