@@ -39,8 +39,8 @@
                         <p style="font-size:large"><strong>Price Details</strong></p>
                         <span style="font-size:medium">Total</span>
                         <span class="total1" style="font-size:medium">@Model.Amount$</span>
-                        <span style="font-size:medium">Delivery Charges</span>
-                        <span class="total1" style="font-size:medium">150$</span>
+                        <span style="font-size:medium">Delivery</span>
+                        <span class="total1" style="font-size:medium">0$</span>
                         <div class="clearfix"></div>
                     </div>
                     <ul class="total_price">
@@ -69,8 +69,8 @@
                                     <div class="cart-item-info">
                                         <h3><a href="#">@element.Key.Name</a><span></span></h3>
                                         <h3>Amount: <input style="width:10%" type="number" max="@element.Key.Count" min="1" name="count" value="@element.Value"/><input type="number" value="@element.Key.Id" name="Id" hidden /></h3>
-                                        <input type="submit" asp-action="ChangeCount" formmethod="post" name="Изменить" />
-                                        <h1>Price : @element.Key.Price</h1>
+                                        <button asp-controller="Order" asp-action="ChangeCount" formmethod="post">Submit</button>
+                                        <h1>@element.Key.Price$</h1>
                                     </div>
                                 </form>
                                 <div class="clearfix"></div>
