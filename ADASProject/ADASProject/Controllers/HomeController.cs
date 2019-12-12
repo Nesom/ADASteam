@@ -122,6 +122,12 @@ namespace ADASProject.Controllers
             return View(new SetCityModel() { Cities = cityList });
         }
 
+        [HttpGet]
+        public async Task<IActionResult> SetCustomCity()
+        {
+            return View(new SetCityModel());
+        }
+
         [HttpPost]
         public async Task<IActionResult> SetCity(SetCityModel model)
         {

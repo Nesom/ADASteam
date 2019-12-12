@@ -23,12 +23,14 @@
     <h4>Chouse your city</h4>
     <form asp-controller="Home" asp-action="SetCity" method="post">
         <select class="select_or" asp-for="City">
-            @foreach(var city in Model.Cities)
+            @foreach (var city in Model.Cities)
             {
                 <option value="@city">@city</option>
             }
         </select>
         <button class="button_new">Submit</button>
+        <br />
+        <a asp-controller="Home" asp-action="SetCustomCity">I didn't find my sity...</a>
     </form>
 </body>
 

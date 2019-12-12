@@ -27,11 +27,11 @@
     <p class="pre_new">Write your address</p>
     <form asp-controller="Order" asp-action="Order" method="post">
         <p class="pre_new">Country  <input asp-for="Address.Country" type="text" maxlength="32" /></p>
-        <p class="pre_new">City  <input asp-for="Address.Sity" type="text" maxlength="32"/></p>
-        <p class="pre_new">Street  <input asp-for="Address.Street" type="text" maxlength="32"/></p>
-        <p class="pre_new">Home number  <input asp-for="Address.HouseNumber" type="text" maxlength="8"/></p>
-        <p class="pre_new">Apartment number  <input asp-for="Address.ApartmentNumber" type="text" maxlength="8"/></p>
-        <p class="pre_new">Postcode  <input asp-for="Address.PostOfficeIndex" type="number" maxlength="12"/></p>
+        <p class="pre_new">City  <input asp-for="Address.Sity" type="text" value="@TempData.Peek("city")" maxlength="32" /></p>
+        <p class="pre_new">Street  <input asp-for="Address.Street" type="text" maxlength="32" /></p>
+        <p class="pre_new">Home number  <input asp-for="Address.HouseNumber" type="text" maxlength="8" /></p>
+        <p class="pre_new">Apartment number  <input asp-for="Address.ApartmentNumber" type="text" maxlength="8" /></p>
+        <p class="pre_new">Postcode  <input asp-for="Address.PostOfficeIndex" type="number" maxlength="12" /></p>
         <input type="submit" name="Order" />
     </form>
 </body>

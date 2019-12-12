@@ -19,19 +19,22 @@
 </head>
 <body>
     @foreach (var order in Model.Products)
-    {
-        <div class="div_or">
-            <p class="pre_new">Order number: @order.Key.Id</p>
-            <p class="pre_new">Order amount: @order.Key.Amount руб</p>
-            <p class="pre_new">Order time: @order.Key.OrderTime.ToString()</p>
-            <p class="pre_new">Status: @order.Key.StatusInfo.ToString()</p>
-            <p class="pre_new">Product list(@order.Value.Count): </p>
-            @foreach (var product in order.Value)
+    {           
+    <div class="div_or">
+        <p class="pre_new">Order number: @order.Key.Id</p>
+        <p class="pre_new">Order amount: @order.Key.Amount руб</p>
+        <p class="pre_new">Order time: @order.Key.OrderTime.ToString()</p>
+        <p class="pre_new">Status: @order.Key.StatusInfo.ToString()</p>
+        <p class="pre_new">Product list(@order.Value.Count): </p>
+        @foreach (var product in order.Value)
+        {
+            @if (product.Item1 != null)
             {
                 <p class="pre_new" style="margin-left:24px">   @product.Item1.Name  (@product.Item2)</p>
             }
-            <a style="margin-bottom:0px; color:black" asp-controller="Order" asp-action="GetOrder/@order.Key.Id"><p class="pre_new" style="font-weight:600">Details</p></a>
-        </div>
+        }
+        <a style="margin-bottom:0px; color:black" asp-controller="Order" asp-action="GetOrder/@order.Key.Id"><p class="pre_new" style="font-weight:600">Details</p></a>
+    </div>
     }
 </body>
 

@@ -1,0 +1,21 @@
+﻿@model SetCityModel
+<head>
+    <style>
+        .button_new {
+            border-radius: 4px 5px;
+            border-width: 3px;
+            border: solid;
+            background-color: #f0f0f0;
+            margin-left: 5px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h4>Write your city</h4>
+    <form asp-controller="Home" asp-action="SetCity" method="post">
+        <input asp-for="City" type="text" required/>
+        <button class="button_new">Submit</button>
+    </form>
+</body>
+
