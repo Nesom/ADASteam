@@ -141,25 +141,20 @@ namespace ADASProject.Controllers
             var model = new OrderModel();
             model.CityIndex = -1;
 
-            var places = new Dictionary<string, string>()
+            model.Places = new List<string>()
             {
-                {"Elabuga", "Elabuga, Mira 34" },
-                {"Kazan'", "Kazan', Kremlevskaya 35A" },
-                {"Kazan", "Kazan', Kremlevskaya 35A" },
-                {"Moscow", "Kazan', Moscow, Sovetckaya 21B" }
+                "Elabuga, Mira 34",
+                "Kazan', Kremlevskaya 35A",
+                "Kazan', Gvardeyskaya 12",
+                "Moscow, Sovetckaya 21B"
             };
 
             var city = (string)TempData.Peek("city");
 
             if (city != null && city.Length > 0)
-                city = "Kazan'";
-
-            model.Places = places
-                .Select(pl => pl.Value)
-                .ToList();
-
-            if (places.ContainsKey(city))
-                model.CityIndex = model.Places.IndexOf(places[city]);
+                for (int i = 0; i < model.Places.Count; i++)
+                    if (model.Places[i].StartsWith(city))
+                        model.CityIndex = i;
 
             return View(model);
         }

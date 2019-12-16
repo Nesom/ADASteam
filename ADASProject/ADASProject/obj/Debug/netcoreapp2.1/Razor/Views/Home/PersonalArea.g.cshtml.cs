@@ -126,7 +126,7 @@ using ADASProject.Models;
             WriteLiteral("      ");
             EndContext();
             BeginContext(288, 69, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f77d281a894b4fe8affce6202e7bfbb5", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "65664ba4343e43e1b1e967339e48ab5a", async() => {
                 BeginContext(346, 7, true);
                 WriteLiteral("Details");
                 EndContext();
@@ -176,7 +176,7 @@ using ADASProject.Models;
             WriteLiteral("    ");
             EndContext();
             BeginContext(468, 74, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0f74a470c3f54091bfb603037cfac415", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ecb28e42dcc34d45b208fb211b5670f5", async() => {
                 BeginContext(516, 22, true);
                 WriteLiteral("<pre>Add product</pre>");
                 EndContext();
@@ -200,7 +200,7 @@ using ADASProject.Models;
             WriteLiteral("\r\n    ");
             EndContext();
             BeginContext(548, 80, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c74814223a0741eeb10f7eeafb21ad33", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "84696398750147f8be3df9b95c6633fb", async() => {
                 BeginContext(599, 25, true);
                 WriteLiteral("<pre>Remove product</pre>");
                 EndContext();
@@ -224,7 +224,7 @@ using ADASProject.Models;
             WriteLiteral("\r\n    ");
             EndContext();
             BeginContext(634, 80, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "fc95a852de4c4f42bd3e517e563931fc", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7084b00f753544fca1d01679b3e6128f", async() => {
                 BeginContext(683, 27, true);
                 WriteLiteral("<pre>Check order list</pre>");
                 EndContext();

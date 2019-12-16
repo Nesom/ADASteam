@@ -60,12 +60,12 @@ using ADASProject.Models;
             WriteLiteral("<pre style=\"font-size:18px\">Available types: </pre>\r\n");
             EndContext();
             BeginContext(70, 300, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8744ee25e2734b18a9cc717826d45f7c", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "346b1bc58023460da663a6fbd943a445", async() => {
                 BeginContext(129, 6, true);
                 WriteLiteral("\r\n    ");
                 EndContext();
                 BeginContext(135, 184, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("select", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0365f3a9f1ef42ee91d3546477d495fa", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("select", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "58ee43c0f794410babead7442dc97ccb", async() => {
                     BeginContext(158, 2, true);
                     WriteLiteral("\r\n");
                     EndContext();
@@ -79,7 +79,7 @@ using ADASProject.Models;
                     WriteLiteral("            ");
                     EndContext();
                     BeginContext(234, 59, false);
-                    __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "6565e4393ae94f99a68a82eb5489a5aa", async() => {
+                    __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "4ce1012bea8f475192047dbac9e97fa3", async() => {
                         BeginContext(280, 4, false);
 #line 7 "C:\Users\User\Documents\GitHub\ADASteam\ADASProject\ADASProject\Views\Edit\ChouseAdd.cshtml"
                                                     Write(name);

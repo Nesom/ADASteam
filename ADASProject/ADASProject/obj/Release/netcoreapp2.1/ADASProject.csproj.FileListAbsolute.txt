@@ -134,4 +134,3 @@ C:\Users\User\Documents\GitHub\ADASteam\ADASProject\ADASProject\obj\Release\netc
 C:\Users\User\Documents\GitHub\ADASteam\ADASProject\ADASProject\obj\Release\netcoreapp2.1\ADASProject.csproj.CopyComplete
 C:\Users\User\Documents\GitHub\ADASteam\ADASProject\ADASProject\obj\Release\netcoreapp2.1\ADASProject.dll
 C:\Users\User\Documents\GitHub\ADASteam\ADASProject\ADASProject\obj\Release\netcoreapp2.1\ADASProject.pdb
-C:\Users\User\Documents\GitHub\ADASteam\ADASProject\ADASProject\obj\Release\netcoreapp2.1\Razor\Views\Home\SetCustomCity.g.cshtml.cs

@@ -28,32 +28,25 @@ namespace ADASProject.Notifications
             MailAddress from = new MailAddress("adasproject4@gmail.com", "ADAS");
             // кому отправляем
             MailAddress to = new MailAddress(email);
+            // создаем объект сообщения
+            MailMessage m = new MailMessage(from, to);
+            // тема письма
+            m.Subject = subject;
+            // текст письма
+            m.Body = message;
+            // письмо представляет код html
+            m.IsBodyHtml = true;
             // адрес smtp-сервера и порт, с которого будем отправлять письмо
-            using (SmtpClient smtp = new SmtpClient
+            SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587);
+            // логин и пароль
+            smtp.Credentials = new NetworkCredential("adasproject4@gmail.com", "adasproject4!!");
+            smtp.EnableSsl = true;
+            // отправляем пиьсмо
+            try
             {
-                Host = "smtp.gmail.com",
-                Port = 587,
-                EnableSsl = true,
-                DeliveryMethod = SmtpDeliveryMethod.Network,
-                UseDefaultCredentials = false,
-                Credentials = new NetworkCredential("adasproject4@gmail.com", "adasproject4!!")
-            })
-            {
-                // создаем объект сообщения
-                using (var m = new MailMessage(from, to)
-                {
-                    Subject = subject,
-                    Body = message,
-                    IsBodyHtml = true
-                })
-                    // отправляем пиьсмо
-                    try
-                    {
-                        smtp.Send(m);
-                    }
-                    catch { }
+                await smtp.SendMailAsync(m);
             }
-
+            catch { }
         }
 
         public async Task SendOrderNotificationAsync(string email, OrderInfo order, Status type)
