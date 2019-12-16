@@ -55,7 +55,7 @@ using ADASProject.Models;
         public async override global::System.Threading.Tasks.Task ExecuteAsync()
         {
             BeginContext(0, 17, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "de712b5a3bd24c5b9e8a29d32a588a2e", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "54945c581b58486ca9fcd2b67f879286", async() => {
                 BeginContext(6, 4, true);
                 WriteLiteral("\r\n\r\n");
                 EndContext();
@@ -75,12 +75,12 @@ using ADASProject.Models;
             WriteLiteral("\r\n");
             EndContext();
             BeginContext(19, 175, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "28ff7a95a5d042a082dcd69fd32c1161", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "bbb9ac5cd9ea4f0eb8813f0b0bcc1a66", async() => {
                 BeginContext(25, 6, true);
                 WriteLiteral("\r\n    ");
                 EndContext();
                 BeginContext(31, 74, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "59c0d0fb8ba5482592d3322b087c16c6", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "68fd2a53040f4821b7aca9159639c33c", async() => {
                     BeginContext(78, 23, true);
                     WriteLiteral("<h4>Order delivery</h4>");
                     EndContext();
@@ -104,7 +104,7 @@ using ADASProject.Models;
                 WriteLiteral("\r\n    ");
                 EndContext();
                 BeginContext(111, 74, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1b4878bf0c2741b18eeb53d4a4ab155f", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "b1e05572d59345a187dab28bd85d7610", async() => {
                     BeginContext(160, 21, true);
                     WriteLiteral("<h4>Get in place</h4>");
                     EndContext();
