@@ -43,7 +43,10 @@
         <p class="pre_new">Products</p>
         @foreach (var subOrder in Model.SubOrders)
         {
-            <p class="pre_new" style="margin-left:25px">@subOrder.Item1.Name (@subOrder.Item2)</p>
+            @if (subOrder.Item1 != null)
+            {
+                <p class="pre_new" style="margin-left:25px">@subOrder.Item1.Name (@subOrder.Item2)</p>
+            }
         }
         @if (Model.Role == "admin")
         {

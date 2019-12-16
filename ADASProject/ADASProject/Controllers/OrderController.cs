@@ -138,13 +138,25 @@ namespace ADASProject.Controllers
         [Authorize(Roles = "admin, user")]
         public async Task<IActionResult> Placement()
         {
-            var places = new List<string>()
+            var model = new OrderModel();
+            model.CityIndex = -1;
+
+            model.Places = new List<string>()
             {
-                "Kazan, Kremlevskaya 35A",
-                "Kazan, Gvardeyskaya 12",
-                "Elabuga, Mira 34"
+                "Elabuga, Mira 34",
+                "Kazan', Kremlevskaya 35A",
+                "Kazan', Gvardeyskaya 12",
+                "Moscow, Sovetckaya 21B"
             };
-            return View(new OrderModel() { Places = places });
+
+            var city = (string)TempData.Peek("city");
+
+            if (city != null && city.Length > 0)
+                for (int i = 0; i < model.Places.Count; i++)
+                    if (model.Places[i].StartsWith(city))
+                        model.CityIndex = i;
+
+            return View(model);
         }
 
         [HttpPost]

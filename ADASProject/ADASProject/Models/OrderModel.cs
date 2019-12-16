@@ -15,5 +15,6 @@ namespace ADASProject.Models
 
         public List<string> Places { get; set; }
         public string Place { get; set; }
+        public int CityIndex { get; set; }
     }
 }
