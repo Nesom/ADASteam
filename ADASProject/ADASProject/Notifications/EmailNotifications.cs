@@ -28,19 +28,20 @@ namespace ADASProject.Notifications
             MailAddress from = new MailAddress("adasproject4@gmail.com", "ADAS");
             // кому отправляем
             MailAddress to = new MailAddress(email);
-            // создаем объект сообщения
-            MailMessage m = new MailMessage(from, to);
-            // тема письма
-            m.Subject = subject;
-            // текст письма
-            m.Body = message;
-            // письмо представляет код html
-            m.IsBodyHtml = true;
             // адрес smtp-сервера и порт, с которого будем отправлять письмо
             SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587);
             // логин и пароль
             smtp.Credentials = new NetworkCredential("adasproject4@gmail.com", "adasproject4!!");
             smtp.EnableSsl = true;
+            smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+            smtp.UseDefaultCredentials = false;
+            // создаем объект сообщения
+            using (var m = new MailMessage(from, to)
+            {
+                Subject = subject,
+                Body = message,
+                IsBodyHtml = true
+            })
             // отправляем пиьсмо
             try
             {
